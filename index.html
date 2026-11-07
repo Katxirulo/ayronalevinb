@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ayron Club · Segunda Alevín F8 Grupo A</title>
+<meta name="description" content="Estadísticas, clasificación y proyección del Ayron Club en Segunda Alevín F8, Grupo A.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --cesped:#1F6B3A; --cesped-2:#2C8a4E; --tiza:#FAFBF7; --tinta:#17201A; --tinta-2:#4E5A52;
+  --linea:#DDE3DC; --panel:#FFFFFF; --marcador:#F2B705; --v:#2C8A4E; --e:#8A938C; --d:#C8402F;
+  --fondo:#EEF2EC;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --texto:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{color-scheme:dark; --tiza:#E9EEE8; --tinta:#E9EEE8; --tinta-2:#A7B2AA; --linea:#2B362E; --panel:#151D18; --fondo:#0D1410; --cesped:#1A5A31; --cesped-2:#3FA463; --v:#3FA463; --e:#7E8A82; --d:#E0604E;}
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--fondo);color:var(--tinta);font-family:var(--texto);font-size:16px;line-height:1.45;padding-bottom:env(safe-area-inset-bottom,0px)}
+.envoltura{max-width:960px;margin-inline:auto;padding:0 16px 40px}
+
+/* Marcador */
+.marcador{background:var(--cesped);color:#fff;padding:calc(20px + env(safe-area-inset-top,0px)) 16px 22px;position:relative;overflow:hidden}
+.marcador::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 48px,transparent 48px 96px);pointer-events:none}
+.marcador::after{content:"";position:absolute;width:220px;height:220px;border:2px solid rgba(255,255,255,.14);border-radius:50%;right:-70px;top:-60px;pointer-events:none}
+.marcador .interior{max-width:960px;margin-inline:auto;position:relative}
+.fila-sup{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px}
+.categoria{font-size:14px;color:rgba(255,255,255,.8)}
+select.equipo{font:600 14px var(--texto);color:#fff;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:6px 10px;max-width:100%}
+select.equipo option{color:#17201A}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(40px,11vw,72px);line-height:.95;margin:10px 0 4px;letter-spacing:.5px}
+.actualizado{font-size:14px;color:rgba(255,255,255,.75);margin:0}
+.cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:18px}
+.cifra{background:rgba(0,0,0,.2);border-radius:10px;padding:10px 12px}
+.cifra .et{font-size:13px;color:rgba(255,255,255,.75)}
+.cifra .val{font-family:var(--display);font-weight:600;font-size:36px;line-height:1.05;color:var(--marcador);font-variant-numeric:tabular-nums}
+.cifra .sub{font-size:13px;color:rgba(255,255,255,.8)}
+.racha{display:flex;gap:5px;margin-top:6px}
+.ficha{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:6px;font:700 14px var(--display);color:#fff}
+.ficha.V{background:var(--v)} .ficha.E{background:var(--e)} .ficha.D{background:var(--d)}
+.marcador .ficha{box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+
+/* Contenido */
+.bloque{background:var(--panel);border:1px solid var(--linea);border-radius:14px;padding:18px 16px;margin-top:16px;min-width:0}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:0 16px}
+h2{font-family:var(--display);font-weight:600;font-size:24px;margin:0;line-height:1.1}
+.nota{font-size:14px;color:var(--tinta-2);margin:4px 0 14px}
+.cabecera{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px}
+
+.proximo{display:grid;gap:10px}
+.cruce{font-family:var(--display);font-size:26px;font-weight:600;line-height:1.1}
+.cruce small{display:block;font-family:var(--texto);font-size:14px;font-weight:400;color:var(--tinta-2)}
+.barra-prob{display:flex;height:34px;border-radius:8px;overflow:hidden;font:600 14px var(--texto);color:#fff}
+.barra-prob span{display:flex;align-items:center;justify-content:center;min-width:0;white-space:nowrap}
+.leyenda{display:flex;gap:14px;font-size:13px;color:var(--tinta-2);flex-wrap:wrap}
+.leyenda i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--texto);font-size:12px;fill:var(--tinta-2)}
+
+button.boton{font:600 14px var(--texto);padding:7px 12px;border-radius:8px;border:1px solid var(--linea);background:var(--panel);color:var(--tinta);cursor:pointer}
+button.boton[aria-pressed=true]{background:var(--cesped);border-color:var(--cesped);color:#fff}
+button.boton:focus-visible,select:focus-visible{outline:3px solid var(--marcador);outline-offset:2px}
+.segmentado{display:inline-flex}
+.segmentado .boton{border-radius:0}
+.segmentado .boton:first-child{border-radius:8px 0 0 8px}
+.segmentado .boton:last-child{border-radius:0 8px 8px 0;margin-left:-1px}
+
+.desliza{overflow-x:auto;max-height:30rem;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th{position:sticky;top:0;background:var(--panel);text-align:right;font-weight:600;color:var(--tinta-2);padding:7px 6px;border-bottom:2px solid var(--linea);white-space:nowrap}
+td{text-align:right;padding:7px 6px;border-bottom:1px solid var(--linea);white-space:nowrap}
+.izq{text-align:left}
+tr.yo td{background:color-mix(in srgb,var(--marcador) 22%,transparent);font-weight:600}
+tr.pendiente td{color:var(--tinta-2)}
+.prob{display:none}
+.con-prob .prob{display:table-cell}
+td.pv{color:var(--v);font-weight:600}
+@media (max-width:560px){.ocultar-movil{display:none}}
+
+details{margin-top:16px;font-size:14px;color:var(--tinta-2)}
+details summary{cursor:pointer;font-weight:600;color:var(--tinta)}
+footer{font-size:13px;color:var(--tinta-2);margin-top:20px;text-align:center}
+</style>
+</head>
+<body>
+
+<header class="marcador">
+  <div class="interior">
+    <div class="fila-sup">
+      <span class="categoria">Segunda Alevín F8, Grupo A, temporada 2026-2027</span>
+      <label><span class="sr" hidden>Equipo</span><select class="equipo" id="equipo" aria-label="Elegir equipo"></select></label>
+    </div>
+    <h1 id="nombre">Ayron Club</h1>
+    <p class="actualizado" id="actualizado"></p>
+    <div class="cifras">
+      <div class="cifra"><div class="et">Posición</div><div class="val" id="c-pos">–</div><div class="sub">de <span id="c-n">16</span> equipos</div></div>
+      <div class="cifra"><div class="et">Puntos</div><div class="val" id="c-pts">–</div><div class="sub" id="c-ved"></div></div>
+      <div class="cifra"><div class="et">Goles</div><div class="val" id="c-goles">–</div><div class="sub" id="c-dg"></div></div>
+      <div class="cifra"><div class="et">Casa / fuera</div><div class="val" id="c-cf">–</div><div class="sub">puntos</div></div>
+      <div class="cifra"><div class="et">Últimos 5</div><div class="racha" id="c-racha"></div></div>
+    </div>
+  </div>
+</header>
+
+<main class="envoltura">
+
+  <section class="bloque" id="proximo">
+    <h2>Próximo partido</h2>
+    <div class="proximo" id="proximo-cuerpo"></div>
+  </section>
+
+  <div class="rejilla">
+    <section class="bloque">
+      <h2>Posición jornada a jornada</h2>
+      <p class="nota">Puesto en la clasificación al terminar cada jornada.</p>
+      <div id="graf-pos"></div>
+    </section>
+    <section class="bloque">
+      <h2>Goles por partido</h2>
+      <p class="nota">Hacia arriba, goles marcados. Hacia abajo, encajados.</p>
+      <div id="graf-goles"></div>
+    </section>
+  </div>
+
+  <div class="rejilla">
+    <section class="bloque">
+      <div class="cabecera">
+        <h2 id="t-partidos">Partidos</h2>
+        <button type="button" class="boton" id="btn-prob" aria-pressed="false">Ver probabilidades</button>
+      </div>
+      <p class="nota">Marcador como local–visitante. Las probabilidades son de victoria, empate y derrota del equipo elegido, en %.</p>
+      <div class="desliza">
+        <table id="tabla-partidos">
+          <thead><tr><th>J</th><th class="izq">Dónde</th><th class="izq">Rival</th><th>Marcador</th><th></th><th class="prob">%V</th><th class="prob">%E</th><th class="prob">%D</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <div class="cabecera">
+        <h2>Clasificación</h2>
+        <div class="segmentado" role="group" aria-label="Vista de la clasificación">
+          <button type="button" class="boton" data-vista="actual" aria-pressed="true">Actual</button>
+          <button type="button" class="boton" data-vista="proy" aria-pressed="false">Proyección</button>
+        </div>
+      </div>
+      <p class="nota" data-ver="actual">3 puntos por victoria y 1 por empate. Los empates a puntos se ordenan por diferencia de goles.</p>
+      <p class="nota" data-ver="proy" hidden>Posición ficticia al final de la primera vuelta (J15) y de la temporada (J30), según los puntos esperados de cada partido pendiente.</p>
+      <div class="desliza" data-ver="actual">
+        <table id="tabla-clas">
+          <thead><tr><th>#</th><th class="izq">Equipo</th><th>PJ</th><th class="ocultar-movil">V</th><th class="ocultar-movil">E</th><th class="ocultar-movil">D</th><th class="ocultar-movil">GF</th><th class="ocultar-movil">GC</th><th>DG</th><th>Pts</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="desliza" data-ver="proy" hidden>
+        <table id="tabla-proy">
+          <thead><tr><th class="izq">Equipo</th><th>Pts</th><th>Pts J15</th><th>Pos J15</th><th>Pts final</th><th>Pos final</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <details>
+    <summary>Cómo se calcula</summary>
+    <p>Los resultados salen del cuadro que publica la Real Federación Cántabra de Fútbol. La jornada de cada partido jugado se deduce de su partido de vuelta (ida + 15).</p>
+    <p>La clasificación se calcula aquí. Si hay empate a puntos, la federación puede aplicar otros criterios, como el enfrentamiento directo.</p>
+    <p>Las probabilidades salen de los goles marcados y encajados por partido de cada equipo, suavizados hacia la media del grupo, con la ventaja de jugar en casa que muestran los resultados. Los goles se modelan con una distribución de Poisson. La proyección suma a los puntos actuales los puntos esperados de cada partido pendiente. Con pocos partidos jugados, es una tendencia, no un pronóstico seguro.</p>
+  </details>
+  <footer>Página no oficial, hecha por un aficionado.</footer>
+</main>
+
+<!--
+  DATOS: un partido por línea. jornada,local,visitante,goles_local,goles_visitante
+  Los partidos sin jugar llevan los goles vacíos. Para actualizar, sustituye este bloque.
+-->
+<script type="text/plain" id="datos">
+jornada,local,visitante,goles_local,goles_visitante
+1,Amistad Sniace,Polanco,3,3
+1,Ayron,Marina Sport,0,1
+1,Bezana,Valle Lebaniego,0,6
+1,Esclavas,Calasanz,3,1
+1,Gimnástica,San Agustín,3,0
+1,Milinde Reocín,Vimenor,2,0
+1,Naval,Tropezón,2,2
+1,San Martín,Textil Escudo,3,1
+2,Calasanz,Amistad Sniace,1,6
+2,Marina Sport,Milinde Reocín,4,1
+2,Polanco,Bezana,3,4
+2,San Agustín,Naval,3,1
+2,Textil Escudo,Gimnástica,1,1
+2,Tropezón,Esclavas,2,4
+2,Valle Lebaniego,Ayron,6,1
+2,Vimenor,San Martín,1,0
+3,Amistad Sniace,Tropezón,5,1
+3,Ayron,Polanco,1,2
+3,Bezana,Calasanz,7,2
+3,Esclavas,San Agustín,2,3
+3,Gimnástica,Vimenor,1,2
+3,Marina Sport,Valle Lebaniego,1,1
+3,Milinde Reocín,San Martín,2,3
+3,Naval,Textil Escudo,2,0
+4,Calasanz,Ayron,0,4
+4,Polanco,Marina Sport,0,6
+4,San Agustín,Amistad Sniace,5,2
+4,San Martín,Gimnástica,1,3
+4,Textil Escudo,Esclavas,2,2
+4,Tropezón,Bezana,4,2
+4,Valle Lebaniego,Milinde Reocín,4,1
+4,Vimenor,Naval,2,2
+5,Amistad Sniace,Textil Escudo,1,4
+5,Ayron,Tropezón,3,0
+5,Bezana,San Agustín,1,2
+5,Esclavas,Vimenor,1,0
+5,Marina Sport,Calasanz,10,0
+5,Milinde Reocín,Gimnástica,2,2
+5,Naval,San Martín,1,1
+5,Valle Lebaniego,Polanco,8,0
+6,Calasanz,Valle Lebaniego,0,11
+6,Gimnástica,Naval,6,2
+6,Polanco,Milinde Reocín,1,2
+6,San Agustín,Ayron,1,0
+6,San Martín,Esclavas,2,0
+6,Textil Escudo,Bezana,2,0
+6,Tropezón,Marina Sport,0,12
+6,Vimenor,Amistad Sniace,1,2
+7,Amistad Sniace,San Martín,1,0
+7,Ayron,Textil Escudo,3,2
+7,Bezana,Vimenor,5,6
+7,Esclavas,Gimnástica,5,3
+7,Marina Sport,San Agustín,4,2
+7,Milinde Reocín,Naval,1,4
+7,Polanco,Calasanz,5,1
+7,Valle Lebaniego,Tropezón,10,2
+8,Calasanz,Milinde Reocín,0,1
+8,Gimnástica,Amistad Sniace,2,0
+8,Naval,Esclavas,3,7
+8,San Agustín,Valle Lebaniego,1,3
+8,San Martín,Bezana,3,1
+8,Textil Escudo,Marina Sport,1,2
+8,Tropezón,Polanco,0,2
+8,Vimenor,Ayron,4,2
+9,Amistad Sniace,Naval,3,5
+9,Ayron,San Martín,1,0
+9,Bezana,Gimnástica,2,3
+9,Calasanz,Tropezón,2,4
+9,Marina Sport,Vimenor,,
+9,Milinde Reocín,Esclavas,,
+9,Polanco,San Agustín,1,3
+9,Valle Lebaniego,Textil Escudo,3,1
+10,Esclavas,Amistad Sniace,,
+10,Gimnástica,Ayron,,
+10,Naval,Bezana,,
+10,San Agustín,Calasanz,,
+10,San Martín,Marina Sport,,
+10,Textil Escudo,Polanco,,
+10,Tropezón,Milinde Reocín,,
+10,Vimenor,Valle Lebaniego,,
+11,Ayron,Naval,,
+11,Bezana,Esclavas,,
+11,Calasanz,Textil Escudo,,
+11,Marina Sport,Gimnástica,,
+11,Milinde Reocín,Amistad Sniace,,
+11,Polanco,Vimenor,,
+11,Tropezón,San Agustín,,
+11,Valle Lebaniego,San Martín,,
+12,Amistad Sniace,Bezana,,
+12,Esclavas,Ayron,,
+12,Gimnástica,Valle Lebaniego,,
+12,Naval,Marina Sport,,
+12,San Agustín,Milinde Reocín,,
+12,San Martín,Polanco,,
+12,Textil Escudo,Tropezón,,
+12,Vimenor,Calasanz,,
+13,Ayron,Amistad Sniace,,
+13,Calasanz,San Martín,,
+13,Marina Sport,Esclavas,,
+13,Milinde Reocín,Bezana,,
+13,Polanco,Gimnástica,,
+13,San Agustín,Textil Escudo,,
+13,Tropezón,Vimenor,,
+13,Valle Lebaniego,Naval,,
+14,Amistad Sniace,Marina Sport,,
+14,Bezana,Ayron,,
+14,Esclavas,Valle Lebaniego,,
+14,Gimnástica,Calasanz,,
+14,Milinde Reocín,Textil Escudo,,
+14,Naval,Polanco,,
+14,San Martín,Tropezón,,
+14,Vimenor,San Agustín,,
+15,Ayron,Milinde Reocín,,
+15,Calasanz,Naval,,
+15,Marina Sport,Bezana,,
+15,Polanco,Esclavas,,
+15,San Agustín,San Martín,,
+15,Textil Escudo,Vimenor,,
+15,Tropezón,Gimnástica,,
+15,Valle Lebaniego,Amistad Sniace,,
+16,Calasanz,Esclavas,,
+16,Marina Sport,Ayron,,
+16,Polanco,Amistad Sniace,,
+16,San Agustín,Gimnástica,,
+16,Textil Escudo,San Martín,,
+16,Tropezón,Naval,,
+16,Valle Lebaniego,Bezana,,
+16,Vimenor,Milinde Reocín,,
+17,Amistad Sniace,Calasanz,,
+17,Ayron,Valle Lebaniego,,
+17,Bezana,Polanco,,
+17,Esclavas,Tropezón,,
+17,Gimnástica,Textil Escudo,,
+17,Milinde Reocín,Marina Sport,,
+17,Naval,San Agustín,,
+17,San Martín,Vimenor,,
+18,Calasanz,Bezana,,
+18,Polanco,Ayron,,
+18,San Agustín,Esclavas,,
+18,San Martín,Milinde Reocín,,
+18,Textil Escudo,Naval,,
+18,Tropezón,Amistad Sniace,,
+18,Valle Lebaniego,Marina Sport,,
+18,Vimenor,Gimnástica,,
+19,Amistad Sniace,San Agustín,,
+19,Ayron,Calasanz,,
+19,Bezana,Tropezón,,
+19,Esclavas,Textil Escudo,,
+19,Gimnástica,San Martín,,
+19,Marina Sport,Polanco,,
+19,Milinde Reocín,Valle Lebaniego,,
+19,Naval,Vimenor,,
+20,Calasanz,Marina Sport,,
+20,Gimnástica,Milinde Reocín,,
+20,Polanco,Valle Lebaniego,,
+20,San Agustín,Bezana,,
+20,San Martín,Naval,,
+20,Textil Escudo,Amistad Sniace,,
+20,Tropezón,Ayron,,
+20,Vimenor,Esclavas,,
+21,Amistad Sniace,Vimenor,,
+21,Ayron,San Agustín,,
+21,Bezana,Textil Escudo,,
+21,Esclavas,San Martín,,
+21,Marina Sport,Tropezón,,
+21,Milinde Reocín,Polanco,,
+21,Naval,Gimnástica,,
+21,Valle Lebaniego,Calasanz,,
+22,Calasanz,Polanco,,
+22,Gimnástica,Esclavas,,
+22,Naval,Milinde Reocín,,
+22,San Agustín,Marina Sport,,
+22,San Martín,Amistad Sniace,,
+22,Textil Escudo,Ayron,,
+22,Tropezón,Valle Lebaniego,,
+22,Vimenor,Bezana,,
+23,Amistad Sniace,Gimnástica,,
+23,Ayron,Vimenor,,
+23,Bezana,San Martín,,
+23,Esclavas,Naval,,
+23,Marina Sport,Textil Escudo,,
+23,Milinde Reocín,Calasanz,,
+23,Polanco,Tropezón,,
+23,Valle Lebaniego,San Agustín,,
+24,Esclavas,Milinde Reocín,,
+24,Gimnástica,Bezana,,
+24,Naval,Amistad Sniace,,
+24,San Agustín,Polanco,,
+24,San Martín,Ayron,,
+24,Textil Escudo,Valle Lebaniego,,
+24,Tropezón,Calasanz,,
+24,Vimenor,Marina Sport,,
+25,Amistad Sniace,Esclavas,,
+25,Ayron,Gimnástica,,
+25,Bezana,Naval,,
+25,Calasanz,San Agustín,,
+25,Marina Sport,San Martín,,
+25,Milinde Reocín,Tropezón,,
+25,Polanco,Textil Escudo,,
+25,Valle Lebaniego,Vimenor,,
+26,Amistad Sniace,Milinde Reocín,,
+26,Esclavas,Bezana,,
+26,Gimnástica,Marina Sport,,
+26,Naval,Ayron,,
+26,San Agustín,Tropezón,,
+26,San Martín,Valle Lebaniego,,
+26,Textil Escudo,Calasanz,,
+26,Vimenor,Polanco,,
+27,Ayron,Esclavas,,
+27,Bezana,Amistad Sniace,,
+27,Calasanz,Vimenor,,
+27,Marina Sport,Naval,,
+27,Milinde Reocín,San Agustín,,
+27,Polanco,San Martín,,
+27,Tropezón,Textil Escudo,,
+27,Valle Lebaniego,Gimnástica,,
+28,Amistad Sniace,Ayron,,
+28,Bezana,Milinde Reocín,,
+28,Esclavas,Marina Sport,,
+28,Gimnástica,Polanco,,
+28,Naval,Valle Lebaniego,,
+28,San Martín,Calasanz,,
+28,Textil Escudo,San Agustín,,
+28,Vimenor,Tropezón,,
+29,Ayron,Bezana,,
+29,Calasanz,Gimnástica,,
+29,Marina Sport,Amistad Sniace,,
+29,Polanco,Naval,,
+29,San Agustín,Vimenor,,
+29,Textil Escudo,Milinde Reocín,,
+29,Tropezón,San Martín,,
+29,Valle Lebaniego,Esclavas,,
+30,Amistad Sniace,Valle Lebaniego,,
+30,Bezana,Marina Sport,,
+30,Esclavas,Polanco,,
+30,Gimnástica,Tropezón,,
+30,Milinde Reocín,Ayron,,
+30,Naval,Calasanz,,
+30,San Martín,San Agustín,,
+30,Vimenor,Textil Escudo,,
+</script>
+
+<script>
+(() => {
+  const EQUIPO_POR_DEFECTO = 'Ayron';
+  const NOMBRES = {'Ayron': 'Ayron Club'};
+
+  const filas = document.getElementById('datos').textContent.trim().split('\n').slice(1);
+  const partidos = filas.map((l) => {
+    const [j, local, visitante, gl, gv] = l.split(',').map((s) => s.trim());
+    return {j: Number(j), local, visitante, gl: gl === '' ? null : Number(gl), gv: gv === '' ? null : Number(gv)};
+  });
+  const jugados = partidos.filter((p) => p.gl !== null);
+  const pendientes = partidos.filter((p) => p.gl === null);
+  const equipos = [...new Set(partidos.flatMap((p) => [p.local, p.visitante]))].sort((a, b) => a.localeCompare(b, 'es'));
+  const ultimaJ = jugados.reduce((m, p) => Math.max(m, p.j), 0);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
+  const fmt1 = new Intl.NumberFormat('es', {maximumFractionDigits: 1, minimumFractionDigits: 1});
+
+  function clasificacion(hasta = Infinity) {
+    const t = Object.fromEntries(equipos.map((e) => [e, {equipo: e, pj: 0, v: 0, e: 0, d: 0, gf: 0, gc: 0}]));
+    for (const p of jugados) {
+      if (p.j > hasta) continue;
+      for (const [n, f, c] of [[p.local, p.gl, p.gv], [p.visitante, p.gv, p.gl]]) {
+        const r = t[n]; r.pj++; r.gf += f; r.gc += c;
+        if (f > c) r.v++; else if (f === c) r.e++; else r.d++;
+      }
+    }
+    return Object.values(t).map((r) => ({...r, dg: r.gf - r.gc, pts: r.v * 3 + r.e}))
+      .sort((x, y) => y.pts - x.pts || y.dg - x.dg || y.gf - x.gf || x.equipo.localeCompare(y.equipo, 'es'))
+      .map((r, i) => ({pos: i + 1, ...r}));
+  }
+
+  // Modelo de probabilidades (Poisson)
+  const probs = (() => {
+    const K = 3, s = Object.fromEntries(equipos.map((e) => [e, {gf: 0, gc: 0, pj: 0}]));
+    let gl = 0, gv = 0;
+    for (const p of jugados) {
+      s[p.local].gf += p.gl; s[p.local].gc += p.gv; s[p.local].pj++;
+      s[p.visitante].gf += p.gv; s[p.visitante].gc += p.gl; s[p.visitante].pj++;
+      gl += p.gl; gv += p.gv;
+    }
+    const n = jugados.length || 1, media = (gl + gv) / (2 * n) || 1, mL = gl / n || 1, mV = gv / n || 1;
+    const ata = (e) => (s[e].gf / media + K) / (s[e].pj + K);
+    const def = (e) => (s[e].gc / media + K) / (s[e].pj + K);
+    const pois = (l) => { const o = []; let f = Math.exp(-l); for (let k = 0; k <= 25; k++) { o.push(f); f *= l / (k + 1); } return o; };
+    const m = new Map();
+    for (const p of pendientes) {
+      const a = pois(mL * ata(p.local) * def(p.visitante)), b = pois(mV * ata(p.visitante) * def(p.local));
+      let w = 0, d = 0, l = 0;
+      a.forEach((x, i) => b.forEach((y, j) => { if (i > j) w += x * y; else if (i === j) d += x * y; else l += x * y; }));
+      const t = w + d + l;
+      m.set(p, {pl: w / t, pe: d / t, pv: l / t});
+    }
+    return m;
+  })();
+
+  const actual = clasificacion();
+
+  const proyeccion = (() => {
+    const r = Object.fromEntries(actual.map((c) => [c.equipo, {equipo: c.equipo, pts: c.pts, dg: c.dg, e15: c.pts, e30: c.pts}]));
+    for (const [p, q] of probs) {
+      const el = 3 * q.pl + q.pe, ev = 3 * q.pv + q.pe;
+      r[p.local].e30 += el; r[p.visitante].e30 += ev;
+      if (p.j <= 15) { r[p.local].e15 += el; r[p.visitante].e15 += ev; }
+    }
+    const rows = Object.values(r);
+    for (const k of ['e15', 'e30']) [...rows].sort((a, b) => b[k] - a[k] || b.dg - a.dg || a.equipo.localeCompare(b.equipo, 'es')).forEach((x, i) => { x['p' + k] = i + 1; });
+    return rows.sort((a, b) => a.pe15 - b.pe15);
+  })();
+
+  const evolucion = (eq) => {
+    const out = [];
+    for (let j = 1; j <= ultimaJ; j++) {
+      const c = clasificacion(j).find((r) => r.equipo === eq);
+      out.push({j, pos: c.pos, pts: c.pts});
+    }
+    return out;
+  };
+
+  const partidosDe = (eq) => partidos.filter((p) => p.local === eq || p.visitante === eq).sort((a, b) => a.j - b.j).map((p) => {
+    const casa = p.local === eq, jug = p.gl !== null;
+    const gf = jug ? (casa ? p.gl : p.gv) : null, gc = jug ? (casa ? p.gv : p.gl) : null;
+    const q = probs.get(p);
+    return {
+      j: p.j, casa, rival: casa ? p.visitante : p.local, marcador: jug ? p.gl + '-' + p.gv : '–', gf, gc,
+      res: !jug ? '' : gf > gc ? 'V' : gf === gc ? 'E' : 'D',
+      pV: q ? (casa ? q.pl : q.pv) : null, pE: q ? q.pe : null, pD: q ? (casa ? q.pv : q.pl) : null
+    };
+  });
+
+  const pct = (x) => Math.round(100 * x);
+
+  // Gráficas en SVG
+  function grafPosicion(datos, n) {
+    if (!datos.length) return '<p class="nota">Aún no hay jornadas jugadas.</p>';
+    const W = 360, H = 210, m = {t: 14, r: 30, b: 26, l: 30};
+    const x = (i) => m.l + (datos.length === 1 ? (W - m.l - m.r) / 2 : i * (W - m.l - m.r) / (datos.length - 1));
+    const y = (p) => m.t + (p - 1) * (H - m.t - m.b) / (n - 1);
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Posición por jornada">`;
+    for (const t of [1, 4, 8, 12, n]) s += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(t)}" y2="${y(t)}" stroke="var(--linea)"/><text x="${m.l - 6}" y="${y(t)}" dy="0.32em" text-anchor="end">${t}º</text>`;
+    const paso = Math.ceil(datos.length / 10);
+    datos.forEach((d, i) => { if (i % paso === 0 || i === datos.length - 1) s += `<text x="${x(i)}" y="${H - 6}" text-anchor="middle">J${d.j}</text>`; });
+    s += `<polyline fill="none" stroke="var(--cesped-2)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" points="${datos.map((d, i) => x(i) + ',' + y(d.pos)).join(' ')}"/>`;
+    datos.forEach((d, i) => {
+      s += `<circle cx="${x(i)}" cy="${y(d.pos)}" r="4" fill="var(--cesped-2)"><title>Jornada ${d.j}: ${d.pos}º, ${d.pts} pts</title></circle>`;
+      if (datos.length <= 15) s += `<text x="${x(i)}" y="${y(d.pos) - 9}" text-anchor="middle" style="fill:var(--tinta);font-weight:600">${d.pos}</text>`;
+    });
+    return s + '</svg>';
+  }
+
+  function grafGoles(datos) {
+    const d = datos.filter((p) => p.res);
+    if (!d.length) return '<p class="nota">Aún no hay partidos jugados.</p>';
+    const W = 360, H = 210, m = {t: 18, r: 6, b: 26, l: 6};
+    const arriba = Math.max(1, ...d.map((p) => p.gf)), abajo = Math.max(1, ...d.map((p) => p.gc));
+    const alto = H - m.t - m.b - 14, cero = m.t + alto * arriba / (arriba + abajo), u = alto / (arriba + abajo);
+    const banda = (W - m.l - m.r) / d.length, ancho = Math.min(28, banda * 0.65);
+    let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Goles por partido">`;
+    s += `<line x1="${m.l}" x2="${W - m.r}" y1="${cero}" y2="${cero}" stroke="var(--tinta-2)"/>`;
+    d.forEach((p, i) => {
+      const cx = m.l + banda * (i + 0.5), x0 = cx - ancho / 2;
+      const tit = `<title>J${p.j}, ${esc(p.rival)} (${p.casa ? 'casa' : 'fuera'}): ${p.marcador}</title>`;
+      if (p.gf) s += `<rect x="${x0}" y="${cero - p.gf * u}" width="${ancho}" height="${p.gf * u}" rx="3" fill="var(--v)">${tit}</rect><text x="${cx}" y="${cero - p.gf * u - 4}" text-anchor="middle" style="fill:var(--tinta);font-weight:600">${p.gf}</text>`;
+      if (p.gc) s += `<rect x="${x0}" y="${cero}" width="${ancho}" height="${p.gc * u}" rx="3" fill="var(--d)">${tit}</rect><text x="${cx}" y="${cero + p.gc * u + 13}" text-anchor="middle" style="fill:var(--tinta);font-weight:600">${p.gc}</text>`;
+      s += `<text x="${cx}" y="${H - 4}" text-anchor="middle">J${p.j}</text>`;
+    });
+    return s + '</svg>';
+  }
+
+  function pintar(eq) {
+    const c = actual.find((r) => r.equipo === eq);
+    const ps = partidosDe(eq), jug = ps.filter((p) => p.res);
+    const ptsDe = (a) => a.reduce((s, p) => s + (p.res === 'V' ? 3 : p.res === 'E' ? 1 : 0), 0);
+    const nombre = NOMBRES[eq] || eq;
+    document.getElementById('nombre').textContent = nombre;
+    document.title = nombre + ' · Segunda Alevín F8 Grupo A';
+    document.getElementById('actualizado').textContent = 'Actualizado tras la jornada ' + ultimaJ;
+    document.getElementById('c-n').textContent = equipos.length;
+    document.getElementById('c-pos').textContent = c.pos + 'º';
+    document.getElementById('c-pts').textContent = c.pts;
+    document.getElementById('c-ved').textContent = `${c.v} V · ${c.e} E · ${c.d} D`;
+    document.getElementById('c-goles').textContent = c.gf + '–' + c.gc;
+    document.getElementById('c-dg').textContent = 'Diferencia ' + (c.dg > 0 ? '+' : '') + c.dg;
+    document.getElementById('c-cf').textContent = ptsDe(jug.filter((p) => p.casa)) + ' / ' + ptsDe(jug.filter((p) => !p.casa));
+    document.getElementById('c-racha').innerHTML = jug.slice(-5).map((p) => `<span class="ficha ${p.res}" title="J${p.j} ${esc(p.rival)} ${p.marcador}">${p.res}</span>`).join('');
+
+    const prox = ps.find((p) => !p.res);
+    document.getElementById('proximo-cuerpo').innerHTML = prox ? `
+      <div class="cruce">${esc(prox.casa ? nombre + ' – ' + prox.rival : prox.rival + ' – ' + nombre)}<small>Jornada ${prox.j}, ${prox.casa ? 'en casa' : 'fuera'}</small></div>
+      <div class="barra-prob" role="img" aria-label="Victoria ${pct(prox.pV)}%, empate ${pct(prox.pE)}%, derrota ${pct(prox.pD)}%">
+        <span style="width:${pct(prox.pV)}%;background:var(--v)">${pct(prox.pV)}%</span>
+        <span style="width:${pct(prox.pE)}%;background:var(--e)">${pct(prox.pE)}%</span>
+        <span style="width:${pct(prox.pD)}%;background:var(--d)">${pct(prox.pD)}%</span>
+      </div>
+      <div class="leyenda"><span><i style="background:var(--v)"></i>Victoria</span><span><i style="background:var(--e)"></i>Empate</span><span><i style="background:var(--d)"></i>Derrota</span></div>`
+      : '<p class="nota">No quedan partidos pendientes.</p>';
+
+    document.getElementById('graf-pos').innerHTML = grafPosicion(evolucion(eq), equipos.length);
+    document.getElementById('graf-goles').innerHTML = grafGoles(ps);
+
+    document.getElementById('t-partidos').textContent = 'Partidos de ' + nombre;
+    document.querySelector('#tabla-partidos tbody').innerHTML = ps.map((p) => `
+      <tr class="${p.res ? '' : 'pendiente'}"><td>${p.j}</td><td class="izq">${p.casa ? 'Casa' : 'Fuera'}</td><td class="izq">${esc(p.rival)}</td><td>${p.marcador}</td>
+      <td>${p.res ? `<span class="ficha ${p.res}">${p.res}</span>` : ''}</td>
+      <td class="prob pv">${p.pV === null ? '' : pct(p.pV)}</td><td class="prob">${p.pE === null ? '' : pct(p.pE)}</td><td class="prob">${p.pD === null ? '' : pct(p.pD)}</td></tr>`).join('');
+
+    document.querySelector('#tabla-clas tbody').innerHTML = actual.map((r) => `
+      <tr class="${r.equipo === eq ? 'yo' : ''}"><td>${r.pos}</td><td class="izq">${esc(r.equipo)}</td><td>${r.pj}</td>
+      <td class="ocultar-movil">${r.v}</td><td class="ocultar-movil">${r.e}</td><td class="ocultar-movil">${r.d}</td><td class="ocultar-movil">${r.gf}</td><td class="ocultar-movil">${r.gc}</td>
+      <td>${r.dg > 0 ? '+' : ''}${r.dg}</td><td><b>${r.pts}</b></td></tr>`).join('');
+
+    document.querySelector('#tabla-proy tbody').innerHTML = proyeccion.map((r) => `
+      <tr class="${r.equipo === eq ? 'yo' : ''}"><td class="izq">${esc(r.equipo)}</td><td>${r.pts}</td><td>${fmt1.format(r.e15)}</td><td><b>${r.pe15}º</b></td><td>${fmt1.format(r.e30)}</td><td><b>${r.pe30}º</b></td></tr>`).join('');
+  }
+
+  // Controles
+  const sel = document.getElementById('equipo');
+  sel.innerHTML = equipos.map((e) => `<option value="${esc(e)}">${esc(NOMBRES[e] || e)}</option>`).join('');
+  const inicial = equipos.includes(decodeURIComponent(location.hash.slice(1))) ? decodeURIComponent(location.hash.slice(1)) : EQUIPO_POR_DEFECTO;
+  sel.value = inicial;
+  sel.addEventListener('change', () => { pintar(sel.value); history.replaceState(null, '', sel.value === EQUIPO_POR_DEFECTO ? location.pathname : '#' + encodeURIComponent(sel.value)); });
+
+  const btn = document.getElementById('btn-prob');
+  btn.addEventListener('click', () => {
+    const on = btn.getAttribute('aria-pressed') !== 'true';
+    btn.setAttribute('aria-pressed', String(on));
+    btn.textContent = on ? 'Ocultar probabilidades' : 'Ver probabilidades';
+    document.getElementById('tabla-partidos').classList.toggle('con-prob', on);
+  });
+
+  document.querySelectorAll('[data-vista]').forEach((b) => b.addEventListener('click', () => {
+    const v = b.dataset.vista;
+    document.querySelectorAll('[data-vista]').forEach((o) => o.setAttribute('aria-pressed', String(o.dataset.vista === v)));
+    document.querySelectorAll('[data-ver]').forEach((e) => { e.hidden = e.dataset.ver !== v; });
+  }));
+
+  pintar(inicial);
+})();
+</script>
+</body>
+</html>
