@@ -87,6 +87,11 @@ tr.pendiente td{color:var(--tinta-2)}
 .prob{display:none}
 .con-prob .prob{display:table-cell}
 td.pv{color:var(--v);font-weight:600}
+.zona{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:22px;padding:0 5px;border-radius:5px;font-weight:600}
+.zona.asc{background:var(--v);color:#fff}
+.zona.desc{background:var(--d);color:#fff}
+.leyenda-zonas{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--tinta-2);margin-top:10px}
+.leyenda-zonas i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
 @media (max-width:560px){.ocultar-movil{display:none}}
 
 details{margin-top:16px;font-size:14px;color:var(--tinta-2)}
@@ -176,6 +181,7 @@ footer{font-size:13px;color:var(--tinta-2);margin-top:20px;text-align:center}
           <tbody></tbody>
         </table>
       </div>
+      <div class="leyenda-zonas"><span><i style="background:var(--v)"></i>Ascienden los 2 primeros</span><span><i style="background:var(--d)"></i>Descienden los 4 últimos</span></div>
     </section>
   </div>
 
@@ -582,6 +588,12 @@ jornada,local,visitante,goles_local,goles_visitante
   });
 
   const pct = (x) => Math.round(100 * x);
+  const ASCIENDEN = 2, DESCIENDEN = 4;
+  const zona = (pos, texto = pos) => {
+    const n = equipos.length;
+    const cls = pos <= ASCIENDEN ? 'asc' : pos > n - DESCIENDEN ? 'desc' : '';
+    return cls ? `<span class="zona ${cls}" title="${cls === 'asc' ? 'Ascenso' : 'Descenso'}">${texto}</span>` : String(texto);
+  };
 
   // Gráficas en SVG
   function grafPosicion(datos, n) {
@@ -660,12 +672,12 @@ jornada,local,visitante,goles_local,goles_visitante
       <td class="prob pv">${p.pV === null ? '' : pct(p.pV)}</td><td class="prob">${p.pE === null ? '' : pct(p.pE)}</td><td class="prob">${p.pD === null ? '' : pct(p.pD)}</td></tr>`).join('');
 
     document.querySelector('#tabla-clas tbody').innerHTML = actual.map((r) => `
-      <tr class="${r.equipo === eq ? 'yo' : ''}"><td>${r.pos}</td><td class="izq">${esc(r.equipo)}</td><td>${r.pj}</td>
+      <tr class="${r.equipo === eq ? 'yo' : ''}"><td>${zona(r.pos)}</td><td class="izq">${esc(r.equipo)}</td><td>${r.pj}</td>
       <td class="ocultar-movil">${r.v}</td><td class="ocultar-movil">${r.e}</td><td class="ocultar-movil">${r.d}</td><td class="ocultar-movil">${r.gf}</td><td class="ocultar-movil">${r.gc}</td>
       <td>${r.dg > 0 ? '+' : ''}${r.dg}</td><td><b>${r.pts}</b></td></tr>`).join('');
 
     document.querySelector('#tabla-proy tbody').innerHTML = proyeccion.map((r) => `
-      <tr class="${r.equipo === eq ? 'yo' : ''}"><td class="izq">${esc(r.equipo)}</td><td>${r.pts}</td><td>${fmt1.format(r.e15)}</td><td><b>${r.pe15}º</b></td><td>${fmt1.format(r.e30)}</td><td><b>${r.pe30}º</b></td></tr>`).join('');
+      <tr class="${r.equipo === eq ? 'yo' : ''}"><td class="izq">${esc(r.equipo)}</td><td>${r.pts}</td><td>${fmt1.format(r.e15)}</td><td><b>${zona(r.pe15, r.pe15 + 'º')}</b></td><td>${fmt1.format(r.e30)}</td><td><b>${zona(r.pe30, r.pe30 + 'º')}</b></td></tr>`).join('');
   }
 
   // Controles
