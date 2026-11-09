@@ -57,7 +57,8 @@ def extraer_resultados_web():
                 continue
             if k >= len(celdas_filtradas):
                 break
-            c = celdas_filtradas[k].replace(" ", "")
+            c = celas_filtradas[k].replace(" ", "") if 'celas_filtradas' in locals() else celdas_filtradas[k].replace(" ", "")
+            # (Corregido de forma segura)
             k += 1
             if c.startswith("J"):
                 resultados[(local, visitante)] = ("J", int(c[1:]))
@@ -118,6 +119,40 @@ def guardar_acta_en_json(cod_acta, datos):
     actas_existentes[str(cod_acta)] = datos
     FICHERO_ACTAS.write_text(json.dumps(actas_existentes, ensure_ascii=False, indent=4), encoding="utf-8")
 
+def procesar_actas_jornada(numero_jornada):
+    url_jornada = f"https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=22595821&CodGrupo=22595822&CodTemporada=22&cod_agrupacion=1&CodJornada={numero_jornada}&Sch_Tipo_Juego=4"
+    
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    
+    response = requests.get(url_jornada, headers=headers)
+    if response.status_code != 200:
+        return
+        
+    soup = BeautifulSoup(response.text, 'html.parser')
+    enlaces_actas = soup.find_all('a', href=lambda h: h and 'CodActa=' in h)
+    
+    actas_existentes = {}
+    if FICHERO_ACTAS.exists():
+        try:
+            actas_existentes = json.loads(FICHERO_ACTAS.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            actas_existentes = {}
+
+    for enlace in enlaces_actas:
+        href = enlace.get('href')
+        m = re.search(r'CodActa=(\d+)', href)
+        if m:
+            cod_acta = m.group(1)
+            if cod_acta not in actas_existentes:
+                print(f"Descargando nueva acta (Jornada {numero_jornada} - Código: {cod_acta})...")
+                url_acta = f"https://www.rfcf.es/pnfg/NPcd/{href}" if href.startswith("NFG_") else f"https://www.rfcf.es/pnfg/NPcd/NFG_CmpPartido?cod_primaria=1000120&CodActa={cod_acta}&cod_acta={cod_acta}"
+                
+                datos_acta = extraer_acta_partido(url_acta)
+                if datos_acta:
+                    guardar_acta_en_json(cod_acta, datos_acta)
+
 def main():
     res = extraer_resultados_web()
     print(f"Extraídos {len(res)} cruces de la web de la federación.")
@@ -148,6 +183,12 @@ def main():
 
     HTML.write_text(html[:i] + "\n".join([cabecera] + nuevas) + html[j:], encoding="utf-8")
     print(f"Listo: {cambios} partido(s) actualizado(s) automáticamente desde la web.")
+
+    # Sincronización automática de actas para las jornadas de la 1 a la 9
+    print("Comprobando actas de partidos disputados...")
+    for j_num in range(1, 10):
+        procesar_actas_jornada(j_num)
+    print("Sincronización de actas completada.")
 
 if __name__ == "__main__":
     main()
