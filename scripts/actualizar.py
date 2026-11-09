@@ -10,6 +10,16 @@ HTML = RAIZ / "index.html"
 # URL de la tabla cruzada oficial de la federación
 URL_TABLA_CRUZADA = "https://www.rfcf.es/pnfg/NPcd/NFG_VisTablaCruzada?cod_primaria=1000120&CodGrupo=22595822"
 
+# Mapeo de cómo aparecen los nombres en la web de la federación a cómo los usas en la web
+EQUIPOS = {
+    "SAN AGUSTIN": "San Agustín", "AYRON": "Ayron", "AMISTAD": "Amistad Sniace",
+    "BEZANA": "Bezana", "CALASANZ": "Calasanz", "ESCLAVAS": "Esclavas",
+    "MARINA": "Marina Sport", "MILINDE": "Milinde Reocín", "NAVAL": "Naval",
+    "TROPEZON": "Tropezón", "VALLE": "Valle Lebaniego", "VIMENOR": "Vimenor",
+    "POLANCO": "Polanco", "GIMNASTICA": "Gimnástica", "SAN MARTIN": "San Martín",
+    "TEXTIL": "Textil Escudo",
+}
+
 INICIO = '<script type="text/plain" id="datos">\n'
 FIN = "\n</script>"
 
@@ -18,7 +28,7 @@ def extraer_resultados_web():
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     
-    print(f"Conectando con la tabla cruzada de la federación...")
+    print("Conectando con la tabla cruzada de la federación...")
     response = requests.get(URL_TABLA_CRUZADA, headers=headers)
     
     if response.status_code != 200:
@@ -26,27 +36,85 @@ def extraer_resultados_web():
     
     soup = BeautifulSoup(response.text, 'html.parser')
     
-    # Buscamos todas las celdas de la tabla cruzada en el HTML de la federación.
-    # Por lo general, en las tablas cruzadas de la RFCF, los resultados o jornadas 
-    # se ubican en las celdas (etiquetas <td> o <span> dentro de la tabla).
+    # Extraemos todos los textos de las celdas de la tabla de la página
+    celdas = [c.get_text(strip=True) for c in soup.find_all(['td', 'th'])]
     
-    # Vamos a extraer todos los textos de las celdas de la tabla para analizarlos
-    celdas_html = soup.find_all(['td', 'th'])
-    textos_celdas = [c.get_text(strip=True) for c in celdas_html]
+    # Buscamos el orden de los equipos en la página analizando las cabeceras
+    texto_completo = "\n".join(celdas)
+    posiciones = {}
+    for clave in EQUIPOS:
+        m = re.search(r"\b" + clave + r"\b", texto_completo)
+        if not m:
+            sys.exit(f"No encuentro el equipo {clave} en la web de la federación.")
+        posiciones[clave] = m.start()
+        
+    orden = [EQUIPOS[k] for k in sorted(posiciones, key=posiciones.get)]
     
-    print(f"Celdas leídas de la web: {len(textos_celdas)}")
+    # Filtramos celdas que correspondan a resultados (ej. "3-3", "1-0") o partidos pendientes (ej. "J9")
+    patron_celda = re.compile(r"^J\s?\d{1,2}$|^\d{1,2}\s?-\s?\d{1,2}$")
+    celdas_filtradas = [c for c in celdas if patron_celda.match(c)]
     
-    # Como la estructura exacta de clases de la tabla de la RFCF puede variar ligeramente,
-    # hagamos una depuración imprimiendo algunas celdas para validar el formato exacto.
-    
+    n = len(orden)
+    if len(celdas_filtradas) < n * (n - 1):
+        # Si la tabla web incluye celdas vacías o formato distinto, ajustamos la recolección
+        # Buscamos de forma directa los patrones en todo el texto HTML si hiciera falta
+        celdas_filtradas = re.findall(r"\bJ\s?\d{1,2}\b|\b\d{1,2}\s?-\s?\d{1,2}\b", soup.text)
+
+    if len(celdas_filtradas) < n * (n - 1):
+        sys.exit(f"Esperaba al menos {n * (n - 1)} celdas de partidos y he leído {len(celdas_filtradas)}.")
+
     resultados = {}
-    # Aquí mapearemos los resultados encontrados con el formato (local, visitante) -> ("R", (gl, gv)) o ("J", num)
-    
+    k = 0
+    for local in orden:
+        for visitante in orden:
+            if local == visitante:
+                continue
+            if k >= len(celdas_filtradas):
+                break
+            c = celdas_filtradas[k].replace(" ", "")
+            k += 1
+            if c.startswith("J"):
+                resultados[(local, visitante)] = ("J", int(c[1:]))
+            else:
+                partes = c.split("-")
+                if len(partes) == 2 and partes[0].isdigit() and partes[1].isdigit():
+                    resultados[(local, visitante)] = ("R", (int(partes[0]), int(partes[1])))
+                else:
+                    resultados[(local, visitante)] = ("J", 0)
+                    
     return resultados
 
 def main():
     res = extraer_resultados_web()
-    print("Extracción de la tabla cruzada completada.")
+    print(f"Extraídos {len(res)} cruces de la web.")
+
+    html = HTML.read_text(encoding="utf-8")
+    i = html.index(INICIO) + len(INICIO)
+    j = html.index(FIN, i)
+    lineas = html[i:j].strip().splitlines()
+    cabecera, filas = lineas[0], lineas[1:]
+
+    nuevas, cambios = [], 0
+    for fila in filas:
+        jornada, local, visitante, gl, gv = fila.split(",")
+        dato = res.get((local, visitante))
+        if dato is None:
+            # Si no se encuentra exacto, mantenemos lo que había
+            nuevas.append(fila)
+            continue
+            
+        if dato[0] == "R":
+            ngl, ngv = map(str, dato[1])
+        else:
+            ngl, ngv = "", ""
+            
+        if (ngl, ngv) != (gl, gv):
+            cambios += 1
+            print(f"  J{jornada} {local} - {visitante}: {gl or '·'}-{gv or '·'} -> {ngl or '·'}-{ngv or '·'}")
+        nuevas.append(",".join([jornada, local, visitante, ngl, ngv]))
+
+    HTML.write_text(html[:i] + "\n".join([cabecera] + nuevas) + html[j:], encoding="utf-8")
+    print(f"Listo: {cambios} partido(s) actualizado(s) desde la web.")
 
 if __name__ == "__main__":
     main()
