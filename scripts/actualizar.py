@@ -89,45 +89,40 @@ def extraer_acta_partido(url_acta):
         "alineaciones_raw": []
     }
     
-    # 1. Extracción precisa del Árbitro
-    # Buscamos textos que contengan "ÁRBITRO" o etiquetas donde suele ir el colegiado
+    # 1. Extracción y limpieza del Árbitro
     for elem in soup.find_all(text=True):
-        if "ÁRBITRO" in elem.upper() or "ÁRBITRO PRINCIPAL" in elem.upper():
+        if "ÁRBITRO" in elem.upper():
             padre = elem.parent
             texto_padre = padre.get_text(strip=True)
             if ":" in texto_padre:
                 partes = texto_padre.split(":")
                 if len(partes) > 1 and len(partes[-1].strip()) > 3:
-                    datos_acta["arbitro"] = partes[-1].strip()
+                    # Limpiamos la palabra clave para dejar solo el nombre
+                    sucia = partes[-1].strip()
+                    limpia = re.sub(r'ARBITRO PRINCIPAL', '', sucia, flags=re.IGNORECASE).strip()
+                    datos_acta["arbitro"] = limpia
                     break
             siguiente = padre.find_next_sibling()
             if siguiente and len(siguiente.get_text(strip=True)) > 3:
-                datos_acta["arbitro"] = siguiente.get_text(strip=True)
+                sucia = siguiente.get_text(strip=True)
+                limpia = re.sub(r'ARBITRO PRINCIPAL', '', sucia, flags=re.IGNORECASE).strip()
+                datos_acta["arbitro"] = limpia
                 break
 
-    # 2. Extracción precisa de Goles (Buscando la sección de goles de la ficha)
-    # Los goles suelen estar en elementos que agrupan los marcadores y los goleadores al lado
+    # 2. Extracción precisa de Goleadores (Buscando filas o bloques que contengan el minuto y el nombre)
     goles_encontrados = []
-    # Buscamos elementos que contengan el formato de resultado de gol o minuto
-    for elem in soup.find_all(['div', 'span', 'td']):
+    for elem in soup.find_all(['div', 'span', 'td', 'li']):
         texto = elem.get_text(separator=" ", strip=True)
-        # Patrón típico de gol: un resultado (ej 1-0), un minuto (ej 26') y un nombre de jugador
-        if "'" in texto and "-" in texto and any(char.isdigit() for char in texto):
-            if len(texto) < 60 and "function" not in texto and "Nova_" not in texto:
-                if texto not in goles_encontrados:
-                    goles_encontrados.append(texto)
-                    
-    # Si no encuentra bloques compuestos, cogemos los textos que tengan minutos pero limpios
-    if not goles_encontrados:
-        for elem in soup.find_all(text=True):
-            t = elem.strip()
-            if "'" in t and "(" in t and ")" in t and len(t) < 15 and "function" not in t:
-                if t not in goles_encontrados:
-                    goles_encontrados.append(t)
-                    
+        # Buscamos líneas que parezcan un gol registrado (tienen formato de minuto tipo (XX') y letras de nombres)
+        if "'" in texto and any(char.isdigit() for char in texto):
+            if any(c.isalpha() for c in texto) and len(texto) < 80:
+                if "function" not in texto and "Nova_" not in texto and "Árbitro" not in texto:
+                    if texto not in goles_encontrados:
+                        goles_encontrados.append(texto)
+                        
     datos_acta["goleadores"] = goles_encontrados
 
-    # 3. Extracción de Alineaciones (Titulares y Suplentes) ya probada y funcional
+    # 3. Extracción de Alineaciones (Titulares y Suplentes)
     jugadores_actuales = []
     filas = soup.find_all(['tr', 'li', 'div'])
     for fila in filas:
