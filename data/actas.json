@@ -5,5 +5,67 @@
             "1-0 (26') ORTIZ FERNANDEZ, IGOR"
         ],
         "alineaciones": {}
+    },
+    "246512": {
+        "arbitro": "",
+        "goleadores": [
+            "Nova_Ajax(\"html_unico\",\"/pnfg/NSendHtml/SistemaNavegacion/html/N_redes(ffcantabria).html\",\"\",'<span style=\"float:right;margin-top:10px;\"><strong style=\"color:white;\">Cargando </strong>&nbsp;<img src=\"/images/ajax-grande.gif\" style=\"width: 25px\"></span>');",
+            "eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!\"\".replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return\"\\\\w+\"};c=1}while(c--){if(k[c]){p=p.replace(new RegExp(\"\\\\b\"+e(c)+\"\\\\b\",\"g\"),k[c])}}return p}(\"k o(a,n,i,f){g d=[2,5,9,4,1,0,8,6,3,7,1,3,5,7,9,0,2,4,6,8,0,2,4,6,8,1,3,5,7,9,7,5,2,0,9,6,3,8,4,1];c.b(a).e.j(f);c.b(a).e.l('m-'+d[(i*h)+n])}\",25,25,\"||||||||||id|getElementById|document|t|classList|oc|var|10||remove|function|add|fa||ntype\".split(\"|\"),0,{}));",
+            "(14')",
+            "(21')",
+            "(59')",
+            "(60')",
+            "var Nova_Select_Printer;if(typeof(Nova_Print_Url)!=\"undefined\"){if(document.getElementById(\"Id_Nova_Print\")){document.getElementById(\"Id_Nova_Print\").style.display=\"\"}if(document.getElementById(\"menu_impresion\")){document.getElementById(\"menu_impresion\").style.display=\"\"}}function Nova_Print(SelectPrinter){var h=50;var w=270;if(typeof(Nova_Print_Url)!=\"undefined\"){Nova_Select_Printer=SelectPrinter;window.open(\"/pnfg/NSendHtml/Generico/html/N_Print.html\",\"\",\"titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=\"+w+\",height=\"+h+\",top=\"+(screen.availHeight-h-85)+\",left=\"+(screen.availWidth-w-10))}}if(typeof(Nova_Pdf_Url)!=\"undefined\"){if(document.getElementById(\"Id_Nova_Pdf\")){document.getElementById(\"Id_Nova_Pdf\").style.display=\"\"}if(document.getElementById(\"menu_impresion\")){document.getElementById(\"menu_impresion\").style.display=\"\"}}function Nova_Pdf(alto,ancho){if(typeof(Nova_Pdf_Url)!=\"undefined\"){if(typeof(alto)!=\"undefined\"&&typeof(ancho)!=\"undefined\"){h=alto;w=ancho}else{h=125;w=250}var v=window.open(Nova_Pdf_Url,\"\",\"titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=\"+w+\",height=\"+h+\",top=\"+((screen.availHeight-30-h)/2)+\",left=\"+((screen.availWidth-w)/2))}else{if(typeof(Nova_PrintPdf_Url)!=\"undefined\"){Nova_PrintPdf()}}}if(typeof(Nova_PrintPdf_Url)!=\"undefined\"){if(document.getElementById(\"Id_Nova_Pdf\")){document.getElementById(\"Id_Nova_Pdf\").style.display=\"\"}if(document.getElementById(\"menu_impresion\")){document.getElementById(\"menu_impresion\").style.display=\"\"}}function Nova_PrintPdf(){if(typeof(Nova_PrintPdf_Url)!=\"undefined\"){$(\"#form_imprimir_generico\").html(\"<form name='N_ImpresionPdfGenerico'  id='N_ImpresionPdfGenerico' action='/pnfg/NPcd/N_ImpresionPdfGenerico' method='post'>\"+\"<input type=hidden id='generico_NPcd_Pdf' name='NPcd_Pdf' value='1'>\"+\"<input type=hidden name='contenedor_pdf' id='contenedor_pdf' value=''>\"+\"</form>\");ImpresionPDFGenerico.location=Nova_PrintPdf_Url;var iFrameBody;$(\"#ImpresionPDFGenerico\")[0].onload=function(){if($(\"#ImpresionPDFGenerico\")[0].contentDocument){iFrameBody=$(\"#ImpresionPDFGenerico\")[0].contentDocument.getElementsByTagName(\"body\")[0]}else{if($(\"#ImpresionPDFGenerico\")[0].contentWindow){iFrameBody=$(\"#ImpresionPDFGenerico\")[0].contentWindow.document.getElementsByTagName(\"body\")[0]}}var contenedor_pdf=iFrameBody.innerHTML;document.getElementById(\"contenedor_pdf\").value=contenedor_pdf;document.N_ImpresionPdfGenerico.submit()}}};"
+        ],
+        "alineaciones": {}
+    },
+    "246514": {
+        "arbitro": "",
+        "goleadores": [
+            "Nova_Ajax(\"html_unico\",\"/pnfg/NSendHtml/SistemaNavegacion/html/N_redes(ffcantabria).html\",\"\",'<span style=\"float:right;margin-top:10px;\"><strong style=\"color:white;\">Cargando </strong>&nbsp;<img src=\"/images/ajax-grande.gif\" style=\"width: 25px\"></span>');",
+            "eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!\"\".replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return\"\\\\w+\"};c=1}while(c--){if(k[c]){p=p.replace(new RegExp(\"\\\\b\"+e(c)+\"\\\\b\",\"g\"),k[c])}}return p}(\"k o(a,n,i,f){g d=[2,5,9,4,1,0,8,6,3,7,1,3,5,7,9,0,2,4,6,8,0,2,4,6,8,1,3,5,7,9,7,5,2,0,9,6,3,8,4,1];c.b(a).e.j(f);c.b(a).e.l('m-'+d[(i*h)+n])}\",25,25,\"||||||||||id|getElementById|document|t|classList|oc|var|10||remove|function|add|fa||ntype\".split(\"|\"),0,{}));",
+            "(10')",
+            "(12')",
+            "(21')",
+            "(49')",
+            "var Nova_Select_Printer;if(typeof(Nova_Print_Url)!=\"undefined\"){if(document.getElementById(\"Id_Nova_Print\")){document.getElementById(\"Id_Nova_Print\").style.display=\"\"}if(document.getElementById(\"menu_impresion\")){document.getElementById(\"menu_impresion\").style.display=\"\"}}function Nova_Print(SelectPrinter){var h=50;var w=270;if(typeof(Nova_Print_Url)!=\"undefined\"){Nova_Select_Printer=SelectPrinter;window.open(\"/pnfg/NSendHtml/Generico/html/N_Print.html\",\"\",\"titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=\"+w+\",height=\"+h+\",top=\"+(screen.availHeight-h-85)+\",left=\"+(screen.availWidth-w-10))}}if(typeof(Nova_Pdf_Url)!=\"undefined\"){if(document.getElementById(\"Id_Nova_Pdf\")){document.getElementById(\"Id_Nova_Pdf\").style.display=\"\"}if(document.getElementById(\"menu_impresion\")){document.getElementById(\"menu_impresion\").style.display=\"\"}}function Nova_Pdf(alto,ancho){if(typeof(Nova_Pdf_Url)!=\"undefined\"){if(typeof(alto)!=\"undefined\"&&typeof(ancho)!=\"undefined\"){h=alto;w=ancho}else{h=125;w=250}var v=window.open(Nova_Pdf_Url,\"\",\"titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=\"+w+\",height=\"+h+\",top=\"+((screen.availHeight-30-h)/2)+\",left=\"+((screen.availWidth-w)/2))}else{if(typeof(Nova_PrintPdf_Url)!=\"undefined\"){Nova_PrintPdf()}}}if(typeof(Nova_PrintPdf_Url)!=\"undefined\"){if(document.getElementById(\"Id_Nova_Pdf\")){document.getElementById(\"Id_Nova_Pdf\").style.display=\"\"}if(document.getElementById(\"menu_impresion\")){document.getElementById(\"menu_impresion\").style.display=\"\"}}function Nova_PrintPdf(){if(typeof(Nova_PrintPdf_Url)!=\"undefined\"){$(\"#form_imprimir_generico\").html(\"<form name='N_ImpresionPdfGenerico'  id='N_ImpresionPdfGenerico' action='/pnfg/NPcd/N_ImpresionPdfGenerico' method='post'>\"+\"<input type=hidden id='generico_NPcd_Pdf' name='NPcd_Pdf' value='1'>\"+\"<input type=hidden name='contenedor_pdf' id='contenedor_pdf' value=''>\"+\"</form>\");ImpresionPDFGenerico.location=Nova_PrintPdf_Url;var iFrameBody;$(\"#ImpresionPDFGenerico\")[0].onload=function(){if($(\"#ImpresionPDFGenerico\")[0].contentDocument){iFrameBody=$(\"#ImpresionPDFGenerico\")[0].contentDocument.getElementsByTagName(\"body\")[0]}else{if($(\"#ImpresionPDFGenerico\")[0].contentWindow){iFrameBody=$(\"#ImpresionPDFGenerico\")[0].contentWindow.document.getElementsByTagName(\"body\")[0]}}var contenedor_pdf=iFrameBody.innerHTML;document.getElementById(\"contenedor_pdf\").value=contenedor_pdf;document.N_ImpresionPdfGenerico.submit()}}};"
+        ],
+        "alineaciones": {}
+    },
+    "246508": {
+        "arbitro": "",
+        "goleadores": [
+            "Nova_Ajax(\"html_unico\",\"/pnfg/NSendHtml/SistemaNavegacion/html/N_redes(ffcantabria).html\",\"\",'<span style=\"float:right;margin-top:10px;\"><strong style=\"color:white;\">Cargando </strong>&nbsp;<img src=\"/images/ajax-grande.gif\" style=\"width: 25px\"></span>');",
+            "eval(function(p,a,c,k,e,d){e=function(c){return c.toString(36)};if(!\"\".replace(/^/,String)){while(c--){d[c.toString(a)]=k[c]||c.toString(a)}k=[function(e){return d[e]}];e=function(){return\"\\\\w+\"};c=1}while(c--){if(k[c]){p=p.replace(new RegExp(\"\\\\b\"+e(c)+\"\\\\b\",\"g\"),k[c])}}return p}(\"k o(a,n,i,f){g d=[2,5,9,4,1,0,8,6,3,7,1,3,5,7,9,0,2,4,6,8,0,2,4,6,8,1,3,5,7,9,7,5,2,0,9,6,3,8,4,1];c.b(a).e.j(f);c.b(a).e.l('m-'+d[(i*h)+n])}\",25,25,\"||||||||||id|getElementById|document|t|classList|oc|var|10||remove|function|add|fa||ntype\".split(\"|\"),0,{}));",
+            "(7')",
+            "(58')",
+            "var Nova_Select_Printer;if(typeof(Nova_Print_Url)!=\"undefined\"){if(document.getElementById(\"Id_Nova_Print\")){document.getElementById(\"Id_Nova_Print\").style.display=\"\"}if(document.getElementById(\"menu_impresion\")){document.getElementById(\"menu_impresion\").style.display=\"\"}}function Nova_Print(SelectPrinter){var h=50;var w=270;if(typeof(Nova_Print_Url)!=\"undefined\"){Nova_Select_Printer=SelectPrinter;window.open(\"/pnfg/NSendHtml/Generico/html/N_Print.html\",\"\",\"titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=\"+w+\",height=\"+h+\",top=\"+(screen.availHeight-h-85)+\",left=\"+(screen.availWidth-w-10))}}if(typeof(Nova_Pdf_Url)!=\"undefined\"){if(document.getElementById(\"Id_Nova_Pdf\")){document.getElementById(\"Id_Nova_Pdf\").style.display=\"\"}if(document.getElementById(\"menu_impresion\")){document.getElementById(\"menu_impresion\").style.display=\"\"}}function Nova_Pdf(alto,ancho){if(typeof(Nova_Pdf_Url)!=\"undefined\"){if(typeof(alto)!=\"undefined\"&&typeof(ancho)!=\"undefined\"){h=alto;w=ancho}else{h=125;w=250}var v=window.open(Nova_Pdf_Url,\"\",\"titlebar=no,toolbar=no,location=no,status=no,menubar=no,scrollbars=no,resizable=no,width=\"+w+\",height=\"+h+\",top=\"+((screen.availHeight-30-h)/2)+\",left=\"+((screen.availWidth-w)/2))}else{if(typeof(Nova_PrintPdf_Url)!=\"undefined\"){Nova_PrintPdf()}}}if(typeof(Nova_PrintPdf_Url)!=\"undefined\"){if(document.getElementById(\"Id_Nova_Pdf\")){document.getElementById(\"Id_Nova_Pdf\").style.display=\"\"}if(document.getElementById(\"menu_impresion\")){document.getElementById(\"menu_impresion\").style.display=\"\"}}function Nova_PrintPdf(){if(typeof(Nova_PrintPdf_Url)!=\"undefined\"){$(\"#form_imprimir_generico\").html(\"<form name='N_ImpresionPdfGenerico'  id='N_ImpresionPdfGenerico' action='/pnfg/NPcd/N_ImpresionPdfGenerico' method='post'>\"+\"<input type=hidden id='generico_NPcd_Pdf' name='NPcd_Pdf' value='1'>\"+\"<input type=hidden name='contenedor_pdf' id='contenedor_pdf' value=''>\"+\"</form>\");ImpresionPDFGenerico.location=Nova_PrintPdf_Url;var iFrameBody;$(\"#ImpresionPDFGenerico\")[0].onload=function(){if($(\"#ImpresionPDFGenerico\")[0].contentDocument){iFrameBody=$(\"#ImpresionPDFGenerico\")[0].contentDocument.getElementsByTagName(\"body\")[0]}else{if($(\"#ImpresionPDFGenerico\")[0].contentWindow){iFrameBody=$(\"#ImpresionPDFGenerico\")[0].contentWindow.document.getElementsByTagName(\"body\")[0]}}var contenedor_pdf=iFrameBody.innerHTML;document.getElementById(\"contenedor_pdf\").value=contenedor_pdf;document.N_ImpresionPdfGenerico.submit()}}};"
+        ],
+        "alineaciones": {}
+    },
+    "246513": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones": {}
+    },
+    "246509": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones": {}
+    },
+    "246511": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones": {}
+    },
+    "246515": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones": {}
+    },
+    "246510": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones": {}
     }
 }
