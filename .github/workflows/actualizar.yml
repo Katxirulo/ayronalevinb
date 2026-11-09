@@ -1,10 +1,12 @@
-name: Actualizar resultados
+name: Actualizar resultados desde Web
 
 on:
-  push:
-    paths:
-      - "pdf/**"
-  workflow_dispatch:
+  schedule:
+    # Sábados de 10:00 a 18:00 cada hora (Ejemplo en UTC: 09:00 a 17:00)
+    - cron: '0 9-17 * * 6'
+    # Domingos de 10:00 a 14:00 cada hora (Ejemplo en UTC: 09:00 a 13:00)
+    - cron: '0 9-13 * * 0'
+  workflow_dispatch:     # Permite mantener el botón de ejecución manual por si lo necesitas
 
 permissions:
   contents: write
@@ -24,5 +26,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           git add index.html
-          git diff --cached --quiet || git commit -m "Resultados actualizados desde el PDF"
+          git diff --cached --quiet || git commit -m "Resultados actualizados automáticamente desde la web de la RFCF"
           git push
