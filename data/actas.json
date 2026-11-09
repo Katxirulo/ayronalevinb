@@ -1,0 +1,14 @@
+{
+  "246576": {
+    "jornada": 9,
+    "local": "Marina Sport",
+    "visitante": "Vimenor",
+    "arbitro": "Nombre del Árbitro",
+    "goles_local": [
+      {"minuto": "15'", "jugador": "Juan Pérez"}
+    ],
+    "goles_visitante": [],
+    "alineacion_local": ["Jugador 1", "Jugador 2"],
+    "alineacion_visitante": ["Jugador 1", "Jugador 2"]
+  }
+}
