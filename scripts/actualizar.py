@@ -109,14 +109,14 @@ def extraer_acta_partido(url_acta):
                 datos_acta["arbitro"] = limpia
                 break
 
-    # 2. Extracción ultra-limpia de Goles
+    # 2. Extracción ultra-limpia y sin duplicados de Goles
     goles_encontrados = []
     for elem in soup.find_all(['div', 'span', 'td', 'li']):
         texto = elem.get_text(separator=" ", strip=True)
-        # Buscar estrictamente patrones que comiencen por un minuto entre paréntesis, ej: (7') NOMBRE APELLIDO
-        if re.search(r"\(\d{1,2}'\)", texto):
-            # Limpiamos espacios sobrantes y filtramos que tenga una longitud razonable y no sea texto técnico
+        # Buscamos patrones que tengan el minuto y además contengan letras (el nombre del jugador)
+        if re.search(r"\(\d{1,2}'\)", texto) and any(c.isalpha() for c in texto):
             texto_limpio = re.sub(r'\s+', ' ', texto).strip()
+            # Filtramos que sea una línea de goles real (evitando textos largos o duplicados cortos)
             if len(texto_limpio) < 50 and "Goles" not in texto_limpio and "Gol" not in texto_limpio:
                 if texto_limpio not in goles_encontrados:
                     goles_encontrados.append(texto_limpio)
