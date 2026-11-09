@@ -1,15 +1,17 @@
 import re
 import sys
+import json
 from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
 RAIZ = Path(__file__).resolve().parent.parent
 HTML = RAIZ / "index.html"
+DIRECTORIO_DATOS = RAIZ / "data"
+FICHERO_ACTAS = DIRECTORIO_DATOS / "actas.json"
 
 URL_TABLA_CRUZADA = "https://www.rfcf.es/pnfg/NPcd/NFG_VisTablaCruzada?cod_primaria=1000120&CodGrupo=22595822"
 
-# Mapeo exacto de cómo aparecen los nombres en la web de la federación a cómo los usas en la web
 EQUIPOS = {
     "SAN AGUSTIN": "San Agustín", "AYRON": "Ayron", "AMISTAD": "Amistad Sniace",
     "BEZANA": "Bezana", "CALASANZ": "Calasanz", "ESCLAVAS": "Esclavas",
@@ -34,8 +36,6 @@ def extraer_resultados_web():
         sys.exit(f"Error: La federación devolvió el estado {response.status_code}.")
     
     soup = BeautifulSoup(response.text, 'html.parser')
-    
-    # Buscamos todas las celdas de las tablas de la página
     celdas = [c.get_text(strip=True) for c in soup.find_all(['td', 'th'])]
     
     texto_completo = "\n".join(celdas)
@@ -47,15 +47,10 @@ def extraer_resultados_web():
         posiciones[clave] = m.start()
         
     orden = [EQUIPOS[k] for k in sorted(posiciones, key=posiciones.get)]
-    
-    # Extraemos todos los patrones de resultados (ej: "3-3", "1-0") o jornadas pendientes (ej: "J9") de todo el texto de la página
     celdas_filtradas = re.findall(r"\bJ\s?\d{1,2}\b|\b\d{1,2}\s?-\s?\d{1,2}\b", soup.text)
     
-    n = len(orden)
     resultados = {}
     k = 0
-    
-    # Recorremos la matriz de equipos (local x visitante)
     for local in orden:
         for visitante in orden:
             if local == visitante:
@@ -74,6 +69,54 @@ def extraer_resultados_web():
                     resultados[(local, visitante)] = ("J", 0)
                     
     return resultados
+
+def extraer_acta_partido(url_acta):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+    
+    response = requests.get(url_acta, headers=headers)
+    if response.status_code != 200:
+        print(f"No se pudo acceder al acta: {url_acta}")
+        return None
+        
+    soup = BeautifulSoup(response.text, 'html.parser')
+    
+    datos_acta = {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones": {}
+    }
+    
+    texto_pagina = soup.get_text()
+    for linea in texto_pagina.split('\n'):
+        if "ÁRBITRO PRINCIPAL" in linea.upper():
+            partes = linea.split(":")
+            if len(partes) > 1:
+                datos_acta["arbitro"] = partes[1].strip()
+            else:
+                datos_acta["arbitro"] = linea.replace("ÁRBITRO PRINCIPAL", "").strip()
+
+    bloque_goles = soup.find_all(string=lambda t: t and "(" in t and "'" in t) if soup else []
+    for g in bloque_goles:
+        g_limpio = g.strip()
+        if g_limpio and len(g_limpio) > 3:
+            datos_acta["goleadores"].append(g_limpio)
+            
+    return datos_acta
+
+def guardar_acta_en_json(cod_acta, datos):
+    DIRECTORIO_DATOS.mkdir(exist_ok=True, parents=True)
+    
+    actas_existentes = {}
+    if FICHERO_ACTAS.exists():
+        try:
+            actas_existentes = json.loads(FICHERO_ACTAS.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            actas_existentes = {}
+            
+    actas_existentes[str(cod_acta)] = datos
+    FICHERO_ACTAS.write_text(json.dumps(actas_existentes, ensure_ascii=False, indent=4), encoding="utf-8")
 
 def main():
     res = extraer_resultados_web()
