@@ -1,1 +1,340 @@
-{}
+{
+    "246512": {
+        "arbitro": "VAL APEZTEGUIA, NICOLAS",
+        "goleadores": [
+            "(14') GUTIERREZ DEL RIO, VIDAL",
+            "(21') DIEZ PEDRACES, LUIS",
+            "(59') CASTAÑOS DE LEON, CRISTHIAN YARIEL",
+            "(60') LAMA MARTINEZ PEDROSA, LUCAS"
+        ],
+        "alineaciones_raw": [
+            {
+                "dorsal": "13",
+                "nombre": "CAGIGAS GARCIA, ULISES"
+            },
+            {
+                "dorsal": "6",
+                "nombre": "MANCHON GARCIA, MARIO"
+            },
+            {
+                "dorsal": "8",
+                "nombre": "RAMOS CALDERON, MANUEL"
+            },
+            {
+                "dorsal": "10",
+                "nombre": "GUTIERREZ BUSTILLO, DIEGO"
+            },
+            {
+                "dorsal": "29",
+                "nombre": "CEBALLOS JORRIN, MARTIN"
+            },
+            {
+                "dorsal": "30",
+                "nombre": "CASTAÑOS DE LEON, CRISTHIAN YARIEL"
+            },
+            {
+                "dorsal": "31",
+                "nombre": "MENDES RUIZ, MARCO"
+            },
+            {
+                "dorsal": "34",
+                "nombre": "DIEZ DIAZ, ORIOL"
+            },
+            {
+                "dorsal": "9",
+                "nombre": "LOPEZ MORENO, JESUS"
+            },
+            {
+                "dorsal": "27",
+                "nombre": "DIEZ PEDRACES, LUIS"
+            },
+            {
+                "dorsal": "32",
+                "nombre": "RUIZ ROLDAN, DANIEL"
+            },
+            {
+                "dorsal": "33",
+                "nombre": "LOPEZ GOMEZ, MARTIN"
+            },
+            {
+                "dorsal": "35",
+                "nombre": "FRAILE OLEA, DANIEL"
+            },
+            {
+                "dorsal": "36",
+                "nombre": "PEREZ LOPEZ, MARTIN"
+            },
+            {
+                "dorsal": "13",
+                "nombre": "AGUDO DEL RIO, PEDRO"
+            },
+            {
+                "dorsal": "3",
+                "nombre": "SANTAMARIA LOPEZ, MATEO"
+            },
+            {
+                "dorsal": "4",
+                "nombre": "OMAR GONZALEZ, OMAR"
+            },
+            {
+                "dorsal": "7",
+                "nombre": "CAMARA CAMARA, ALIOU"
+            },
+            {
+                "dorsal": "9",
+                "nombre": "FERNANDEZ SAINZ, MARTIN"
+            },
+            {
+                "dorsal": "10",
+                "nombre": "GUTIERREZ DEL RIO, VIDAL"
+            },
+            {
+                "dorsal": "11",
+                "nombre": "GOMEZ SOTORRIOS, ILAY"
+            },
+            {
+                "dorsal": "14",
+                "nombre": "LAMA MARTINEZ PEDROSA, LUCAS"
+            },
+            {
+                "dorsal": "1",
+                "nombre": "VILLAR OCHANDO, LUCAS"
+            },
+            {
+                "dorsal": "5",
+                "nombre": "RUIZ COBO, GONZALO"
+            }
+        ]
+    },
+    "246514": {
+        "arbitro": "SOLOMONSON VALLINES, LUCAS",
+        "goleadores": [
+            "(10') PEÑIL GARCÍA, MARTÍN",
+            "(12') GONZALEZ CENDON, PABLO",
+            "(21') DIAZ MERINO, LUIS",
+            "(49') PEÑIL GARCÍA, MARTÍN"
+        ],
+        "alineaciones_raw": [
+            {
+                "dorsal": "13",
+                "nombre": "FERNANDEZ ALDA, MARCO"
+            },
+            {
+                "dorsal": "5",
+                "nombre": "PEREZ REQUEJO, MARIO"
+            },
+            {
+                "dorsal": "6",
+                "nombre": "SEDANO CORRALES, BRUNO"
+            },
+            {
+                "dorsal": "7",
+                "nombre": "PEÑIL GARCÍA, MARTÍN"
+            },
+            {
+                "dorsal": "8",
+                "nombre": "RODRIGUEZ BASAÑEZ, ALBERTO"
+            },
+            {
+                "dorsal": "9",
+                "nombre": "ROLDAN RUBAYO, HUGO"
+            },
+            {
+                "dorsal": "10",
+                "nombre": "GUTIERREZ VILA, CLAUDIA"
+            },
+            {
+                "dorsal": "11",
+                "nombre": "RIVERO CUELI, PABLO"
+            },
+            {
+                "dorsal": "14",
+                "nombre": "OBREGON TRESGALLO, TOMAS"
+            },
+            {
+                "dorsal": "15",
+                "nombre": "DIAZ MERINO, LUIS"
+            },
+            {
+                "dorsal": "16",
+                "nombre": "HOYAL PEREZ, TEO"
+            },
+            {
+                "dorsal": "1",
+                "nombre": "COSIO NIETO, MATEO"
+            },
+            {
+                "dorsal": "3",
+                "nombre": "URRACA CANO, SERGIO"
+            },
+            {
+                "dorsal": "5",
+                "nombre": "ALONSO ECHEVARRIA, MARCOS"
+            },
+            {
+                "dorsal": "7",
+                "nombre": "VAZQUEZ ODRIOZOLA, MARIO"
+            },
+            {
+                "dorsal": "8",
+                "nombre": "GONZALEZ CENDON, PABLO"
+            },
+            {
+                "dorsal": "9",
+                "nombre": "PEREZ IBAÑEZ, PABLO"
+            },
+            {
+                "dorsal": "10",
+                "nombre": "FIDALGO VIDAL, MARCOS"
+            },
+            {
+                "dorsal": "11",
+                "nombre": "LOPEZ RENEDO, MARTIN"
+            },
+            {
+                "dorsal": "4",
+                "nombre": "SANTOVEÑA ESPINIELLA, LUCAS"
+            },
+            {
+                "dorsal": "6",
+                "nombre": "CASANUEVA SAIZ, ADRIAN"
+            },
+            {
+                "dorsal": "15",
+                "nombre": "GARCIA SANTIAGO, DANIEL"
+            }
+        ]
+    },
+    "246508": {
+        "arbitro": "IGLESIAS GUTIÉRREZ, DAVID",
+        "goleadores": [
+            "Goles 0 4 - 1 (7') SAIZ DIEGO, MAURO Gol G. Penalti G. Propia Puerta",
+            "0 4 - 1 (7') SAIZ DIEGO, MAURO Gol G. Penalti G. Propia Puerta",
+            "(7') SAIZ DIEGO, MAURO",
+            "(58') POZUETA FUNADA, NAOKI"
+        ],
+        "alineaciones_raw": [
+            {
+                "dorsal": "1",
+                "nombre": "SAN ROMÁN RUIZ, PABLO"
+            },
+            {
+                "dorsal": "2",
+                "nombre": "CARRAL COBO, LEO"
+            },
+            {
+                "dorsal": "3",
+                "nombre": "GOMEZ PEREZ, LUCAS"
+            },
+            {
+                "dorsal": "4",
+                "nombre": "GUTIERREZ CARRAL, JUAN"
+            },
+            {
+                "dorsal": "5",
+                "nombre": "SAINZ SAINZ, HUGO"
+            },
+            {
+                "dorsal": "8",
+                "nombre": "RODRIGUEZ HERRERO, DAVID"
+            },
+            {
+                "dorsal": "11",
+                "nombre": "ORDOÑEZ FRAILE, ASIER"
+            },
+            {
+                "dorsal": "12",
+                "nombre": "APARICIO CRESPO, ALEJANDRO"
+            },
+            {
+                "dorsal": "6",
+                "nombre": "ORTIZ FERNANDEZ, IGOR"
+            },
+            {
+                "dorsal": "7",
+                "nombre": "ÁLVAREZ SAN EMETERIO, IKER"
+            },
+            {
+                "dorsal": "9",
+                "nombre": "MARTÍN SÁNCHEZ, SERGIO"
+            },
+            {
+                "dorsal": "10",
+                "nombre": "EXPÓSITO GOMEZ, DIEGO"
+            },
+            {
+                "dorsal": "13",
+                "nombre": "SEOANE ABASCAL, ALEJANDRO"
+            },
+            {
+                "dorsal": "4",
+                "nombre": "CHAPARRO PÉREZ, DIEGO"
+            },
+            {
+                "dorsal": "8",
+                "nombre": "CASTAÑERA LAVIN, MARTIN"
+            },
+            {
+                "dorsal": "10",
+                "nombre": "MUÑIZ RUIZ, MIGUEL"
+            },
+            {
+                "dorsal": "11",
+                "nombre": "MARTINEZ OPORTO, HECTOR"
+            },
+            {
+                "dorsal": "12",
+                "nombre": "GONZALEZ RIVAS, HUGO"
+            },
+            {
+                "dorsal": "14",
+                "nombre": "SAIZ DIEGO, MAURO"
+            },
+            {
+                "dorsal": "15",
+                "nombre": "FERNANDEZ BERMUDEZ, IYAN"
+            },
+            {
+                "dorsal": "5",
+                "nombre": "GARRALDA YEZERSKA, MARTIN"
+            },
+            {
+                "dorsal": "6",
+                "nombre": "SAIZ DIEGO, OSCAR"
+            },
+            {
+                "dorsal": "7",
+                "nombre": "MARTINEZ CALLEJA, EDUARDO"
+            },
+            {
+                "dorsal": "9",
+                "nombre": "RUIZ DIEZ, ARES"
+            }
+        ]
+    },
+    "246513": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones_raw": []
+    },
+    "246509": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones_raw": []
+    },
+    "246511": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones_raw": []
+    },
+    "246515": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones_raw": []
+    },
+    "246510": {
+        "arbitro": "",
+        "goleadores": [],
+        "alineaciones_raw": []
+    }
+}
