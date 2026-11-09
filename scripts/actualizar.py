@@ -86,51 +86,58 @@ def extraer_acta_partido(url_acta):
     datos_acta = {
         "arbitro": "",
         "goleadores": [],
-        "alineaciones": {}
+        "alineaciones_raw": []
     }
     
-    # 1. Extracción limpia del Árbitro
+    # 1. Extracción precisa del Árbitro
+    # Buscamos textos que contengan "ÁRBITRO" o etiquetas donde suele ir el colegiado
     for elem in soup.find_all(text=True):
-        if "ÁRBITRO PRINCIPAL" in elem.upper():
-            # El nombre suele estar en el elemento padre o siguiente hermano
+        if "ÁRBITRO" in elem.upper() or "ÁRBITRO PRINCIPAL" in elem.upper():
             padre = elem.parent
             texto_padre = padre.get_text(strip=True)
             if ":" in texto_padre:
-                datos_acta["arbitro"] = texto_padre.split(":")[-1].strip()
-            else:
-                siguiente = padre.find_next_sibling()
-                if siguiente:
-                    datos_acta["arbitro"] = siguiente.get_text(strip=True)
-            break
+                partes = texto_padre.split(":")
+                if len(partes) > 1 and len(partes[-1].strip()) > 3:
+                    datos_acta["arbitro"] = partes[-1].strip()
+                    break
+            siguiente = padre.find_next_sibling()
+            if siguiente and len(siguiente.get_text(strip=True)) > 3:
+                datos_acta["arbitro"] = siguiente.get_text(strip=True)
+                break
 
-    # 2. Extracción limpia de Goles (filtrando scripts y código de la página)
+    # 2. Extracción precisa de Goles (Buscando la sección de goles de la ficha)
+    # Los goles suelen estar en elementos que agrupan los marcadores y los goleadores al lado
     goles_encontrados = []
-    for elem in soup.find_all(text=True):
-        t = elem.strip()
-        # Filtramos para que contenga formato de minuto (ej: (26')) y descartamos código JS
-        if "'" in t and "(" in t and ")" in t and "function" not in t and "Nova_" not in t:
-            if t not in goles_encontrados:
-                goles_encontrados.append(t)
+    # Buscamos elementos que contengan el formato de resultado de gol o minuto
+    for elem in soup.find_all(['div', 'span', 'td']):
+        texto = elem.get_text(separator=" ", strip=True)
+        # Patrón típico de gol: un resultado (ej 1-0), un minuto (ej 26') y un nombre de jugador
+        if "'" in texto and "-" in texto and any(char.isdigit() for char in texto):
+            if len(texto) < 60 and "function" not in texto and "Nova_" not in texto:
+                if texto not in goles_encontrados:
+                    goles_encontrados.append(texto)
+                    
+    # Si no encuentra bloques compuestos, cogemos los textos que tengan minutos pero limpios
+    if not goles_encontrados:
+        for elem in soup.find_all(text=True):
+            t = elem.strip()
+            if "'" in t and "(" in t and ")" in t and len(t) < 15 and "function" not in t:
+                if t not in goles_encontrados:
+                    goles_encontrados.append(t)
+                    
     datos_acta["goleadores"] = goles_encontrados
 
-    # 3. Extracción de Alineaciones (Titulares y Suplentes)
-    # Buscamos bloques de jugadores que contengan dorsal y nombre en las listas del acta
-    alineaciones = {}
-    # Buscamos las tablas o bloques de alineación por los títulos de los equipos o contenedores de jugadores
-    bloques_equipos = soup.find_all(['div', 'table'], class_=lambda c: c and ('equipo' in c.lower() or 'plantilla' in c.lower()))
-    
-    # Método robusto: Buscamos filas con números (dorsales) y nombres de jugadores en mayúsculas
-    filas = soup.find_all(['tr', 'li', 'div'])
+    # 3. Extracción de Alineaciones (Titulares y Suplentes) ya probada y funcional
     jugadores_actuales = []
-    equipo_actual = "Desconocido"
-    
+    filas = soup.find_all(['tr', 'li', 'div'])
     for fila in filas:
         texto = fila.get_text(separator=" ", strip=True)
-        # Identificamos si la línea parece un jugador (Dorsal numérico al inicio + Nombre)
         match_jugador = re.match(r"^(\d{1,2})\s+([A-ZÁÉÍÓÚÑ\s,]+)$", texto)
         if match_jugador:
             dorsal, nombre = match_jugador.groups()
-            jugadores_actuales.append({"dorsal": dorsal, "nombre": nombre.strip()})
+            jugador_dict = {"dorsal": dorsal, "nombre": nombre.strip()}
+            if jugador_dict not in jugadores_actuales:
+                jugadores_actuales.append(jugador_dict)
 
     datos_acta["alineaciones_raw"] = jugadores_actuales
 
