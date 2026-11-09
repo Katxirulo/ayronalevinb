@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 RAIZ = Path(__file__).resolve().parent.parent
 HTML = RAIZ / "index.html"
 
-# URL de la jornada de la federación
-URL_FEDERACION = "https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=22595821&CodGrupo=22595822&CodTemporada=22&cod_agrupacion=1&CodJornada=9&Sch_Tipo_Juego=4"
+# URL de la tabla cruzada oficial de la federación
+URL_TABLA_CRUZADA = "https://www.rfcf.es/pnfg/NPcd/NFG_VisTablaCruzada?cod_primaria=1000120&CodGrupo=22595822"
 
 INICIO = '<script type="text/plain" id="datos">\n'
 FIN = "\n</script>"
@@ -18,31 +18,35 @@ def extraer_resultados_web():
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     }
     
-    print(f"Conectando con la web de la federación...")
-    response = requests.get(URL_FEDERACION, headers=headers)
+    print(f"Conectando con la tabla cruzada de la federación...")
+    response = requests.get(URL_TABLA_CRUZADA, headers=headers)
     
     if response.status_code != 200:
         sys.exit(f"Error: La federación devolvió el código de estado {response.status_code}.")
     
     soup = BeautifulSoup(response.text, 'html.parser')
+    
+    # Buscamos todas las celdas de la tabla cruzada en el HTML de la federación.
+    # Por lo general, en las tablas cruzadas de la RFCF, los resultados o jornadas 
+    # se ubican en las celdas (etiquetas <td> o <span> dentro de la tabla).
+    
+    # Vamos a extraer todos los textos de las celdas de la tabla para analizarlos
+    celdas_html = soup.find_all(['td', 'th'])
+    textos_celdas = [c.get_text(strip=True) for c in celdas_html]
+    
+    print(f"Celdas leídas de la web: {len(textos_celdas)}")
+    
+    # Como la estructura exacta de clases de la tabla de la RFCF puede variar ligeramente,
+    # hagamos una depuración imprimiendo algunas celdas para validar el formato exacto.
+    
     resultados = {}
-    
-    # Buscamos las filas de partidos en la estructura típica de la RFCF
-    # Generalmente los partidos están en tablas o filas con clases específicas.
-    # Vamos a buscar todas las filas de las tablas de la página para analizar los textos.
-    filas_tabla = soup.find_all('tr')
-    
-    print(f"Analizando la página web (encontradas {len(filas_tabla)} filas HTML)...")
-    
-    # NOTA: Dependiendo de si la URL de la jornada muestra solo una jornada o la tabla cruzada completa,
-    # ajustaremos el selector exacto de las celdas. 
-    # De momento, probemos a ver si el script descarga e interpreta el contenido correctamente.
+    # Aquí mapearemos los resultados encontrados con el formato (local, visitante) -> ("R", (gl, gv)) o ("J", num)
     
     return resultados
 
 def main():
     res = extraer_resultados_web()
-    print("Extracción web finalizada.")
+    print("Extracción de la tabla cruzada completada.")
 
 if __name__ == "__main__":
     main()
