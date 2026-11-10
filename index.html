@@ -148,7 +148,7 @@ footer{font-size:13px;color:var(--tinta-2);margin-top:20px;text-align:center}
   <div class="rejilla">
     <section class="bloque">
       <h2>⚽ Máximos Goleadores</h2>
-      <p class="nota">Goles anotados en las actas oficiales disputadas.</p>
+      <p class="nota">Goles de todos los equipos según las actas oficiales. En color, los del equipo elegido.</p>
       <div class="desliza">
         <table>
           <thead><tr><th class="izq">Jugador</th><th>Goles</th></tr></thead>
@@ -161,7 +161,7 @@ footer{font-size:13px;color:var(--tinta-2);margin-top:20px;text-align:center}
 
     <section class="bloque">
       <h2>👕 Partidos Jugados</h2>
-      <p class="nota">Convocatorias registradas en las actas oficiales.</p>
+      <p class="nota">Convocatorias de todos los equipos según las actas oficiales. En color, las del equipo elegido.</p>
       <div class="desliza">
         <table>
           <thead><tr><th class="izq">Jugador</th><th>Partidos</th></tr></thead>
@@ -715,30 +715,39 @@ jornada,local,visitante,goles_local,goles_visitante
     return no ? tit(no) + ' ' + tit(ap) : tit(ap);
   }
 
-  function filasRanking(cuenta, vacio) {
-    const orden = Object.entries(cuenta).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'es'));
+  function filasRanking(cuenta, vacio, equipoActivo) {
+    // cuenta: { "EQUIPO|NOMBRE": { equipo, nombre, n } }
+    const orden = Object.values(cuenta).sort((a, b) => b.n - a.n || a.nombre.localeCompare(b.nombre, 'es'));
     if (!orden.length) return `<tr><td class="izq" colspan="2">${vacio}</td></tr>`;
-    return orden.map(([j, n]) => `<tr><td class="izq">${esc(nombreBonito(j))}</td><td><b>${n}</b></td></tr>`).join('');
+    return orden.map((j) => `<tr class="${j.equipo === equipoActivo ? 'yo' : ''}"><td class="izq">${esc(nombreBonito(j.nombre))} <small style="opacity:.6">· ${esc(NOMBRES[j.equipo] || j.equipo)}</small></td><td><b>${j.n}</b></td></tr>`).join('');
   }
 
-  async function cargarEstadisticas(equipo) {
+  function sumar(cuenta, equipo, nombre) {
+    const k = equipo + '|' + nombre;
+    (cuenta[k] = cuenta[k] || { equipo, nombre, n: 0 }).n += 1;
+  }
+
+  // Cuenta TODAS las actas (todos los equipos); se resaltan los jugadores del equipo elegido
+  async function cargarEstadisticas(equipoActivo) {
     const tGoles = document.getElementById('lista-goleadores');
     const tPart = document.getElementById('lista-participacion');
     try {
       const actas = await leerActas();
       const goles = {}, partidos = {};
       Object.values(actas).forEach((acta) => {
-        const plantilla = acta.equipos && acta.equipos[equipo];
-        if (!plantilla) return; // acta de otro partido o con formato antiguo
-        [...(plantilla.titulares || []), ...(plantilla.suplentes || [])].forEach((j) => {
-          partidos[j.nombre] = (partidos[j.nombre] || 0) + 1;
+        Object.entries(acta.equipos || {}).forEach(([equipo, pl]) => {
+          [...(pl.titulares || []), ...(pl.suplentes || [])].forEach((j) => sumar(partidos, equipo, j.nombre));
         });
         (acta.goles || []).forEach((g) => {
-          if (g.equipo === equipo && g.tipo !== 'propia' && g.jugador) goles[g.jugador] = (goles[g.jugador] || 0) + 1;
+          if (g.tipo === 'propia' || !g.jugador) return; // el gol en propia no suma al jugador
+          // equipo del jugador: el que tiene en la alineación (por si 'equipo' viniera vacío)
+          const eq = Object.entries(acta.equipos || {}).find(([, pl]) =>
+            [...(pl.titulares || []), ...(pl.suplentes || [])].some((j) => j.nombre === g.jugador));
+          sumar(goles, eq ? eq[0] : (g.equipo || ''), g.jugador);
         });
       });
-      tGoles.innerHTML = filasRanking(goles, 'No hay goles registrados todavía.');
-      tPart.innerHTML = filasRanking(partidos, 'No hay alineaciones registradas todavía.');
+      tGoles.innerHTML = filasRanking(goles, 'No hay goles registrados todavía.', equipoActivo);
+      tPart.innerHTML = filasRanking(partidos, 'No hay alineaciones registradas todavía.', equipoActivo);
     } catch (e) {
       console.error('Error al cargar actas.json:', e);
       tGoles.innerHTML = tPart.innerHTML = '<tr><td class="izq" colspan="2">No se pudieron cargar las actas.</td></tr>';
