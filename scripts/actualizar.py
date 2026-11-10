@@ -26,60 +26,87 @@ EQUIPOS = {
 INICIO = '<script type="text/plain" id="datos">\n'
 FIN = "\n</script>"
 
-def extraer_resultados_web():
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    }
-    
-    print("Conectando con la tabla cruzada de la federación...")
-    response = requests.get(URL_TABLA_CRUZADA, headers=headers)
-    
-    if response.status_code != 200:
-        sys.exit(f"Error: La federación devolvió el estado {response.status_code}.")
-    
-    soup = BeautifulSoup(response.text, 'html.parser')
-    celdas = [c.get_text(strip=True) for c in soup.find_all(['td', 'th'])]
-    
-    texto_completo = "\n".join(celdas)
-    posiciones = {}
-    for clave in EQUIPOS:
-        m = re.search(r"\b" + clave + r"\b", texto_completo)
-        if not m:
-            sys.exit(f"No encuentro el equipo {clave} en la web de la federación.")
-        posiciones[clave] = m.start()
-        
-    orden = [EQUIPOS[k] for k in sorted(posiciones, key=posiciones.get)]
-    celdas_filtradas = re.findall(r"\bJ\s?\d{1,2}\b|\b\d{1,2}\s?-\s?\d{1,2}\b", soup.text)
-    
-    resultados = {}
-    k = 0
-    for local in orden:
-        for visitante in orden:
-            if local == visitante:
-                continue
-            if k >= len(celdas_filtradas):
-                break
-            c = celdas_filtradas[k].replace(" ", "")
-            k += 1
-            if c.startswith("J"):
-                resultados[(local, visitante)] = ("J", int(c[1:]))
-            else:
-                partes = c.split("-")
-                if len(partes) == 2 and partes[0].isdigit() and partes[1].isdigit():
-                    resultados[(local, visitante)] = ("R", (int(partes[0]), int(partes[1])))
-                else:
-                    resultados[(local, visitante)] = ("J", 0)
-                    
-    return resultados
-
 SESION = requests.Session()
 SESION.headers.update({
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept-Language": "es-ES,es;q=0.9",
 })
 URL_ACTA = "https://www.rfcf.es/pnfg/NPcd/NFG_CmpPartido?cod_primaria=1000120&CodActa={cod}&cod_acta={cod}"
 URL_JORNADA = ("https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=22595821"
                "&CodGrupo=22595822&CodTemporada=22&cod_agrupacion=1&CodJornada={j}&Sch_Tipo_Juego=4")
-VERSION_ACTA = 2  # sube este número si cambias el formato y quieres volver a descargar todo
+VERSION_ACTA = 2      # sube este número si cambias el formato y quieres volver a descargar todo
+PAUSA = 4             # segundos entre peticiones a la federación
+PAUSA_BLOQUEO = 90    # espera antes de reintentar si la web deja de responder bien
+
+
+class Bloqueado(Exception):
+    pass
+
+
+def diagnostico(r, motivo):
+    """Imprime en el log qué ha devuelto realmente la web."""
+    soup = BeautifulSoup(r.text, "html.parser")
+    titulo = soup.title.get_text(strip=True) if soup.title else "(sin título)"
+    texto = re.sub(r"\s+", " ", soup.get_text(" "))[:300]
+    print(f"    DIAGNÓSTICO ({motivo}): HTTP {r.status_code} · {len(r.text)} bytes · título: {titulo}")
+    print(f"    Texto: {texto}")
+
+
+def descargar(url, es_valida, motivo):
+    """GET con pausa; si la página no es la esperada espera y reintenta una vez."""
+    for intento in (1, 2):
+        time.sleep(PAUSA)
+        try:
+            r = SESION.get(url, timeout=30)
+        except requests.RequestException as e:
+            print(f"    Error de red: {e}")
+            r = None
+        if r is not None and r.status_code == 200:
+            soup = BeautifulSoup(r.text, "html.parser")
+            if es_valida(soup):
+                return soup
+        if r is not None:
+            diagnostico(r, motivo)
+        if intento == 1:
+            print(f"    Reintento en {PAUSA_BLOQUEO} s...")
+            time.sleep(PAUSA_BLOQUEO)
+    raise Bloqueado(motivo)
+
+
+def extraer_resultados_web():
+    print("Conectando con la tabla cruzada de la federación...")
+
+    def filas_equipos(soup):
+        filas = []
+        for tr in soup.find_all("tr"):
+            celdas = tr.find_all(["td", "th"], recursive=False)
+            if len(celdas) == len(EQUIPOS) + 1:
+                eq = nombre_equipo(celdas[0].get_text(" ", strip=True))
+                # la página repite la tabla (versión imprimible): nos quedamos con la primera
+                if eq in EQUIPOS.values() and eq not in [f[0] for f in filas]:
+                    filas.append((eq, celdas[1:]))
+        return filas
+
+    try:
+        soup = descargar(URL_TABLA_CRUZADA, lambda s: len(filas_equipos(s)) == len(EQUIPOS), "tabla cruzada")
+    except Bloqueado:
+        print("  No se ha podido leer la tabla cruzada; los resultados no se tocan en esta ejecución.")
+        return {}
+
+    filas = filas_equipos(soup)
+    orden = [eq for eq, _ in filas]  # las columnas siguen el mismo orden que las filas
+    resultados = {}
+    for local, celdas in filas:
+        for visitante, celda in zip(orden, celdas):
+            if local == visitante:
+                continue
+            t = celda.get_text(" ", strip=True)
+            m = re.search(r"(\d{1,2})\s*-\s*(\d{1,2})", t)
+            if m:
+                resultados[(local, visitante)] = ("R", (int(m.group(1)), int(m.group(2))))
+            elif re.search(r"J\s*\d{1,2}", t):
+                resultados[(local, visitante)] = ("J", 0)
+    return resultados
 
 
 def sin_tildes(texto):
@@ -100,11 +127,9 @@ def limpio(texto):
 
 
 def extraer_acta_partido(cod_acta):
-    r = SESION.get(URL_ACTA.format(cod=cod_acta), timeout=30)
-    if r.status_code != 200:
-        print(f"  No se pudo acceder al acta {cod_acta} (HTTP {r.status_code})")
-        return None
-    soup = BeautifulSoup(r.text, "html.parser")
+    soup = descargar(URL_ACTA.format(cod=cod_acta),
+                     lambda sp: sp.select_one(".font_widgetL") is not None,
+                     f"acta {cod_acta}")
     main = soup.find("main") or soup
 
     loc = main.select_one(".font_widgetL")
@@ -200,11 +225,9 @@ def guardar_actas(actas):
 
 
 def actas_de_jornada(numero_jornada):
-    r = SESION.get(URL_JORNADA.format(j=numero_jornada), timeout=30)
-    if r.status_code != 200:
-        print(f"  Jornada {numero_jornada}: HTTP {r.status_code}")
-        return []
-    soup = BeautifulSoup(r.text, "html.parser")
+    soup = descargar(URL_JORNADA.format(j=numero_jornada),
+                     lambda sp: re.search(r"Jornada\s+\d+", sp.get_text(" ")) is not None,
+                     f"jornada {numero_jornada}")
     m = re.search(r"Jornada\s+(\d+)", soup.get_text(" "))
     if m and int(m.group(1)) != numero_jornada:
         print(f"  AVISO: pedí la jornada {numero_jornada} y la web devolvió la {m.group(1)}")
@@ -216,27 +239,32 @@ def actas_de_jornada(numero_jornada):
     return codigos
 
 
+def acta_completa(acta):
+    return bool(acta and acta.get("version") == VERSION_ACTA and acta.get("equipos")
+                and all(d["titulares"] for d in acta["equipos"].values()))
+
+
 def sincronizar_actas(jornadas):
     actas = cargar_actas()
     nuevas = 0
-    for j in jornadas:
-        codigos = actas_de_jornada(j)
-        print(f"Jornada {j}: {len(codigos)} actas")
-        for cod in codigos:
-            previa = actas.get(cod)
-            completa = (previa and previa.get("version") == VERSION_ACTA
-                        and all(d["titulares"] for d in previa.get("equipos", {}).values()))
-            if completa:
-                continue
-            datos = extraer_acta_partido(cod)
-            if datos:
-                actas[cod] = datos
-                nuevas += 1
-                n_jug = sum(len(d["titulares"]) + len(d["suplentes"]) for d in datos["equipos"].values())
-                print(f"  {cod}: {datos['local']} - {datos['visitante']} · {n_jug} jugadores · {len(datos['goles'])} goles")
-            time.sleep(1)  # no saturar la web de la federación
+    try:
+        for j in jornadas:
+            codigos = actas_de_jornada(j)
+            pendientes = [c for c in codigos if not acta_completa(actas.get(c))]
+            print(f"Jornada {j}: {len(codigos)} actas, {len(pendientes)} pendientes")
+            for cod in pendientes:
+                datos = extraer_acta_partido(cod)
+                if datos:
+                    actas[cod] = datos
+                    nuevas += 1
+                    guardar_actas(actas)  # se guarda acta a acta: si la web nos corta, no se pierde nada
+                    n_jug = sum(len(d["titulares"]) + len(d["suplentes"]) for d in datos["equipos"].values())
+                    print(f"  {cod}: {datos['local']} - {datos['visitante']} · {n_jug} jugadores · {len(datos['goles'])} goles")
+    except Bloqueado as e:
+        print(f"La federación ha dejado de responder bien ({e}). Se sigue en la próxima ejecución.")
     guardar_actas(actas)
-    print(f"Actas actualizadas: {nuevas}. Total en fichero: {len(actas)}.")
+    completas = sum(1 for a in actas.values() if acta_completa(a))
+    print(f"Actas nuevas en esta ejecución: {nuevas}. Completas en el fichero: {completas}.")
 
 
 def main():
