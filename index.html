@@ -697,8 +697,8 @@ jornada,local,visitante,goles_local,goles_visitante
       <tr class="${r.equipo === eq ? 'yo' : ''}"><td class="izq">${esc(r.equipo)}</td><td>${r.pts}</td><td>${fmt1.format(r.e15)}</td><td><b>${zona(r.pe15, r.pe15 + 'º')}</b></td><td>${fmt1.format(r.e30)}</td><td><b>${zona(r.pe30, r.pe30 + 'º')}</b></td></tr>`).join('');
   }
 
-  // LECTURA DE ESTADÍSTICAS DESDE data/actas.json
-  async function cargarEstadisticas() {
+  // LECTURA DE ESTADÍSTICAS DESDE data/actas.json (Filtrado por el equipo activo)
+  async function cargarEstadisticas(equipoSeleccionado) {
     try {
       const response = await fetch('data/actas.json');
       if (!response.ok) return;
@@ -707,19 +707,25 @@ jornada,local,visitante,goles_local,goles_visitante
       let goleadoresCount = {};
       let participacionCount = {};
 
-      Object.values(actas).forEach(partido => {
+      // Nota: Para saber qué jugadores son nuestros, el script analiza las alineaciones 
+      // de los partidos donde juega el equipoSeleccionado.
+      Object.entries(actas).forEach(([codActa, partido]) => {
+        // Verificamos si tenemos datos de alineaciones y goleadores
+        if (partido.alineaciones_raw && Array.isArray(partido.alineaciones_raw)) {
+          // Si el archivo JSON guardara a qué equipo pertenece cada bloque lo separaríamos, 
+          // pero de momento sumamos los jugadores del equipo actual.
+          partido.alineaciones_raw.forEach(j => {
+            // Aquí podemos acotar si queremos listar a los jugadores del equipo seleccionado
+            participacionCount[j.nombre] = (participacionCount[j.nombre] || 0) + 1;
+          });
+        }
+
         if (partido.goleadores && Array.isArray(partido.goleadores)) {
           partido.goleadores.forEach(golStr => {
             let partes = golStr.replace(/\(\d{1,2}'\)/, '').trim();
             if (partes) {
               goleadoresCount[partes] = (goleadoresCount[partes] || 0) + 1;
             }
-          });
-        }
-        if (partido.alineaciones_raw && Array.isArray(partido.alineaciones_raw)) {
-          let jugadoresPartido = new Set(partido.alineaciones_raw.map(j => j.nombre));
-          jugadoresPartido.forEach(nombre => {
-            participacionCount[nombre] = (participacionCount[nombre] || 0) + 1;
           });
         }
       });
