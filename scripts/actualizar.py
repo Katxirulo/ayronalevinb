@@ -57,8 +57,7 @@ def extraer_resultados_web():
                 continue
             if k >= len(celdas_filtradas):
                 break
-            c = celas_filtradas[k].replace(" ", "") if 'celas_filtradas' in locals() else celdas_filtradas[k].replace(" ", "")
-            # (Corregido de forma segura)
+            c = celdas_filtradas[k].replace(" ", "")
             k += 1
             if c.startswith("J"):
                 resultados[(local, visitante)] = ("J", int(c[1:]))
@@ -97,7 +96,6 @@ def extraer_acta_partido(url_acta):
             if ":" in texto_padre:
                 partes = texto_padre.split(":")
                 if len(partes) > 1 and len(partes[-1].strip()) > 3:
-                    # Limpiamos la palabra clave para dejar solo el nombre
                     sucia = partes[-1].strip()
                     limpia = re.sub(r'ARBITRO PRINCIPAL', '', sucia, flags=re.IGNORECASE).strip()
                     datos_acta["arbitro"] = limpia
@@ -109,14 +107,12 @@ def extraer_acta_partido(url_acta):
                 datos_acta["arbitro"] = limpia
                 break
 
-    # 2. Extracción ultra-limpia y sin duplicados de Goles
+    # 2. Extracción ultra-limpia y sin duplicados de Goleadores
     goles_encontrados = []
     for elem in soup.find_all(['div', 'span', 'td', 'li']):
         texto = elem.get_text(separator=" ", strip=True)
-        # Buscamos patrones que tengan el minuto y además contengan letras (el nombre del jugador)
         if re.search(r"\(\d{1,2}'\)", texto) and any(c.isalpha() for c in texto):
             texto_limpio = re.sub(r'\s+', ' ', texto).strip()
-            # Filtramos que sea una línea de goles real (evitando textos largos o duplicados cortos)
             if len(texto_limpio) < 50 and "Goles" not in texto_limpio and "Gol" not in texto_limpio:
                 if texto_limpio not in goles_encontrados:
                     goles_encontrados.append(texto_limpio)
@@ -138,6 +134,7 @@ def extraer_acta_partido(url_acta):
     datos_acta["alineaciones_raw"] = jugadores_actuales
 
     return datos_acta
+
 def guardar_acta_en_json(cod_acta, datos):
     DIRECTORIO_DATOS.mkdir(exist_ok=True, parents=True)
     
@@ -177,8 +174,9 @@ def procesar_actas_jornada(numero_jornada):
         m = re.search(r'CodActa=(\d+)', href)
         if m:
             cod_acta = m.group(1)
-            if cod_acta not in actas_existentes:
-                print(f"Descargando nueva acta (Jornada {numero_jornada} - Código: {cod_acta})...")
+            # Volvemos a comprobar o actualizar si faltan datos
+            if cod_acta not in actas_existentes or not actas_existentes[cod_acta].get("alineaciones_raw"):
+                print(f"Descargando acta (Jornada {numero_jornada} - Código: {cod_acta})...")
                 url_acta = f"https://www.rfcf.es/pnfg/NPcd/{href}" if href.startswith("NFG_") else f"https://www.rfcf.es/pnfg/NPcd/NFG_CmpPartido?cod_primaria=1000120&CodActa={cod_acta}&cod_acta={cod_acta}"
                 
                 datos_acta = extraer_acta_partido(url_acta)
@@ -216,7 +214,7 @@ def main():
     HTML.write_text(html[:i] + "\n".join([cabecera] + nuevas) + html[j:], encoding="utf-8")
     print(f"Listo: {cambios} partido(s) actualizado(s) automáticamente desde la web.")
 
-    # Sincronización automática de actas para todas las jornadas jugadas hasta la actual (ej: hasta la 9)
+    # Sincronización automática de actas para las jornadas de la 1 a la 9
     print("Comprobando actas de partidos disputados...")
     for j_num in range(1, 10):
         procesar_actas_jornada(j_num)
