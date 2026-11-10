@@ -216,7 +216,7 @@ def main():
     HTML.write_text(html[:i] + "\n".join([cabecera] + nuevas) + html[j:], encoding="utf-8")
     print(f"Listo: {cambios} partido(s) actualizado(s) automáticamente desde la web.")
 
-    # Sincronización automática de actas para las jornadas de la 1 a la 9
+    # Sincronización automática de actas para todas las jornadas jugadas hasta la actual (ej: hasta la 9)
     print("Comprobando actas de partidos disputados...")
     for j_num in range(1, 10):
         procesar_actas_jornada(j_num)
