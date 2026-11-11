@@ -40,6 +40,14 @@ PAUSA = 4             # segundos entre peticiones a la federación
 PAUSA_BLOQUEO = 90    # espera antes de reintentar si la web deja de responder bien
 
 
+# html.parser no cierra bien celdas en HTML mal formado; lxml sí. Se prueban los dos.
+ANALIZADORES = ["html.parser"]
+try:
+    import lxml  # noqa: F401
+    ANALIZADORES.append("lxml")
+except ImportError:
+    pass
+
 class Bloqueado(Exception):
     pass
 
@@ -62,10 +70,13 @@ def descargar(url, es_valida, motivo):
         except requests.RequestException as e:
             print(f"    Error de red: {e}")
             r = None
-        if r is not None and r.status_code == 200:
-            soup = BeautifulSoup(r.text, "html.parser")
-            if es_valida(soup):
-                return soup
+        if r is not None and r.status_code == 200 and r.text.strip():
+            for analizador in ANALIZADORES:
+                soup = BeautifulSoup(r.text, analizador)
+                if es_valida(soup):
+                    if analizador != "html.parser":
+                        print(f"    ({motivo}: leída con {analizador})")
+                    return soup
         if r is not None:
             diagnostico(r, motivo)
         if intento == 1:
@@ -78,19 +89,35 @@ def extraer_resultados_web():
     print("Conectando con la tabla cruzada de la federación...")
 
     def filas_equipos(soup):
+        n = len(EQUIPOS)
         filas = []
         for tr in soup.find_all("tr"):
             celdas = tr.find_all(["td", "th"], recursive=False)
-            if len(celdas) == len(EQUIPOS) + 1:
-                eq = nombre_equipo(celdas[0].get_text(" ", strip=True))
-                # la página repite la tabla (versión imprimible): nos quedamos con la primera
-                if eq in EQUIPOS.values() and eq not in [f[0] for f in filas]:
-                    filas.append((eq, celdas[1:]))
+            if not (n + 1 <= len(celdas) <= n + 3):
+                continue
+            # el nombre puede ir en la 1ª celda o tras una columna de escudo
+            cab = " ".join(c.get_text(" ", strip=True) for c in celdas[:len(celdas) - n])
+            eq = nombre_equipo(cab)
+            # la página repite la tabla (versión imprimible): nos quedamos con la primera
+            if eq in EQUIPOS.values() and eq not in [f[0] for f in filas]:
+                filas.append((eq, celdas[len(celdas) - n:]))
         return filas
+
+    def resumen_filas(soup):
+        from collections import Counter
+        c = Counter(len(tr.find_all(["td", "th"], recursive=False)) for tr in soup.find_all("tr"))
+        return ", ".join(f"{k} celdas x{v}" for k, v in sorted(c.items()) if k >= 10) or "ninguna fila ancha"
 
     try:
         soup = descargar(URL_TABLA_CRUZADA, lambda s: len(filas_equipos(s)) == len(EQUIPOS), "tabla cruzada")
     except Bloqueado:
+        try:
+            r = SESION.get(URL_TABLA_CRUZADA, timeout=30)
+            for a in ANALIZADORES:
+                sp = BeautifulSoup(r.text, a)
+                print(f"    [{a}] filas de equipo reconocidas: {len(filas_equipos(sp))} de {len(EQUIPOS)} · filas: {resumen_filas(sp)}")
+        except Exception as e:
+            print(f"    (sin diagnóstico extra: {e})")
         print("  No se ha podido leer la tabla cruzada; los resultados no se tocan en esta ejecución.")
         return {}
 
@@ -271,8 +298,31 @@ def sincronizar_actas(jornadas):
 # ---------------------------------------------------------------------------
 # CALENDARIO (fecha, hora y campo) de la jornada en curso y de la siguiente
 # ---------------------------------------------------------------------------
-URL_CALENDARIO = ("https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=22595821"
-                  "&CodGrupo=22595822&CodTemporada=22&CodJornada={j}&Sch_Tipo_Juego=")
+_BASE_JORNADA = ("https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=22595821"
+                 "&CodGrupo=22595822&CodTemporada=22&CodJornada={j}")
+URLS_CALENDARIO = [  # se prueban en orden hasta que una traiga horarios
+    URL_JORNADA,
+    _BASE_JORNADA,
+    _BASE_JORNADA + "&Sch_Tipo_Juego=",
+]
+
+def pagina_calendario(j):
+    ultima = None
+    for i, u in enumerate(URLS_CALENDARIO, 1):
+        try:
+            soup = descargar(u.format(j=j),
+                             lambda sp: re.search(r"Jornada\s+\d+", sp.get_text(" ")) is not None,
+                             f"calendario jornada {j} (variante {i})")
+        except Bloqueado:
+            continue
+        n = len(soup.select("span.horario"))
+        print(f"  Variante {i}: {n} horarios en la página.")
+        if n:
+            return soup
+        ultima = soup
+    if ultima is None:
+        raise Bloqueado(f"calendario jornada {j}")
+    return ultima
 RE_FECHA = re.compile(r"\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b")
 RE_HORA = re.compile(r"\b([01]?\d|2[0-3])[:.]([0-5]\d)\b")
 
@@ -412,9 +462,7 @@ def sincronizar_calendario(filas):
     for j in objetivo:
         print(f"Calendario de la jornada {j}...")
         try:
-            soup = descargar(URL_CALENDARIO.format(j=j),
-                             lambda sp: re.search(r"Jornada\s+\d+", sp.get_text(" ")) is not None,
-                             f"calendario jornada {j}")
+            soup = pagina_calendario(j)
         except Bloqueado:
             print("  No se ha podido leer; se deja el calendario como estaba.")
             continue
