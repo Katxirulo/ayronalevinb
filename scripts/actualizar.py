@@ -271,6 +271,8 @@ def sincronizar_actas(jornadas):
 # ---------------------------------------------------------------------------
 # CALENDARIO (fecha, hora y campo) de la jornada en curso y de la siguiente
 # ---------------------------------------------------------------------------
+URL_CALENDARIO = ("https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=22595821"
+                  "&CodGrupo=22595822&CodTemporada=22&CodJornada={j}&Sch_Tipo_Juego=")
 RE_FECHA = re.compile(r"\b(\d{1,2})[-/](\d{1,2})[-/](\d{4})\b")
 RE_HORA = re.compile(r"\b([01]?\d|2[0-3])[:.]([0-5]\d)\b")
 
@@ -292,10 +294,46 @@ def equipos_en(texto):
             vistos[nombre] = m.start()
     return [n for n, _ in sorted(vistos.items(), key=lambda x: x[1])]
 
+def partidos_con_horario(soup):
+    """Formato de la RFCF: cada partido es una tabla; la 1ª fila lleva local, <span class="horario">fecha</span>
+    + hora y visitante; la fila siguiente, el campo, el tipo de césped y el árbitro."""
+    encontrados = {}
+    for sp in soup.select("span.horario"):
+        fila = sp.find_parent("tr")
+        if not fila:
+            continue
+        eqs = equipos_en(fila.get_text(" ", strip=True))
+        if len(eqs) != 2 or frozenset(eqs) in encontrados:
+            continue
+        celda = sp.find_parent("td") or fila
+        texto_celda = celda.get_text(" ", strip=True)
+        campo = arbitro = ""
+        tabla = fila.find_parent("table")
+        if tabla:
+            resto = []
+            for tr in tabla.find_all("tr"):
+                if tr is not fila and fila not in tr.parents and tr not in fila.parents:
+                    resto += list(tr.stripped_strings)
+            if resto and not resto[0].lower().startswith("árbitro"):
+                campo = limpio(resto[0])
+            for i, t in enumerate(resto):
+                if t.lower().startswith("árbitro") and i + 1 < len(resto):
+                    arbitro = limpio(resto[i + 1])
+        a = fila.find("a", href=re.compile(r"CodActa=\d+", re.I))
+        encontrados[frozenset(eqs)] = {
+            "fecha": _fecha(sp.get_text()) or _fecha(texto_celda),
+            "hora": _hora(texto_celda.replace(sp.get_text(), " ")),
+            "campo": campo, "arbitro": arbitro,
+            "acta": re.search(r"CodActa=(\d+)", a["href"], re.I).group(1) if a else "",
+        }
+    return encontrados
+
 def partidos_en_pagina_jornada(soup):
     """Busca en la página de la jornada cada bloque con 2 equipos y una fecha."""
-    encontrados = {}
     main = soup.find("main") or soup
+    encontrados = partidos_con_horario(main)
+    if encontrados:
+        return encontrados
     for nodo in main.find_all(string=RE_FECHA):
         el, eqs = nodo.parent, []
         while el is not None and el.name not in ("main", "body", "html"):
@@ -374,7 +412,7 @@ def sincronizar_calendario(filas):
     for j in objetivo:
         print(f"Calendario de la jornada {j}...")
         try:
-            soup = descargar(URL_JORNADA.format(j=j),
+            soup = descargar(URL_CALENDARIO.format(j=j),
                              lambda sp: re.search(r"Jornada\s+\d+", sp.get_text(" ")) is not None,
                              f"calendario jornada {j}")
         except Bloqueado:
@@ -384,6 +422,7 @@ def sincronizar_calendario(filas):
         m = re.search(r"Jornada\s+\d+\D{0,15}(\d{1,2}[-/]\d{1,2}[-/]\d{4})", texto)
         fecha_jornada = _fecha(m.group(1)) if m else ""
         en_pagina = partidos_en_pagina_jornada(soup)
+        print(f"  La página trae {len(soup.select('span.horario'))} horarios; reconocidos {len(en_pagina)} partidos.")
         previo = cal.get(str(j), {})
         nuevo = {}
         faltan = []
@@ -392,8 +431,8 @@ def sincronizar_calendario(filas):
             d = dict(previo.get(clave, {}))
             p = en_pagina.get(frozenset((l, v)))
             if p:
-                for k in ("fecha", "hora", "campo"):
-                    if p[k]:
+                for k in ("fecha", "hora", "campo", "arbitro"):
+                    if p.get(k):
                         d[k] = p[k]
                 if p["acta"]:
                     d["acta"] = p["acta"]
