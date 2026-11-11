@@ -3,6 +3,8 @@ import sys
 import json
 import time
 import unicodedata
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
@@ -36,8 +38,10 @@ URL_ACTA = "https://www.rfcf.es/pnfg/NPcd/NFG_CmpPartido?cod_primaria=1000120&Co
 URL_JORNADA = ("https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=22595821"
                "&CodGrupo=22595822&CodTemporada=22&cod_agrupacion=1&CodJornada={j}&Sch_Tipo_Juego=4")
 VERSION_ACTA = 2      # sube este número si cambias el formato y quieres volver a descargar todo
-PAUSA = 4             # segundos entre peticiones a la federación
-PAUSA_BLOQUEO = 90    # espera antes de reintentar si la web deja de responder bien
+PAUSA = 8             # segundos entre peticiones a la federación (si se piden muchas seguidas, corta)
+ESPERAS_BLOQUEO = [60, 150]  # esperas antes de cada reintento si la web responde vacío o raro
+MADRID = ZoneInfo("Europe/Madrid")
+DURACION_PARTIDO = timedelta(minutes=80)  # tras la hora de inicio, se da el partido por terminado
 
 
 # html.parser no cierra bien celdas en HTML mal formado; lxml sí. Se prueban los dos.
@@ -62,8 +66,9 @@ def diagnostico(r, motivo):
 
 
 def descargar(url, es_valida, motivo):
-    """GET con pausa; si la página no es la esperada espera y reintenta una vez."""
-    for intento in (1, 2):
+    """GET con pausa. Si la federación responde vacío (corta por exceso de peticiones) o con una
+    página inesperada, espera y reintenta (hasta 3 intentos en total)."""
+    for intento in range(len(ESPERAS_BLOQUEO) + 1):
         time.sleep(PAUSA)
         try:
             r = SESION.get(url, timeout=30)
@@ -74,14 +79,14 @@ def descargar(url, es_valida, motivo):
             for analizador in ANALIZADORES:
                 soup = BeautifulSoup(r.text, analizador)
                 if es_valida(soup):
-                    if analizador != "html.parser":
-                        print(f"    ({motivo}: leída con {analizador})")
+                    if intento:
+                        print(f"    ({motivo}: correcta al intento {intento + 1})")
                     return soup
         if r is not None:
             diagnostico(r, motivo)
-        if intento == 1:
-            print(f"    Reintento en {PAUSA_BLOQUEO} s...")
-            time.sleep(PAUSA_BLOQUEO)
+        if intento < len(ESPERAS_BLOQUEO):
+            print(f"    Reintento en {ESPERAS_BLOQUEO[intento]} s...")
+            time.sleep(ESPERAS_BLOQUEO[intento])
     raise Bloqueado(motivo)
 
 
@@ -167,6 +172,15 @@ def extraer_acta_partido(cod_acta):
         return None
     local, visitante = nombre_equipo(loc.get_text()), nombre_equipo(vis.get_text())
     m = re.search(r"Jornada\s+(\d+)", main.get_text(" "))
+    # Marcador de la cabecera: el bloque más pequeño que contiene a los dos equipos
+    marcador = None
+    for anc in loc.parents:
+        if vis in anc.descendants:
+            txt = RE_FECHA.sub(" ", re.sub(r"\d{4}-\d{4}", " ", anc.get_text(" ")))
+            mm = re.search(r"(?<![\d(])(\d{1,2})\s*-\s*(\d{1,2})(?![\d'])", txt)
+            if mm:
+                marcador = [int(mm.group(1)), int(mm.group(2))]
+            break
 
     acta = {
         "version": VERSION_ACTA,
@@ -177,6 +191,7 @@ def extraer_acta_partido(cod_acta):
         "equipos": {local: {"titulares": [], "suplentes": []},
                     visitante: {"titulares": [], "suplentes": []}},
         "goles": [],
+        "marcador": marcador,
     }
 
     for bloque in main.select("div.dashboard-stat"):
@@ -236,6 +251,16 @@ def extraer_acta_partido(cod_acta):
             acta["goles"].append({"minuto": int(min_txt) if min_txt else None, "jugador": jugador,
                                   "equipo": del_equipo, "tipo": tipo})
     return acta
+
+
+def resultado_desde_acta(acta):
+    """[goles local, goles visitante]: el marcador del acta o, si no lo trae, los goles contados."""
+    if acta.get("marcador"):
+        return list(acta["marcador"])
+    if any(not g.get("equipo") for g in acta.get("goles", [])):
+        return None  # algún goleador sin equipo: no se puede saber el marcador con seguridad
+    return [sum(1 for g in acta["goles"] if g["equipo"] == acta["local"]),
+            sum(1 for g in acta["goles"] if g["equipo"] == acta["visitante"])]
 
 
 def cargar_actas():
@@ -301,9 +326,9 @@ def sincronizar_actas(jornadas):
 _BASE_JORNADA = ("https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=22595821"
                  "&CodGrupo=22595822&CodTemporada=22&CodJornada={j}")
 URLS_CALENDARIO = [  # se prueban en orden hasta que una traiga horarios
+    _BASE_JORNADA + "&Sch_Tipo_Juego=",   # la que se ve en el navegador: trae horarios y resultados
     URL_JORNADA,
     _BASE_JORNADA,
-    _BASE_JORNADA + "&Sch_Tipo_Juego=",
 ]
 
 def pagina_calendario(j):
@@ -370,7 +395,15 @@ def partidos_con_horario(soup):
                 if t.lower().startswith("árbitro") and i + 1 < len(resto):
                     arbitro = limpio(resto[i + 1])
         a = fila.find("a", href=re.compile(r"CodActa=\d+", re.I))
+        marcador = None
+        for h in celda.find_all(["h4", "strong"]):
+            mm = re.fullmatch(r"\s*(\d{1,2})\s*-\s*(\d{1,2})\s*", h.get_text(" "))
+            if mm:
+                marcador = [int(mm.group(1)), int(mm.group(2))]
+                # orden local-visitante tal como aparecen en la fila
+                break
         encontrados[frozenset(eqs)] = {
+            "orden": eqs, "marcador": marcador,
             "fecha": _fecha(sp.get_text()) or _fecha(texto_celda),
             "hora": _hora(texto_celda.replace(sp.get_text(), " ")),
             "campo": campo, "arbitro": arbitro,
@@ -442,29 +475,38 @@ def cargar_calendario():
             pass
     return {}
 
-def sincronizar_calendario(filas):
-    """filas: líneas del CSV 'jornada,local,visitante,gl,gv' ya actualizadas."""
+def inicio_partido(d):
+    if not d.get("fecha"):
+        return None
+    hora = d.get("hora") if not d.get("aprox") else ""
+    try:
+        return datetime.strptime(d["fecha"] + " " + (hora or "23:59"), "%Y-%m-%d %H:%M").replace(tzinfo=MADRID)
+    except ValueError:
+        return None
+
+
+def revisar_jornadas(filas, cal, actas):
+    """filas: listas [jornada, local, visitante, gl, gv] del CSV (se modifican aquí).
+    Revisa las jornadas con partidos pendientes hasta la siguiente a la última jugada:
+    calendario, resultados (de la página de la jornada o del acta) y actas."""
     por_jornada = {}
     for f in filas:
-        j, l, v, gl, gv = f.split(",")
-        por_jornada.setdefault(int(j), []).append((l, v, gl != ""))
-    if not por_jornada:
-        return
-    jugadas = [j for j, ps in por_jornada.items() if any(x[2] for x in ps)]
+        por_jornada.setdefault(int(f[0]), []).append(f)
+    jugadas = [j for j, ps in por_jornada.items() if any(f[3] != "" for f in ps)]
     ultima = max(jugadas) if jugadas else 0
-    objetivo = []
-    if ultima and not all(x[2] for x in por_jornada[ultima]):
-        objetivo.append(ultima)
-    if ultima + 1 in por_jornada:
-        objetivo.append(ultima + 1)
+    objetivo = sorted(j for j, ps in por_jornada.items()
+                      if j <= ultima + 1 and any(f[3] == "" for f in ps))
+    if ultima + 2 in por_jornada and all(f[3] != "" for f in por_jornada.get(ultima + 1, [])):
+        objetivo.append(ultima + 2)
+    ahora = datetime.now(MADRID)
+    cambios = nuevas_actas = 0
 
-    cal = cargar_calendario()
     for j in objetivo:
-        print(f"Calendario de la jornada {j}...")
+        print(f"Jornada {j}...")
         try:
             soup = pagina_calendario(j)
         except Bloqueado:
-            print("  No se ha podido leer; se deja el calendario como estaba.")
+            print("  No se ha podido leer; se deja todo como estaba.")
             continue
         texto = (soup.find("main") or soup).get_text(" ", strip=True)
         m = re.search(r"Jornada\s+\d+\D{0,15}(\d{1,2}[-/]\d{1,2}[-/]\d{4})", texto)
@@ -473,100 +515,82 @@ def sincronizar_calendario(filas):
         print(f"  La página trae {len(soup.select('span.horario'))} horarios; reconocidos {len(en_pagina)} partidos.")
         previo = cal.get(str(j), {})
         nuevo = {}
-        faltan = []
-        for l, v, _ in por_jornada[j]:
+        for f in por_jornada[j]:
+            l, v = f[1], f[2]
             clave = f"{l}|{v}"
             d = dict(previo.get(clave, {}))
             p = en_pagina.get(frozenset((l, v)))
             if p:
-                for k in ("fecha", "hora", "campo", "arbitro"):
+                for k in ("fecha", "hora", "campo", "arbitro", "acta"):
                     if p.get(k):
                         d[k] = p[k]
-                if p["acta"]:
-                    d["acta"] = p["acta"]
+                if p.get("fecha"):
+                    d.pop("aprox", None)
+            if not d.get("fecha") and fecha_jornada:
+                d["fecha"], d["aprox"] = fecha_jornada, True
             nuevo[clave] = d
-            if not (d.get("fecha") and d.get("hora")) or not (p and p["fecha"]):
-                faltan.append(clave)
 
-        # Lo que la página de la jornada no dice, se busca en la ficha de cada partido
-        if faltan:
-            codigos = []
-            for a in soup.find_all("a", href=re.compile(r"CodActa=\d+", re.I)):
-                c = re.search(r"CodActa=(\d+)", a["href"], re.I).group(1)
-                if c not in codigos:
-                    codigos.append(c)
-            try:
-                for cod in codigos:
-                    if not faltan:
-                        break
-                    fi = ficha_partido(cod)
-                    clave = next((c for c in faltan if set(c.split("|")) == {fi["local"], fi["visitante"]}), None)
-                    if not clave:
-                        continue
-                    d = nuevo[clave]
-                    for k in ("fecha", "hora", "campo", "ciudad"):
-                        if fi[k]:
-                            d[k] = fi[k]
-                    d["acta"] = cod
-                    faltan.remove(clave)
-            except Bloqueado:
-                print("  La federación ha dejado de responder al leer las fichas.")
-        for clave in faltan:
-            if fecha_jornada and not nuevo[clave].get("fecha"):
-                nuevo[clave]["fecha"] = fecha_jornada
-                nuevo[clave]["aprox"] = True  # solo la fecha de la jornada, sin hora
+            # --- Resultado ---
+            ini = inicio_partido(d)
+            terminado = ini is not None and ahora >= ini + DURACION_PARTIDO
+            reciente = ini is not None and ahora - ini <= timedelta(days=1, hours=12)
+            marcador = None
+            if p and p.get("marcador"):
+                gl, gv = p["marcador"]
+                marcador = [gl, gv] if p["orden"][0] == l else [gv, gl]
+            cod = d.get("acta")
+            # El acta se descarga si el partido ya debería haber terminado y no la tenemos completa,
+            # o si es reciente (la federación a veces corrige el acta en las horas siguientes).
+            if cod and (terminado or marcador) and (not acta_completa(actas.get(cod)) or reciente):
+                try:
+                    a = extraer_acta_partido(cod)
+                except Bloqueado:
+                    a = None
+                    print(f"  Acta {cod}: la federación no responde; se intentará en la próxima ejecución.")
+                if a and acta_completa(a) and {a["local"], a["visitante"]} == {l, v}:
+                    if actas.get(cod) != a:
+                        nuevas_actas += 1
+                    actas[cod] = a
+                    n_jug = sum(len(x["titulares"]) + len(x["suplentes"]) for x in a["equipos"].values())
+                    print(f"  Acta {cod}: {a['local']} - {a['visitante']} · {n_jug} jugadores · {len(a['goles'])} goles")
+            a = actas.get(cod) if cod else None
+            if marcador is None and terminado and a and acta_completa(a):
+                r = resultado_desde_acta(a)
+                if r:
+                    marcador = r if a["local"] == l else [r[1], r[0]]
+            if marcador:
+                ngl, ngv = str(marcador[0]), str(marcador[1])
+                if (ngl, ngv) != (f[3], f[4]):
+                    cambios += 1
+                    print(f"  RESULTADO J{j} {l} - {v}: {f[3] or '·'}-{f[4] or '·'} -> {ngl}-{ngv}")
+                    f[3], f[4] = ngl, ngv
 
         cal[str(j)] = nuevo
         for clave, d in nuevo.items():
             print(f"  {clave.replace('|', ' - ')}: {d.get('fecha') or '¿fecha?'} {d.get('hora', '')} {d.get('campo', '')}")
-        con_fecha = sum(1 for d in nuevo.values() if d.get("fecha"))
-        print(f"  {con_fecha} de {len(nuevo)} partidos con fecha.")
-
-    DIRECTORIO_DATOS.mkdir(exist_ok=True, parents=True)
-    FICHERO_CALENDARIO.write_text(json.dumps(cal, ensure_ascii=False, indent=2), encoding="utf-8")
+        print(f"  {sum(1 for d in nuevo.values() if d.get('fecha'))} de {len(nuevo)} partidos con fecha.")
+    return cambios, nuevas_actas
 
 
 def main():
-    res = extraer_resultados_web()
-    print(f"Extraídos {len(res)} cruces de la web de la federación.")
-
     html = HTML.read_text(encoding="utf-8")
     i = html.index(INICIO) + len(INICIO)
     j = html.index(FIN, i)
     lineas = html[i:j].strip().splitlines()
-    cabecera, filas = lineas[0], lineas[1:]
+    cabecera, filas = lineas[0], [l.split(",") for l in lineas[1:]]
 
-    nuevas, cambios = [], 0
-    for fila in filas:
-        jornada, local, visitante, gl, gv = fila.split(",")
-        dato = res.get((local, visitante))
-        if dato is None:
-            nuevas.append(fila)
-            continue
-            
-        if dato[0] == "R":
-            ngl, ngv = map(str, dato[1])
-        else:
-            ngl, ngv = "", ""
-            
-        if (ngl, ngv) != (gl, gv):
-            cambios += 1
-            print(f"  J{jornada} {local} - {visitante}: {gl or '·'}-{gv or '·'} -> {ngl or '·'}-{ngv or '·'}")
-        nuevas.append(",".join([jornada, local, visitante, ngl, ngv]))
-
-    HTML.write_text(html[:i] + "\n".join([cabecera] + nuevas) + html[j:], encoding="utf-8")
-    print(f"Listo: {cambios} partido(s) actualizado(s) automáticamente desde la web.")
-
-    # Sincronización de actas: solo jornadas con algún resultado
-    jugadas = sorted({int(f.split(",")[0]) for f in nuevas if f.split(",")[3] != ""})
-    print(f"Comprobando actas de las jornadas {jugadas}...")
-    sincronizar_actas(jugadas)
-
-    # Fechas, horas y campos de la jornada en curso y la siguiente
+    cal = cargar_calendario()
+    actas = cargar_actas()
     try:
-        sincronizar_calendario(nuevas)
-    except Exception as e:  # el calendario nunca debe impedir guardar resultados y actas
-        print(f"Error al actualizar el calendario: {e}")
+        cambios, nuevas_actas = revisar_jornadas(filas, cal, actas)
+    finally:
+        # se guarda siempre lo conseguido, aunque algo falle a mitad
+        HTML.write_text(html[:i] + "\n".join([cabecera] + [",".join(f) for f in filas]) + html[j:], encoding="utf-8")
+        guardar_actas(actas)
+        DIRECTORIO_DATOS.mkdir(exist_ok=True, parents=True)
+        FICHERO_CALENDARIO.write_text(json.dumps(cal, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"Listo: {cambios} resultado(s) nuevo(s) o corregido(s), {nuevas_actas} acta(s) nueva(s) o actualizada(s).")
+
 
 if __name__ == "__main__":
     main()
