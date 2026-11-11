@@ -262,7 +262,7 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
           <tbody></tbody>
         </table>
       </div>
-      <div class="leyenda-zonas"><span><i style="background:var(--v)"></i>Ascienden los 2 primeros</span><span><i style="background:var(--d)"></i>Descienden los 4 últimos</span><span><b style="color:var(--tinta)">+3</b>&nbsp;puntos reales</span><span><i style="background:none;width:auto;height:auto;margin:0;font-style:italic">+1,6</i>&nbsp;puntos esperados</span></div>
+      <div class="leyenda-zonas"><span><i style="background:var(--v)"></i>Ascienden los 2 primeros</span><span><i style="background:var(--d)"></i>Descienden los 4 últimos</span><span><b style="color:var(--tinta)">+3</b>&nbsp;puntos reales</span><span><i style="background:none;width:auto;height:auto;margin:0;font-style:italic">+2</i>&nbsp;puntos esperados</span></div>
     </section>
   </div>
 
@@ -848,7 +848,7 @@ jornada,local,visitante,goles_local,goles_visitante
       document.querySelector('#' + id + ' tbody').innerHTML = [...proyeccion].sort((a, b) => a['pe' + k] - b['pe' + k]).map((r) => {
         const pos = r['pe' + k], d = posAct[r.equipo] - pos;
         const mov = d > 0 ? `<span class="mov sube" title="Sube ${d}">▲${d}</span>` : d < 0 ? `<span class="mov baja" title="Baja ${-d}">▼${-d}</span>` : '<span class="mov igual" title="Igual">=</span>';
-        return `<tr class="${r.equipo === eq ? 'yo' : ''}"><td>${zona(pos)}</td><td class="izq">${esc(r.equipo)}</td><td>${r.pts}</td><td><b>${fmt1.format(r['e' + k])}</b></td><td>${mov}</td></tr>`;
+        return `<tr class="${r.equipo === eq ? 'yo' : ''}"><td>${zona(pos)}</td><td class="izq">${esc(r.equipo)}</td><td>${r.pts}</td><td><b>${Math.round(r['e' + k])}</b></td><td>${mov}</td></tr>`;
       }).join('');
     }
   }
@@ -880,7 +880,7 @@ jornada,local,visitante,goles_local,goles_visitante
   const fmtDia = new Intl.DateTimeFormat('es', { weekday: 'short', day: 'numeric', month: 'short' });
   const fmtDiaLargo = new Intl.DateTimeFormat('es', { weekday: 'long', day: 'numeric', month: 'long' });
   const fecha = (iso, f = fmtDia) => f.format(new Date(iso + 'T12:00:00'));
-  const pts1 = (x) => fmt1.format(x);
+  const pts1 = (x) => String(Math.round(x));
   const etq = (x) => (pct(x) >= 10 ? pct(x) + '%' : '');
 
   function pintarJornada(eq) {
@@ -946,7 +946,7 @@ jornada,local,visitante,goles_local,goles_visitante
       const mov = d > 0 ? `<span class="mov sube" title="Sube ${d}">▲${d}</span>` : d < 0 ? `<span class="mov baja" title="Baja ${-d}">▼${-d}</span>` : '<span class="mov igual" title="Igual">=</span>';
       const ext = r.real === true ? `<td class="real">+${r.extra}</td>` : r.real === false ? `<td class="esperado">+${pts1(r.extra)}</td>` : '<td>–</td>';
       return `<tr class="${r.equipo === eq ? 'yo' : ''}"><td>${zona(r.pos)}</td><td class="izq">${esc(r.equipo)}</td><td>${r.antes}</td>${ext}
-        <td><b>${r.real === false ? pts1(r.total) : r.total}</b></td><td>${mov}</td></tr>`;
+        <td><b>${r.antes + Math.round(r.extra)}</b></td><td>${mov}</td></tr>`;
     }).join('');
   }
 
