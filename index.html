@@ -119,6 +119,95 @@ td.real{font-weight:700}
 details{margin-top:16px;font-size:14px;color:var(--tinta-2)}
 details summary{cursor:pointer;font-weight:600;color:var(--tinta)}
 footer{font-size:13px;color:var(--tinta-2);margin-top:20px;text-align:center}
+
+/* ===== ESTILO APP (previsualización) ===== */
+:root{
+  --fondo:#F2F3F7; --panel:#FFFFFF; --tinta:#1C1C1E; --tinta-2:#6E6E73; --linea:#E8E8ED;
+  --v:#2DB45A; --e:#A1A1A8; --d:#F0453A; --p1:#0A84FF; --p2:#FF9F0A; --marcador:#FFD60A;
+  --texto:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter","Segoe UI",Roboto,system-ui,sans-serif;
+  --display:"Barlow Condensed",-apple-system,"SF Pro Display",system-ui,sans-serif;
+  --radio:22px; --sombra:0 1px 2px rgba(0,0,0,.04),0 6px 22px rgba(15,23,42,.06);
+}
+@media (prefers-color-scheme:dark){
+  :root{--fondo:#000;--panel:#1C1C1E;--tinta:#F5F5F7;--tinta-2:#98989F;--linea:#2C2C2E;--v:#32D74B;--e:#8E8E93;--d:#FF453A;--sombra:none}
+}
+body{background:var(--fondo);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+.envoltura{max-width:1040px}
+
+/* Cabecera: banda del club con esquinas redondeadas y "widgets" de cristal */
+.marcador{border-radius:0 0 32px 32px;padding-bottom:26px;
+  background:linear-gradient(135deg,var(--club-1) 0%,color-mix(in srgb,var(--club-1) 70%,#000) 100%)}
+.marcador::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(115deg,transparent 0 46px,rgba(255,255,255,.05) 46px 92px)}
+.marcador .interior{z-index:1}
+.categoria,select.equipo{border-radius:999px;border:0;padding:7px 14px;background:rgba(255,255,255,.9);color:#1C1C1E;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.identidad{border-radius:24px;background:rgba(255,255,255,.92);color:#1C1C1E;padding:14px 22px 14px 14px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
+h1{font-weight:700;letter-spacing:0;text-transform:uppercase}
+.actualizado{font-size:13px;color:#6E6E73;opacity:1}
+.cifras{gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.cifra{border-radius:20px;background:rgba(255,255,255,.92);color:#1C1C1E;padding:12px 14px;box-shadow:0 4px 16px rgba(0,0,0,.12)}
+.cifra .et{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:#6E6E73;opacity:1}
+.cifra .val{font-size:40px;font-weight:700}
+.cifra .sub{color:#6E6E73;opacity:1}
+.ficha{border-radius:8px;width:28px;height:28px}
+
+/* Tarjetas */
+.bloque{border:0;border-radius:var(--radio);box-shadow:var(--sombra);padding:20px 18px;margin-top:18px}
+.rejilla{gap:0 18px}
+h2{font-family:var(--texto);font-weight:700;font-size:21px;letter-spacing:-.02em}
+.nota{font-size:13.5px;margin:4px 0 14px}
+
+/* Controles tipo iOS */
+.segmentado{background:color-mix(in srgb,var(--tinta) 7%,transparent);border-radius:11px;padding:3px;gap:2px}
+.segmentado .boton,.segmentado .boton:first-child,.segmentado .boton:last-child{border:0;border-radius:8px;margin:0;background:transparent;color:var(--tinta);padding:6px 14px;font:600 13px var(--texto)}
+.segmentado .boton[aria-pressed=true]{background:var(--panel);color:var(--tinta);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+button.boton{border-radius:999px;font:600 13px var(--texto);padding:7px 14px}
+#btn-prob{border:0;background:color-mix(in srgb,var(--tinta) 7%,transparent)}
+#btn-prob[aria-pressed=true]{background:var(--club-1);color:var(--club-txt,#fff)}
+
+/* Tablas limpias */
+table{font-size:14.5px}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--linea);padding:8px 8px}
+td{border-bottom:1px solid var(--linea);padding:10px 8px}
+tbody tr:last-child td{border-bottom:0}
+tr.yo td{background:color-mix(in srgb,var(--club-1,var(--p1)) 12%,transparent)}
+tr.yo td:first-child{box-shadow:none;border-radius:12px 0 0 12px}
+tr.yo td:last-child{border-radius:0 12px 12px 0}
+.zona{border-radius:8px;min-width:28px;height:24px}
+.desliza{border-radius:14px}
+.leyenda-zonas,.leyenda{font-size:12.5px}
+
+/* Probabilidades y partidos */
+.barra-prob{border-radius:12px;gap:2px;background:var(--panel);height:32px}
+.barra-prob span:first-child{border-radius:12px 4px 4px 12px}
+.barra-prob span:last-child{border-radius:4px 12px 12px 4px}
+.barra-prob.mini{height:26px;border-radius:9px}
+.barra-prob.mini span:first-child{border-radius:9px 3px 3px 9px}
+.barra-prob.mini span:last-child{border-radius:3px 9px 9px 3px}
+.pj{border:0;border-radius:18px;background:color-mix(in srgb,var(--tinta) 3.5%,transparent);padding:12px 14px}
+.pj.yo{box-shadow:inset 0 0 0 2px var(--club-1,var(--p1))}
+.pj-res{border-radius:10px;font-family:var(--display);background:#1C1C1E;color:#fff}
+.estado-j{border:0;background:color-mix(in srgb,var(--tinta) 7%,transparent);padding:4px 11px}
+.estado-j.vivo{background:#FF3B30;color:#fff}
+.estado-j.vivo::before{content:"● ";animation:latido 1.4s infinite}
+@keyframes latido{50%{opacity:.3}}
+.cruce{font-size:28px}
+details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box-shadow:var(--sombra)}
+#proximo h2{margin-bottom:10px}
+@media (max-width:560px){
+  .categoria{font-size:12px;padding:6px 12px}
+  .identidad{padding:10px 16px 10px 10px;gap:10px}
+  h1{font-size:clamp(32px,10vw,44px)}
+  .cifras{grid-template-columns:repeat(3,1fr);gap:8px}
+  .cifra{padding:9px 10px;border-radius:16px}
+  .cifra .val{font-size:28px}
+  .cifra .et{font-size:10.5px}
+  .cifra .sub{font-size:11.5px}
+  .cifra:nth-child(4),.cifra:nth-child(5){grid-column:span 1}
+  .cifra:last-child{grid-column:span 2}
+  .ficha{width:24px;height:24px;font-size:13px}
+  .cruce{font-size:23px}
+}
 </style>
 </head>
 <body>
@@ -245,20 +334,28 @@ footer{font-size:13px;color:var(--tinta-2);margin-top:20px;text-align:center}
         <h2>Clasificación</h2>
         <div class="segmentado" role="group" aria-label="Vista de la clasificación">
           <button type="button" class="boton" data-vista="actual" aria-pressed="true">Actual</button>
-          <button type="button" class="boton" data-vista="proy" aria-pressed="false">Proyección</button>
+          <button type="button" class="boton" data-vista="v1" aria-pressed="false">1ª Vuelta</button>
+          <button type="button" class="boton" data-vista="fin" aria-pressed="false">Fin Liga</button>
         </div>
       </div>
       <p class="nota" data-ver="actual">3 puntos por victoria y 1 por empate. Los empates a puntos se ordenan por diferencia de goles.</p>
-      <p class="nota" data-ver="proy" hidden>Posición ficticia al final de la primera vuelta (J15) y de la temporada (J30), según los puntos esperados de cada partido pendiente.</p>
+      <p class="nota" data-ver="v1" hidden>Clasificación prevista al acabar la primera vuelta (J15): puntos actuales más los puntos esperados de los partidos pendientes hasta la J15.</p>
+      <p class="nota" data-ver="fin" hidden>Clasificación prevista al final de la liga (J30): puntos actuales más los puntos esperados de todos los partidos pendientes.</p>
       <div class="desliza" data-ver="actual">
         <table id="tabla-clas">
           <thead><tr><th>#</th><th class="izq">Equipo</th><th>PJ</th><th class="ocultar-movil">V</th><th class="ocultar-movil">E</th><th class="ocultar-movil">D</th><th class="ocultar-movil">GF</th><th class="ocultar-movil">GC</th><th>DG</th><th>Pts</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
-      <div class="desliza" data-ver="proy" hidden>
-        <table id="tabla-proy">
-          <thead><tr><th class="izq">Equipo</th><th>Pts</th><th>Pts J15</th><th>Pos J15</th><th>Pts final</th><th>Pos final</th></tr></thead>
+      <div class="desliza" data-ver="v1" hidden>
+        <table id="tabla-v1">
+          <thead><tr><th>#</th><th class="izq">Equipo</th><th>Ahora</th><th>Previstos</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="desliza" data-ver="fin" hidden>
+        <table id="tabla-fin">
+          <thead><tr><th>#</th><th class="izq">Equipo</th><th>Ahora</th><th>Previstos</th><th></th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -746,8 +843,14 @@ jornada,local,visitante,goles_local,goles_visitante
       <td class="ocultar-movil">${r.v}</td><td class="ocultar-movil">${r.e}</td><td class="ocultar-movil">${r.d}</td><td class="ocultar-movil">${r.gf}</td><td class="ocultar-movil">${r.gc}</td>
       <td>${r.dg > 0 ? '+' : ''}${r.dg}</td><td><b>${r.pts}</b></td></tr>`).join('');
 
-    document.querySelector('#tabla-proy tbody').innerHTML = proyeccion.map((r) => `
-      <tr class="${r.equipo === eq ? 'yo' : ''}"><td class="izq">${esc(r.equipo)}</td><td>${r.pts}</td><td>${fmt1.format(r.e15)}</td><td><b>${zona(r.pe15, r.pe15 + 'º')}</b></td><td>${fmt1.format(r.e30)}</td><td><b>${zona(r.pe30, r.pe30 + 'º')}</b></td></tr>`).join('');
+    const posAct = Object.fromEntries(actual.map((r) => [r.equipo, r.pos]));
+    for (const [id, k] of [['tabla-v1', '15'], ['tabla-fin', '30']]) {
+      document.querySelector('#' + id + ' tbody').innerHTML = [...proyeccion].sort((a, b) => a['pe' + k] - b['pe' + k]).map((r) => {
+        const pos = r['pe' + k], d = posAct[r.equipo] - pos;
+        const mov = d > 0 ? `<span class="mov sube" title="Sube ${d}">▲${d}</span>` : d < 0 ? `<span class="mov baja" title="Baja ${-d}">▼${-d}</span>` : '<span class="mov igual" title="Igual">=</span>';
+        return `<tr class="${r.equipo === eq ? 'yo' : ''}"><td>${zona(pos)}</td><td class="izq">${esc(r.equipo)}</td><td>${r.pts}</td><td><b>${fmt1.format(r['e' + k])}</b></td><td>${mov}</td></tr>`;
+      }).join('');
+    }
   }
 
 
