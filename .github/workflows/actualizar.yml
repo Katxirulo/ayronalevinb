@@ -2,10 +2,12 @@ name: Actualizar resultados desde Web
 
 on:
   schedule:
-    # Sábados de 10:00 a 18:00 cada hora (Ejemplo en UTC: 09:00 a 17:00)
+    # Sábados de 10:00 a 18:00 cada hora (en UTC: 09:00 a 17:00)
     - cron: '0 9-17 * * 6'
-    # Domingos de 10:00 a 14:00 cada hora (Ejemplo en UTC: 09:00 a 13:00)
+    # Domingos de 10:00 a 14:00 cada hora (en UTC: 09:00 a 13:00)
     - cron: '0 9-13 * * 0'
+    # De lunes a viernes a las 20:00 (19:00 UTC): recoge los horarios de la próxima jornada
+    - cron: '0 19 * * 1-5'
   workflow_dispatch:     # Permite mantener el botón de ejecución manual por si lo necesitas
 
 permissions:
