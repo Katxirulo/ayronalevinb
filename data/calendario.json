@@ -1,1 +1,52 @@
-{}
+{
+  "10": {
+    "San Martín|Marina Sport": {
+      "fecha": "2026-11-14",
+      "hora": "09:30",
+      "campo": "Suances",
+      "arbitro": "GARCIA RUBIO, JOEL"
+    },
+    "Naval|Bezana": {
+      "fecha": "2026-11-14",
+      "hora": "10:15",
+      "campo": "Reinosa",
+      "arbitro": "MARTINEZ GONZALEZ, GUILLERMO"
+    },
+    "Vimenor|Valle Lebaniego": {
+      "fecha": "2026-11-14",
+      "hora": "11:00",
+      "campo": "Vioño",
+      "arbitro": "ALLENDE GARCIA, SAÚL"
+    },
+    "Textil Escudo|Polanco": {
+      "fecha": "2026-11-15",
+      "hora": "10:15",
+      "campo": "Cabezón de la Sal",
+      "arbitro": "LASO MARTINEZ, GONZALO"
+    },
+    "Tropezón|Milinde Reocín": {
+      "fecha": "2026-11-15",
+      "hora": "10:30",
+      "campo": "Tanos 2",
+      "arbitro": "CARUTA MOROI, EDUARDO"
+    },
+    "Gimnástica|Ayron": {
+      "fecha": "2026-11-15",
+      "hora": "11:00",
+      "campo": "El Malecón 2",
+      "arbitro": "EL HARKAOUI EL MANSOURI , JABER"
+    },
+    "Esclavas|Amistad Sniace": {
+      "fecha": "2026-11-15",
+      "hora": "11:00",
+      "campo": "Comp. Albericia (A)",
+      "arbitro": "LUCAS GUTIERREZ, ANGEL"
+    },
+    "San Agustín|Calasanz": {
+      "fecha": "2026-11-15",
+      "hora": "11:45",
+      "campo": "San Agustin",
+      "arbitro": "MARTINEZ CASAS, CARLA"
+    }
+  }
+}
