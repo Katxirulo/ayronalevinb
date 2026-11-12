@@ -254,6 +254,10 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
 .arb-n.V{background:var(--v)}.arb-n.E{background:var(--e)}.arb-n.D{background:var(--d)}
 .arb-0{color:var(--tinta-2)}
 #tabla-arbitros td.izq{white-space:normal}
+.jchips{display:flex;flex-wrap:wrap;gap:4px}
+.jchip{display:inline-block;padding:2px 7px;border-radius:7px;font-size:12.5px;font-weight:700;border:1.5px solid;background:#fff}
+.jchip.V{color:var(--v);border-color:var(--v)}.jchip.E{color:#6E6E73;border-color:var(--e)}.jchip.D{color:var(--d);border-color:var(--d)}
+@media (max-width:560px){#tabla-arbitros td,#tabla-arbitros th{padding-left:4px;padding-right:4px}#tabla-arbitros{font-size:13.5px}}
 </style>
 </head>
 <body>
@@ -362,13 +366,7 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
 
   <!-- ÁRBITROS (de las actas) -->
   <section class="bloque" id="arbitros">
-    <div class="cabecera">
-      <h2>🟨 Árbitros</h2>
-      <div class="segmentado" role="group" aria-label="Filtro de árbitros">
-        <button type="button" class="boton" data-filtro-arb="club" aria-pressed="true" id="btn-arb-club">Mi equipo</button>
-        <button type="button" class="boton" data-filtro-arb="todos" aria-pressed="false">Todos</button>
-      </div>
-    </div>
+    <h2 id="t-arbitros">🟨 Árbitros</h2>
     <p class="nota" id="nota-arbitros">Cargando árbitros...</p>
     <div class="desliza">
       <table id="tabla-arbitros">
@@ -1094,59 +1092,42 @@ jornada,local,visitante,goles_local,goles_visitante
   }
 
 
-  // ÁRBITROS: ranking por partidos dirigidos, con los resultados
-  let filtroArb = 'club';
+  // ÁRBITROS del equipo elegido: se rellena solo con cada acta nueva que trae su árbitro
   let actasArb = null, equipoArb = null;
   const nombreArbitro = (n) => String(n || '').replace(/\s+,/g, ',').replace(/\s+/g, ' ').trim();
 
   function pintarArbitros() {
     if (!actasArb) return;
-    const eq = equipoArb, club = filtroArb === 'club';
+    const eq = equipoArb, nombre = NOMBRES[eq] || eq;
     const marc = new Map(partidos.filter((p) => p.gl !== null).map((p) => [p.j + '|' + p.local + '|' + p.visitante, [p.gl, p.gv]]));
     const tabla = {};
     for (const a of Object.values(actasArb)) {
       const nom = nombreArbitro(a.arbitro);
-      if (!nom) continue;
+      if (!nom || (a.local !== eq && a.visitante !== eq)) continue;
       let m = marc.get(a.jornada + '|' + a.local + '|' + a.visitante);
       if (!m) {  // si el partido no está en el cuadro, se cuentan los goles del acta
         const gs = a.goles || [];
         m = [gs.filter((g) => g.equipo === a.local).length, gs.filter((g) => g.equipo === a.visitante).length];
       }
-      if (club && a.local !== eq && a.visitante !== eq) continue;
-      const r = (tabla[nom] = tabla[nom] || { nom, pj: 0, v: 0, e: 0, d: 0, partidos: [] });
-      r.pj++;
-      if (club) {
-        const [gf, gc] = a.local === eq ? m : [m[1], m[0]];
-        if (gf > gc) r.v++; else if (gf === gc) r.e++; else r.d++;
-        r.partidos.push(`J${a.jornada} ${a.local} ${m[0]}-${m[1]} ${a.visitante}`);
-      } else {
-        if (m[0] > m[1]) r.v++; else if (m[0] === m[1]) r.e++; else r.d++;
-        r.partidos.push(`J${a.jornada} ${a.local} ${m[0]}-${m[1]} ${a.visitante}`);
-      }
+      const [gf, gc] = a.local === eq ? m : [m[1], m[0]];
+      const res = gf > gc ? 'V' : gf === gc ? 'E' : 'D';
+      const r = (tabla[nom] = tabla[nom] || { nom, pj: 0, V: 0, E: 0, D: 0, js: [] });
+      r.pj++; r[res]++;
+      r.js.push({ j: a.jornada, res, txt: `J${a.jornada}: ${a.local} ${m[0]}-${m[1]} ${a.visitante}` });
     }
-    const filas = Object.values(tabla).sort((a, b) => b.pj - a.pj || b.v - a.v || a.d - b.d || a.nom.localeCompare(b.nom, 'es'));
-    const nombre = NOMBRES[eq] || eq;
-    document.getElementById('btn-arb-club').textContent = eq;
-    document.getElementById('nota-arbitros').textContent = club
-      ? `Árbitros que han dirigido partidos de ${nombre} y cómo le fue: victorias, empates y derrotas de ${nombre}.`
-      : 'Todos los árbitros del grupo según las actas. «Local», «Empate» y «Visitante» indican quién ganó los partidos que dirigieron.';
-    document.querySelector('#tabla-arbitros thead').innerHTML = club
-      ? '<tr><th>#</th><th class="izq">Árbitro</th><th>PJ</th><th>V</th><th>E</th><th>D</th></tr>'
-      : '<tr><th>#</th><th class="izq">Árbitro</th><th>PJ</th><th>Local</th><th>Empate</th><th>Visitante</th></tr>';
-    let pos = 0, prev = null;
-    document.querySelector('#tabla-arbitros tbody').innerHTML = filas.map((r, i) => {
-      if (prev === null || r.pj !== prev) pos = i + 1;
-      prev = r.pj;
-      const c = (n, cls) => `<td>${n ? `<span class="arb-n ${cls}">${n}</span>` : '<span class="arb-0">0</span>'}</td>`;
-      return `<tr title="${esc(r.partidos.join('\n'))}"><td>${pos}</td><td class="izq">${esc(nombreBonito(r.nom))}</td><td><b>${r.pj}</b></td>${c(r.v, 'V')}${c(r.e, 'E')}${c(r.d, 'D')}</tr>`;
-    }).join('') || '<tr><td class="izq" colspan="6">No hay actas con árbitro todavía.</td></tr>';
+    const filas = Object.values(tabla).map((r) => ({ ...r, js: r.js.sort((x, y) => x.j - y.j) }))
+      .sort((a, b) => b.pj - a.pj || b.V - a.V || a.D - b.D || a.js[0].j - b.js[0].j);
+    document.getElementById('t-arbitros').textContent = '🟨 Árbitros de ' + nombre;
+    document.getElementById('nota-arbitros').textContent =
+      `Árbitros que han dirigido partidos de ${nombre}, según las actas: jornadas que pitaron y victorias, empates y derrotas de ${nombre} con cada uno.`;
+    document.querySelector('#tabla-arbitros thead').innerHTML =
+      '<tr><th class="izq">Árbitro</th><th class="izq">Jornadas</th><th>PJ</th><th>V</th><th>E</th><th>D</th></tr>';
+    const c = (n, cls) => `<td>${n ? `<span class="arb-n ${cls}">${n}</span>` : '<span class="arb-0">0</span>'}</td>`;
+    document.querySelector('#tabla-arbitros tbody').innerHTML = filas.map((r) => {
+      const jornadas = r.js.map((x) => `<span class="jchip ${x.res}" title="${esc(x.txt)}">J${x.j}</span>`).join('');
+      return `<tr><td class="izq">${esc(nombreBonito(r.nom))}</td><td class="izq"><span class="jchips">${jornadas}</span></td><td><b>${r.pj}</b></td>${c(r.V, 'V')}${c(r.E, 'E')}${c(r.D, 'D')}</tr>`;
+    }).join('') || '<tr><td class="izq" colspan="6">Este equipo aún no tiene actas con árbitro.</td></tr>';
   }
-
-  document.querySelectorAll('[data-filtro-arb]').forEach((b) => b.addEventListener('click', () => {
-    filtroArb = b.dataset.filtroArb;
-    document.querySelectorAll('[data-filtro-arb]').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
-    pintarArbitros();
-  }));
 
   document.querySelectorAll('[data-filtro-gol]').forEach((b) => b.addEventListener('click', () => {
     filtroGoles = b.dataset.filtroGol;
