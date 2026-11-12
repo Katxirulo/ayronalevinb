@@ -133,8 +133,12 @@ body{background:var(--fondo);-webkit-font-smoothing:antialiased;letter-spacing:-
 /* Cabecera: banda del club con esquinas redondeadas y "widgets" de cristal */
 .marcador{border-radius:0 0 32px 32px;padding-bottom:26px;
   background:linear-gradient(135deg,var(--club-1) 0%,color-mix(in srgb,var(--club-1) 70%,#000) 100%)}
-.marcador::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(115deg,transparent 0 46px,rgba(255,255,255,.05) 46px 92px)}
+/* Bandera a pliegues: bandas de luz y sombra que recorren los colores del club */
+.marcador::after{content:"";position:absolute;inset:0 -60%;pointer-events:none;will-change:transform;
+  background:repeating-linear-gradient(100deg,rgba(0,0,0,.20) 0px,rgba(0,0,0,.04) 70px,rgba(255,255,255,.16) 140px,rgba(0,0,0,.04) 210px,rgba(0,0,0,.20) 280px);
+  animation:pliegue 4.5s linear infinite}
+@keyframes pliegue{from{transform:translateX(0)}to{transform:translateX(280px)}}
+@media (prefers-reduced-motion:reduce){.marcador::after{animation:none}}
 .marcador .interior{z-index:1}
 .categoria,select.equipo{border-radius:999px;border:0;padding:7px 14px;background:rgba(255,255,255,.9);color:#1C1C1E;font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.12)}
 .identidad{border-radius:24px;background:rgba(255,255,255,.92);color:#1C1C1E;padding:14px 22px 14px 14px;box-shadow:0 8px 30px rgba(0,0,0,.18)}
