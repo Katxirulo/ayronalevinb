@@ -232,6 +232,24 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
 }
 .corto{display:none}
 @media (max-width:560px){#tabla-partidos .largo{display:none}#tabla-partidos .corto{display:inline}#tabla-partidos .ficha{width:24px;height:24px}}
+
+/* ===== Selector de equipo destacado ===== */
+.selector-equipo{display:inline-flex;flex-direction:column;gap:2px;background:#fff;color:#1C1C1E;border-radius:18px;padding:8px 14px 8px;
+  border:2.5px solid var(--club-2,#FFD60A);box-shadow:0 6px 20px rgba(0,0,0,.25);cursor:pointer;animation:llamada 1.6s ease-out 3;max-width:100%}
+.selector-et{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:color-mix(in srgb,var(--club-1) 75%,#000)}
+.selector-equipo select.equipo{appearance:none;-webkit-appearance:none;border:0;box-shadow:none;background:transparent;padding:2px 30px 2px 0;
+  font:800 18px var(--texto);color:#1C1C1E;cursor:pointer;border-radius:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='12' fill='%231C1C1E'/%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right center;min-width:200px}
+.selector-equipo:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(0,0,0,.3)}
+.selector-equipo:focus-within{outline:3px solid #fff;outline-offset:2px}
+@keyframes llamada{0%{box-shadow:0 6px 20px rgba(0,0,0,.25),0 0 0 0 rgba(255,255,255,.85)}100%{box-shadow:0 6px 20px rgba(0,0,0,.25),0 0 0 16px rgba(255,255,255,0)}}
+@media (max-width:560px){.fila-sup{flex-direction:column;align-items:stretch}.selector-equipo{width:100%;order:-1}.selector-equipo select.equipo{width:100%}}
+@media (max-width:560px){
+  #tabla-clas-jornada td,#tabla-clas-jornada th,#tabla-v1 td,#tabla-v1 th,#tabla-fin td,#tabla-fin th,#tabla-clas td,#tabla-clas th{padding-left:5px;padding-right:5px}
+  #tabla-clas-jornada td.izq,#tabla-v1 td.izq,#tabla-fin td.izq{white-space:normal;line-height:1.2}
+}
+@media (max-width:380px){#tabla-partidos{font-size:13px}#tabla-partidos td,#tabla-partidos th{padding-left:3px;padding-right:3px}}
 </style>
 </head>
 <body>
@@ -240,7 +258,7 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
   <div class="interior">
     <div class="fila-sup">
       <span class="categoria">Segunda Alevín F8, Grupo A, temporada 2026-2027</span>
-      <label><span class="sr" hidden>Equipo</span><select class="equipo" id="equipo" aria-label="Elegir equipo"></select></label>
+      <label class="selector-equipo"><span class="selector-et">⇄ Elige equipo</span><select class="equipo" id="equipo" aria-label="Elegir equipo"></select></label>
     </div>
     <div class="identidad">
       <img class="escudo" id="escudo" alt="" hidden>
@@ -279,14 +297,14 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
     </section>
     <section class="bloque">
       <h2 id="t-clas-jornada">Clasificación prevista</h2>
-      <p class="nota" id="nota-clas-jornada">Partidos jugados con su resultado real; los pendientes, con sus puntos esperados.</p>
+      <p class="nota" id="nota-clas-jornada">Partidos jugados con su resultado real; los pendientes, con su resultado más probable (3, 1 o 0 puntos).</p>
       <div class="desliza">
         <table id="tabla-clas-jornada">
           <thead><tr><th>#</th><th class="izq">Equipo</th><th>Antes</th><th id="th-jornada">Jornada</th><th>Pts</th><th></th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
-      <div class="leyenda-zonas"><span><i style="background:var(--v)"></i>Ascienden los 2 primeros</span><span><i style="background:var(--d)"></i>Descienden los 4 últimos</span><span><b style="color:var(--tinta)">+3</b>&nbsp;puntos reales</span><span><i style="background:none;width:auto;height:auto;margin:0;font-style:italic">+2</i>&nbsp;puntos esperados</span></div>
+      <div class="leyenda-zonas"><span><i style="background:var(--v)"></i>Ascienden los 2 primeros</span><span><i style="background:var(--d)"></i>Descienden los 4 últimos</span><span><b style="color:var(--tinta)">+3</b>&nbsp;puntos reales</span><span><i style="background:none;width:auto;height:auto;margin:0;font-style:italic">+3</i>&nbsp;resultado más probable</span></div>
     </section>
   </div>
 
@@ -363,8 +381,8 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
         </div>
       </div>
       <p class="nota" data-ver="actual">3 puntos por victoria y 1 por empate. Los empates a puntos se ordenan por diferencia de goles.</p>
-      <p class="nota" data-ver="v1" hidden>Clasificación prevista al acabar la primera vuelta (J15): puntos actuales más los puntos esperados de los partidos pendientes hasta la J15.</p>
-      <p class="nota" data-ver="fin" hidden>Clasificación prevista al final de la liga (J30): puntos actuales más los puntos esperados de todos los partidos pendientes.</p>
+      <p class="nota" data-ver="v1" hidden>Clasificación prevista al acabar la primera vuelta (J15), simulando 10.000 veces los partidos pendientes: cada uno da 3, 1 o 0 puntos según sus probabilidades. «Previstos» es el total más habitual (la mediana).</p>
+      <p class="nota" data-ver="fin" hidden>Clasificación prevista al final de la liga (J30), simulando 10.000 veces los partidos pendientes: cada uno da 3, 1 o 0 puntos según sus probabilidades. «Previstos» es el total más habitual (la mediana).</p>
       <div class="desliza" data-ver="actual">
         <table id="tabla-clas">
           <thead><tr><th>#</th><th class="izq">Equipo</th><th>PJ</th><th class="ocultar-movil">V</th><th class="ocultar-movil">E</th><th class="ocultar-movil">D</th><th class="ocultar-movil">GF</th><th class="ocultar-movil">GC</th><th>DG</th><th>Pts</th></tr></thead>
@@ -390,9 +408,9 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
   <details>
     <summary>Cómo se calcula</summary>
     <p>Los resultados salen del cuadro que publica la Real Federación Cántabra de Fútbol. La jornada de cada partido jugado se deduce de su partido de vuelta (ida + 15).</p>
-    <p>La jornada en curso cambia sola: cuando se completa una jornada (o ya han pasado todas sus fechas), pasa a la siguiente. Los horarios y campos salen de la web de la federación, que los publica una semana antes. En la clasificación prevista, los partidos ya jugados cuentan con su resultado real y los pendientes con sus puntos esperados (3 × victoria + 1 × empate).</p>
+    <p>La jornada en curso cambia sola: cuando se completa una jornada (o ya han pasado todas sus fechas), pasa a la siguiente. Los horarios y campos salen de la web de la federación, que los publica una semana antes. En la clasificación prevista de la jornada, los partidos ya jugados cuentan con su resultado real y los pendientes con su resultado más probable: 3 puntos al favorito, o 1 a cada uno si lo más probable es el empate.</p>
     <p>La clasificación se calcula aquí. Si hay empate a puntos, la federación puede aplicar otros criterios, como el enfrentamiento directo.</p>
-    <p>Las probabilidades salen de los goles marcados y encajados por partido de cada equipo, suavizados hacia la media del grupo, con la ventaja de jugar en casa que muestran los resultados. Los goles se modelan con una distribución de Poisson. La proyección suma a los puntos actuales los puntos esperados de cada partido pendiente. Con pocos partidos jugados, es una tendencia, no un pronóstico seguro.</p>
+    <p>Las probabilidades salen de los goles marcados y encajados por partido de cada equipo, suavizados hacia la media del grupo, con la ventaja de jugar en casa que muestran los resultados. Los goles se modelan con una distribución de Poisson. Las clasificaciones de 1ª vuelta y fin de liga simulan 10.000 veces los partidos pendientes, cada uno con 3, 1 o 0 puntos según sus probabilidades, y toman la mediana de puntos de cada equipo. Con pocos partidos jugados, es una tendencia, no un pronóstico seguro.</p>
   </details>
   <footer>Página no oficial, hecha por un aficionado.</footer>
 </main>
@@ -747,15 +765,34 @@ jornada,local,visitante,goles_local,goles_visitante
 
   const actual = clasificacion();
 
+  // Proyección: se simula el resto de la liga 10.000 veces. En cada partido pendiente sale
+  // victoria, empate o derrota según sus probabilidades (3, 1 o 0 puntos, nunca fracciones).
+  // Para cada equipo se toma la mediana de puntos: un total entero y alcanzable.
   const proyeccion = (() => {
-    const r = Object.fromEntries(actual.map((c) => [c.equipo, {equipo: c.equipo, pts: c.pts, dg: c.dg, e15: c.pts, e30: c.pts}]));
-    for (const [p, q] of probs) {
-      const el = 3 * q.pl + q.pe, ev = 3 * q.pv + q.pe;
-      r[p.local].e30 += el; r[p.visitante].e30 += ev;
-      if (p.j <= 15) { r[p.local].e15 += el; r[p.visitante].e15 += ev; }
+    const N = 10000;
+    let semilla = 20262027;  // semilla fija: el resultado no cambia al recargar la página
+    const azar = () => { semilla |= 0; semilla = semilla + 0x6D2B79F5 | 0; let t = Math.imul(semilla ^ semilla >>> 15, 1 | semilla); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    const idx = Object.fromEntries(equipos.map((e, i) => [e, i]));
+    const base = equipos.map((e) => actual.find((c) => c.equipo === e).pts);
+    const pend = [...probs].map(([p, q]) => ({ l: idx[p.local], v: idx[p.visitante], pl: q.pl, pe: q.pe, v15: p.j <= 15 }));
+    const s15 = equipos.map(() => new Uint16Array(N)), s30 = equipos.map(() => new Uint16Array(N));
+    const t15 = new Array(equipos.length), t30 = new Array(equipos.length);
+    for (let n = 0; n < N; n++) {
+      for (let e = 0; e < equipos.length; e++) { t15[e] = base[e]; t30[e] = base[e]; }
+      for (const m of pend) {
+        const x = azar(), a = x < m.pl ? 3 : x < m.pl + m.pe ? 1 : 0, b = a === 3 ? 0 : a === 1 ? 1 : 3;
+        t30[m.l] += a; t30[m.v] += b;
+        if (m.v15) { t15[m.l] += a; t15[m.v] += b; }
+      }
+      for (let e = 0; e < equipos.length; e++) { s15[e][n] = t15[e]; s30[e][n] = t30[e]; }
     }
-    const rows = Object.values(r);
-    for (const k of ['e15', 'e30']) [...rows].sort((a, b) => b[k] - a[k] || b.dg - a.dg || a.equipo.localeCompare(b.equipo, 'es')).forEach((x, i) => { x['p' + k] = i + 1; });
+    const mediana = (arr) => { const o = [...arr].sort((a, b) => a - b); return o[Math.floor(N / 2)]; };
+    const media = (arr) => arr.reduce((a, b) => a + b, 0) / N;
+    const rows = equipos.map((e, i) => {
+      const c = actual.find((x) => x.equipo === e);
+      return { equipo: e, pts: c.pts, dg: c.dg, e15: mediana(s15[i]), e30: mediana(s30[i]), m15: media(s15[i]), m30: media(s30[i]) };
+    });
+    for (const k of ['15', '30']) [...rows].sort((a, b) => b['e' + k] - a['e' + k] || b['m' + k] - a['m' + k] || b.dg - a.dg || a.equipo.localeCompare(b.equipo, 'es')).forEach((x, i) => { x['pe' + k] = i + 1; });
     return rows.sort((a, b) => a.pe15 - b.pe15);
   })();
 
@@ -954,8 +991,11 @@ jornada,local,visitante,goles_local,goles_visitante
         Object.assign(fila[p.local], { extra: pl, real: true }); fila[p.local].dg += p.gl - p.gv;
         Object.assign(fila[p.visitante], { extra: pv, real: true }); fila[p.visitante].dg += p.gv - p.gl;
       } else if (p.q) {
-        Object.assign(fila[p.local], { extra: 3 * p.q.pl + p.q.pe, real: false });
-        Object.assign(fila[p.visitante], { extra: 3 * p.q.pv + p.q.pe, real: false });
+        // resultado más probable: victoria local, empate o victoria visitante
+        const mx = Math.max(p.q.pl, p.q.pe, p.q.pv);
+        const [a, b] = mx === p.q.pl ? [3, 0] : mx === p.q.pv ? [0, 3] : [1, 1];
+        Object.assign(fila[p.local], { extra: a, real: false, prob: mx });
+        Object.assign(fila[p.visitante], { extra: b, real: false, prob: mx });
       }
     }
     const tabla = Object.values(fila).map((r) => ({ ...r, total: r.antes + r.extra }))
@@ -964,13 +1004,13 @@ jornada,local,visitante,goles_local,goles_visitante
     const todoReal = tabla.every((r) => r.real !== false);
     document.getElementById('nota-clas-jornada').textContent = todoReal && hechos
       ? 'Jornada terminada: clasificación con los resultados reales.'
-      : 'Partidos jugados con su resultado real; los pendientes, con los puntos esperados según las probabilidades.';
+      : 'Partidos jugados con su resultado real; los pendientes, con su resultado más probable (3, 1 o 0 puntos).';
     document.querySelector('#tabla-clas-jornada tbody').innerHTML = tabla.map((r) => {
       const d = r.posAntes - r.pos;
       const mov = d > 0 ? `<span class="mov sube" title="Sube ${d}">▲${d}</span>` : d < 0 ? `<span class="mov baja" title="Baja ${-d}">▼${-d}</span>` : '<span class="mov igual" title="Igual">=</span>';
-      const ext = r.real === true ? `<td class="real">+${r.extra}</td>` : r.real === false ? `<td class="esperado">+${pts1(r.extra)}</td>` : '<td>–</td>';
+      const ext = r.real === true ? `<td class="real">+${r.extra}</td>` : r.real === false ? `<td class="esperado" title="Resultado más probable (${pct(r.prob)}%)">+${r.extra}</td>` : '<td>–</td>';
       return `<tr class="${r.equipo === eq ? 'yo' : ''}"><td>${zona(r.pos)}</td><td class="izq">${esc(r.equipo)}</td><td>${r.antes}</td>${ext}
-        <td><b>${r.antes + Math.round(r.extra)}</b></td><td>${mov}</td></tr>`;
+        <td><b>${r.antes + r.extra}</b></td><td>${mov}</td></tr>`;
     }).join('');
   }
 
