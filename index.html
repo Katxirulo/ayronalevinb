@@ -262,6 +262,11 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
 .jchip{display:inline-block;padding:2px 7px;border-radius:7px;font-size:12.5px;font-weight:700;border:1.5px solid;background:#fff}
 .jchip.V{color:var(--v);border-color:var(--v)}.jchip.E{color:#6E6E73;border-color:var(--e)}.jchip.D{color:var(--d);border-color:var(--d)}
 @media (max-width:560px){#tabla-arbitros td,#tabla-arbitros th{padding-left:4px;padding-right:4px}#tabla-arbitros{font-size:13.5px}}
+/* Escudo en relieve: silueta blanca translúcida, como estampada en la bandera */
+.marcador::before{content:"";position:absolute;pointer-events:none;z-index:0;
+  width:min(620px,95vw);aspect-ratio:1;right:-4%;top:50%;transform:translateY(-50%) rotate(-8deg);
+  background:var(--escudo-fondo,none) no-repeat center/contain;opacity:.6;filter:grayscale(1) contrast(1.6) brightness(1.15);mix-blend-mode:soft-light}
+@media (max-width:560px){.marcador::before{width:120vw;right:-38%;top:auto;bottom:-6%;transform:rotate(-8deg)}}
 </style>
 </head>
 <body>
@@ -736,6 +741,9 @@ jornada,local,visitante,goles_local,goles_visitante
     img.onload = () => { img.hidden = false; };
     img.onerror = () => { img.hidden = true; };
     if (ruta) { img.alt = 'Escudo de ' + (NOMBRES[eq] || eq); img.src = ruta; } else img.removeAttribute('src');
+    // escudo grande y translúcido de fondo en la cabecera
+    const cab = document.querySelector('.marcador').style;
+    if (ruta) cab.setProperty('--escudo-fondo', `url("${ruta}")`); else cab.removeProperty('--escudo-fondo');
   }
 
   const filas = document.getElementById('datos').textContent.trim().split('\n').slice(1);
