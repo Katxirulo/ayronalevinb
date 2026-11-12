@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ayron Club · Segunda Alevín F8 Grupo A</title>
+<meta name="color-scheme" content="only light">
 <meta name="theme-color" content="#1F6B3A">
 <meta name="description" content="Estadísticas, clasificación y proyección del Ayron Club en Segunda Alevín F8, Grupo A.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
@@ -19,10 +20,7 @@
   --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
   --texto:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
 }
-@media (prefers-color-scheme:dark){
-  .marcador{--club-panel:rgba(18,24,20,.9) !important;color:#E9EEE8 !important}
-  :root{color-scheme:dark; --tiza:#E9EEE8; --tinta:#E9EEE8; --tinta-2:#A7B2AA; --linea:#2B362E; --panel:#151D18; --fondo:#0D1410; --cesped:#1A5A31; --cesped-2:#3FA463; --v:#3FA463; --e:#7E8A82; --d:#E0604E;}
-}
+
 *{box-sizing:border-box}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--fondo);color:var(--tinta);font-family:var(--texto);font-size:16px;line-height:1.45;padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -96,7 +94,7 @@ td.pv{color:var(--v);font-weight:600}
 
 /* Jornada en curso */
 :root{--p1:#2F6FB3;--p2:#C77A12}
-@media (prefers-color-scheme:dark){:root{--p1:#4C8FD6;--p2:#E0952E}}
+
 .estado-j{display:inline-block;font-size:13px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--fondo);border:1px solid var(--linea);color:var(--tinta-2)}
 .estado-j.vivo{background:var(--marcador);border-color:var(--marcador);color:#17201A}
 .lista-j{display:grid;gap:8px}
@@ -128,9 +126,7 @@ footer{font-size:13px;color:var(--tinta-2);margin-top:20px;text-align:center}
   --display:"Barlow Condensed",-apple-system,"SF Pro Display",system-ui,sans-serif;
   --radio:22px; --sombra:0 1px 2px rgba(0,0,0,.04),0 6px 22px rgba(15,23,42,.06);
 }
-@media (prefers-color-scheme:dark){
-  :root{--fondo:#000;--panel:#1C1C1E;--tinta:#F5F5F7;--tinta-2:#98989F;--linea:#2C2C2E;--v:#32D74B;--e:#8E8E93;--d:#FF453A;--sombra:none}
-}
+
 body{background:var(--fondo);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
 .envoltura{max-width:1040px}
 
@@ -208,6 +204,34 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
   .ficha{width:24px;height:24px;font-size:13px}
   .cruce{font-size:23px}
 }
+
+/* ===== Opciones bien visibles (color del club) ===== */
+:root{color-scheme:light only}
+.segmentado,#btn-prob{--c:var(--club-1,#0A84FF);--c-osc:color-mix(in srgb,var(--c) 72%,#000)}
+.segmentado{background:color-mix(in srgb,var(--c) 10%,#fff);border:1.5px solid color-mix(in srgb,var(--c) 40%,#fff);
+  border-radius:14px;padding:4px;gap:4px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.segmentado .boton,.segmentado .boton:first-child,.segmentado .boton:last-child{min-height:36px;padding:7px 16px;border-radius:10px;
+  color:var(--c-osc);font:700 14px var(--texto);background:transparent;cursor:pointer;transition:background .15s,color .15s}
+.segmentado .boton:hover{background:color-mix(in srgb,var(--c) 16%,#fff)}
+.segmentado .boton[aria-pressed=true]{background:var(--c);color:var(--club-txt,#fff);box-shadow:0 2px 6px color-mix(in srgb,var(--c) 45%,transparent)}
+#btn-prob{min-height:38px;padding:8px 16px 8px 12px;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--c) 45%,#fff);
+  background:color-mix(in srgb,var(--c) 10%,#fff);color:var(--c-osc);font:700 14px var(--texto);box-shadow:0 2px 8px rgba(0,0,0,.07);
+  display:inline-flex;align-items:center;gap:8px}
+#btn-prob::before{content:"";width:30px;height:18px;border-radius:999px;background:#D1D1D6;flex:none;
+  box-shadow:inset 0 0 0 2px #D1D1D6;transition:.2s;
+  background-image:radial-gradient(circle at 9px 9px,#fff 7px,transparent 7.5px)}
+#btn-prob[aria-pressed=true]{background:var(--c);border-color:var(--c);color:var(--club-txt,#fff)}
+#btn-prob[aria-pressed=true]::before{background-color:rgba(255,255,255,.35);box-shadow:inset 0 0 0 2px rgba(255,255,255,.35);
+  background-image:radial-gradient(circle at 21px 9px,#fff 7px,transparent 7.5px)}
+.cabecera{row-gap:12px}
+@media (max-width:560px){.cabecera>.segmentado{width:100%}.segmentado .boton{flex:1}}
+@media (max-width:560px){
+  #lista-goleadores td.izq,#lista-participacion td.izq,#tabla-partidos td.izq{white-space:normal;line-height:1.25}
+  #lista-goleadores small,#lista-participacion small{display:block;margin-top:2px}
+  #tabla-partidos td,#tabla-partidos th{padding-left:5px;padding-right:5px}
+}
+.corto{display:none}
+@media (max-width:560px){#tabla-partidos .largo{display:none}#tabla-partidos .corto{display:inline}#tabla-partidos .ficha{width:24px;height:24px}}
 </style>
 </head>
 <body>
@@ -285,11 +309,11 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
       <div class="cabecera">
         <h2>⚽ Máximos Goleadores</h2>
         <div class="segmentado" role="group" aria-label="Filtro de goleadores">
-          <button type="button" class="boton" data-filtro-gol="todos" aria-pressed="true">Todos</button>
-          <button type="button" class="boton" data-filtro-gol="club" aria-pressed="false" id="btn-gol-club">Solo mi equipo</button>
+          <button type="button" class="boton" data-filtro-gol="club" aria-pressed="true" id="btn-gol-club">Mi equipo</button>
+          <button type="button" class="boton" data-filtro-gol="todos" aria-pressed="false">Todos</button>
         </div>
       </div>
-      <p class="nota" id="nota-goleadores">Goles de todos los equipos según las actas oficiales. En color, los del equipo elegido.</p>
+      <p class="nota" id="nota-goleadores">Goles de los jugadores del equipo elegido según las actas oficiales.</p>
       <div class="desliza">
         <table>
           <thead><tr><th class="izq">Jugador</th><th>Goles</th></tr></thead>
@@ -323,7 +347,7 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
       <p class="nota">Marcador como local–visitante. Las probabilidades son de victoria, empate y derrota del equipo elegido, en %.</p>
       <div class="desliza">
         <table id="tabla-partidos">
-          <thead><tr><th>J</th><th class="izq">Dónde</th><th class="izq">Rival</th><th>Marcador</th><th></th><th class="prob">%V</th><th class="prob">%E</th><th class="prob">%D</th></tr></thead>
+          <thead><tr><th>J</th><th class="izq"><span class="largo">Dónde</span><span class="corto">C/F</span></th><th class="izq">Rival</th><th><span class="largo">Marcador</span><span class="corto">Res.</span></th><th></th><th class="prob">%V</th><th class="prob">%E</th><th class="prob">%D</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -834,7 +858,7 @@ jornada,local,visitante,goles_local,goles_visitante
 
     document.getElementById('t-partidos').textContent = 'Partidos de ' + nombre;
     document.querySelector('#tabla-partidos tbody').innerHTML = ps.map((p) => `
-      <tr class="${p.res ? '' : 'pendiente'}"><td>${p.j}</td><td class="izq">${p.casa ? 'Casa' : 'Fuera'}</td><td class="izq">${esc(p.rival)}</td><td>${p.marcador}</td>
+      <tr class="${p.res ? '' : 'pendiente'}"><td>${p.j}</td><td class="izq"><span class="largo">${p.casa ? 'Casa' : 'Fuera'}</span><span class="corto" title="${p.casa ? 'Casa' : 'Fuera'}">${p.casa ? 'C' : 'F'}</span></td><td class="izq">${esc(p.rival)}</td><td>${p.marcador}</td>
       <td>${p.res ? `<span class="ficha ${p.res}">${p.res}</span>` : ''}</td>
       <td class="prob pv">${p.pV === null ? '' : pct(p.pV)}</td><td class="prob">${p.pE === null ? '' : pct(p.pE)}</td><td class="prob">${p.pD === null ? '' : pct(p.pD)}</td></tr>`).join('');
 
@@ -982,7 +1006,7 @@ jornada,local,visitante,goles_local,goles_visitante
 
   // Cuenta TODAS las actas (todos los equipos); se resaltan los jugadores del equipo elegido
   // Filtros de las tablas de jugadores
-  let filtroGoles = 'todos';
+  let filtroGoles = 'club';
   let ultimasCuentas = null;
 
   function soloEquipo(cuenta, equipo) {
@@ -994,7 +1018,7 @@ jornada,local,visitante,goles_local,goles_visitante
     const { goles, partidos, equipoActivo } = ultimasCuentas;
     const corto = equipoActivo;
     const club = filtroGoles === 'club';
-    document.getElementById('btn-gol-club').textContent = 'Solo ' + corto;
+    document.getElementById('btn-gol-club').textContent = corto;
     document.getElementById('nota-goleadores').textContent = club
       ? 'Goles de los jugadores de ' + (NOMBRES[equipoActivo] || equipoActivo) + ' según las actas oficiales.'
       : 'Goles de todos los equipos según las actas oficiales. En color, los del equipo elegido.';
