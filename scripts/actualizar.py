@@ -42,6 +42,7 @@ PAUSA = 8             # segundos entre peticiones a la federación (si se piden 
 ESPERAS_BLOQUEO = [45, 120]  # esperas antes de cada reintento si la web responde vacío o raro
 MADRID = ZoneInfo("Europe/Madrid")
 DURACION_PARTIDO = timedelta(minutes=80)  # tras la hora de inicio, se da el partido por terminado
+ACTA_SEGURA = timedelta(minutes=150)      # si no se ve el visto bueno de la federación, se espera esto
 
 
 # html.parser no cierra bien celdas en HTML mal formado; lxml sí. Se prueban los dos.
@@ -393,6 +394,19 @@ def partidos_con_horario(soup):
                 if t.lower().startswith("árbitro") and i + 1 < len(resto):
                     arbitro = limpio(resto[i + 1])
         a = fila.find("a", href=re.compile(r"CodActa=\d+", re.I))
+        # Estado: la RFCF escribe "En juego" (o "Descanso", "Aplazado"...) mientras no hay acta;
+        # cuando el acta está cerrada pone un icono de visto bueno.
+        bloque = tabla or fila
+        txt_bloque = sin_tildes(bloque.get_text(" ", strip=True))
+        if re.search(r"EN JUEGO|DESCANSO|DIRECTO", txt_bloque):
+            estado = "en_juego"
+        elif re.search(r"APLAZAD|SUSPENDID", txt_bloque):
+            estado = "aplazado"
+        elif bloque.find(class_=re.compile(r"check|success-icon|finaliz", re.I)) or \
+                bloque.find("img", src=re.compile(r"check|ok\.|final|acta", re.I)):
+            estado = "final"
+        else:
+            estado = ""
         marcador = None
         for h in celda.find_all(["h4", "strong"]):
             mm = re.fullmatch(r"\s*(\d{1,2})\s*-\s*(\d{1,2})\s*", h.get_text(" "))
@@ -401,7 +415,7 @@ def partidos_con_horario(soup):
                 # orden local-visitante tal como aparecen en la fila
                 break
         encontrados[frozenset(eqs)] = {
-            "orden": eqs, "marcador": marcador,
+            "orden": eqs, "marcador": marcador, "estado": estado,
             "fecha": _fecha(sp.get_text()) or _fecha(texto_celda),
             "hora": _hora(texto_celda.replace(sp.get_text(), " ")),
             "campo": campo, "arbitro": arbitro,
@@ -535,14 +549,23 @@ def revisar_jornadas(filas, cal, actas):
             ini = inicio_partido(d)
             terminado = ini is not None and ahora >= ini + DURACION_PARTIDO
             reciente = ini is not None and ahora - ini <= timedelta(days=1, hours=12)
-            marcador = None
+            estado = (p or {}).get("estado", "")
+            d["estado"] = estado
+            if estado == "en_juego" or estado == "aplazado":
+                # Mientras la federación lo marca así no hay resultado; si había uno puesto, se quita.
+                if f[3] != "":
+                    cambios += 1
+                    print(f"  J{j} {l} - {v}: {estado.replace('_', ' ')} según la federación -> se quita {f[3]}-{f[4]}")
+                    f[3], f[4] = "", ""
+                continue
+            marcador_web = None
             if p and p.get("marcador"):
                 gl, gv = p["marcador"]
-                marcador = [gl, gv] if p["orden"][0] == l else [gv, gl]
+                marcador_web = [gl, gv] if p["orden"][0] == l else [gv, gl]
             cod = d.get("acta")
             # El acta se descarga si el partido ya debería haber terminado y no la tenemos completa,
             # o si es reciente (la federación a veces corrige el acta en las horas siguientes).
-            if cod and (terminado or marcador) and (not acta_completa(actas.get(cod)) or reciente):
+            if cod and terminado and (not acta_completa(actas.get(cod)) or reciente):
                 try:
                     a = extraer_acta_partido(cod)
                 except Bloqueado:
@@ -555,11 +578,20 @@ def revisar_jornadas(filas, cal, actas):
                     n_jug = sum(len(x["titulares"]) + len(x["suplentes"]) for x in a["equipos"].values())
                     print(f"  Acta {cod}: {a['local']} - {a['visitante']} · {n_jug} jugadores · {len(a['goles'])} goles")
             a = actas.get(cod) if cod else None
-            if marcador is None and terminado and a and acta_completa(a):
-                r = resultado_desde_acta(a)
-                if r:
-                    marcador = r if a["local"] == l else [r[1], r[0]]
+            # Solo hay resultado con acta: la federación lo da por cerrado (visto bueno) o,
+            # si no se puede saber, han pasado 2 h 30 desde el inicio y el acta trae alineaciones.
+            cerrado = estado == "final" or (ini is not None and ahora >= ini + ACTA_SEGURA)
+            marcador = None
+            if terminado and a and acta_completa(a) and cerrado:
+                marcador = marcador_web
+                if marcador is None:
+                    r = resultado_desde_acta(a)
+                    if r:
+                        marcador = r if a["local"] == l else [r[1], r[0]]
+            elif terminado and f[3] == "":
+                print(f"  J{j} {l} - {v}: terminado pero sin acta cerrada todavía; se queda sin resultado.")
             if marcador:
+                d["estado"] = "final"
                 ngl, ngv = str(marcador[0]), str(marcador[1])
                 if (ngl, ngv) != (f[3], f[4]):
                     cambios += 1
