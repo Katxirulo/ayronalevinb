@@ -10480,5 +10480,476 @@
         "tipo": "normal"
       }
     ]
+  },
+  "246586": {
+    "version": 2,
+    "jornada": 10,
+    "local": "Naval",
+    "visitante": "Bezana",
+    "arbitro": "MARTINEZ GONZALEZ, GUILLERMO",
+    "equipos": {
+      "Naval": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "FRAILE OLEA, DANIEL"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "MANCHON GARCIA, MARIO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "RAMOS CALDERON, MANUEL"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "LOPEZ MORENO, JESUS"
+          },
+          {
+            "dorsal": "27",
+            "nombre": "DIEZ PEDRACES, LUIS"
+          },
+          {
+            "dorsal": "29",
+            "nombre": "CEBALLOS JORRIN, MARTIN"
+          },
+          {
+            "dorsal": "31",
+            "nombre": "MENDES RUIZ, MARCO"
+          },
+          {
+            "dorsal": "36",
+            "nombre": "PEREZ LOPEZ, MARTIN"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "28",
+            "nombre": "CUEVAS GUTIERREZ, AITOR"
+          },
+          {
+            "dorsal": "30",
+            "nombre": "CASTAÑOS DE LEON, CRISTHIAN YARIEL"
+          },
+          {
+            "dorsal": "33",
+            "nombre": "LOPEZ GOMEZ, MARTIN"
+          },
+          {
+            "dorsal": "34",
+            "nombre": "DIEZ DIAZ, ORIOL"
+          },
+          {
+            "dorsal": "42",
+            "nombre": "HERREROS GUTIERREZ, AXEL"
+          }
+        ]
+      },
+      "Bezana": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "RODRIGUEZ ROJO, MARTIN"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "RUIZ MARTINEZ, LEO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "DONICA DONICA, MAXIM"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "POO ORDOÑEZ, DARIO"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "TORRONTEGUI GARCIA, DIEGO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "PEREZ JIMENEZ, ALEJANDRO"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "DIEZ ARRIBAS, LUCAS"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "FIGUEROA PAEZ, JUAN ESTEBAN"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "2",
+            "nombre": "GUTIERREZ FERNANDEZ, DYLAN"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "LOPEZ MAZO, IVAN"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "NAKHAL ESTRADA, MOISES DAVID"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "GONZALEZ-ORTEGA HAYA, PABLO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "SOLAR MIERMONT, FABIO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "CASUSO DE LA FUENTE, MIGUEL"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 12,
+        "jugador": "CEBALLOS JORRIN, MARTIN",
+        "equipo": "Naval",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 17,
+        "jugador": "TORRONTEGUI GARCIA, DIEGO",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 21,
+        "jugador": "DONICA DONICA, MAXIM",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 29,
+        "jugador": "DIEZ PEDRACES, LUIS",
+        "equipo": "Naval",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 37,
+        "jugador": "LOPEZ MORENO, JESUS",
+        "equipo": "Naval",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 43,
+        "jugador": "LOPEZ MORENO, JESUS",
+        "equipo": "Naval",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 50,
+        "jugador": "FIGUEROA PAEZ, JUAN ESTEBAN",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 56,
+        "jugador": "CASUSO DE LA FUENTE, MIGUEL",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 57,
+        "jugador": "DIEZ PEDRACES, LUIS",
+        "equipo": "Naval",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 57,
+        "jugador": "FIGUEROA PAEZ, JUAN ESTEBAN",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 58,
+        "jugador": "DIEZ PEDRACES, LUIS",
+        "equipo": "Naval",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
+  },
+  "246584": {
+    "version": 2,
+    "jornada": 10,
+    "local": "San Martín",
+    "visitante": "Marina Sport",
+    "arbitro": "GARCIA RUBIO, JOEL",
+    "equipos": {
+      "San Martín": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "FERNANDEZ ALDA, MARCO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "PEREZ REQUEJO, MARIO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "SEDANO CORRALES, BRUNO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "PEÑIL GARCÍA, MARTÍN"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "GUTIERREZ VILA, CLAUDIA"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "RIVERO CUELI, PABLO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "OBREGON TRESGALLO, TOMAS"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "DIAZ MERINO, LUIS"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "8",
+            "nombre": "RODRIGUEZ BASAÑEZ, ALBERTO"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "ROLDAN RUBAYO, HUGO"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "HOYAL PEREZ, TEO"
+          }
+        ]
+      },
+      "Marina Sport": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "SEOANE ABASCAL, ALEJANDRO"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "CHAPARRO PÉREZ, DIEGO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "GARRALDA YEZERSKA, MARTIN"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "MARTINEZ CALLEJA, EDUARDO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "CASTAÑERA LAVIN, MARTIN"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "RUIZ DIEZ, ARES"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "MUÑIZ RUIZ, MIGUEL"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "SAIZ DIEGO, MAURO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "3",
+            "nombre": "SAIZ DIEGO, OSCAR"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "GOMEZ EXPOSITO, BRUNO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "MARTINEZ OPORTO, HECTOR"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "GONZALEZ RIVAS, HUGO"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 5,
+        "jugador": "GUTIERREZ VILA, CLAUDIA",
+        "equipo": "San Martín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 17,
+        "jugador": "RUIZ DIEZ, ARES",
+        "equipo": "Marina Sport",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 18,
+        "jugador": "DIAZ MERINO, LUIS",
+        "equipo": "San Martín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 23,
+        "jugador": "PEÑIL GARCÍA, MARTÍN",
+        "equipo": "San Martín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 25,
+        "jugador": "RODRIGUEZ BASAÑEZ, ALBERTO",
+        "equipo": "Marina Sport",
+        "tipo": "propia"
+      },
+      {
+        "minuto": 46,
+        "jugador": "GONZALEZ RIVAS, HUGO",
+        "equipo": "Marina Sport",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 61,
+        "jugador": "MARTINEZ OPORTO, HECTOR",
+        "equipo": "Marina Sport",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
+  },
+  "246583": {
+    "version": 2,
+    "jornada": 10,
+    "local": "Vimenor",
+    "visitante": "Valle Lebaniego",
+    "arbitro": "ALLENDE GARCIA, SAÚL",
+    "equipos": {
+      "Vimenor": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "GONZALEZ HOYO, SAUL"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "GARCIA ACEREDA, PABLO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "EZZEKRAOUI BENELGOUSSA, SOHAIL"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "SAÑUDO ORTIZ, MARTIN"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "PRECIADO CARAMÉS, DANIEL"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "DIEGO DE LA RIVA, MARTÍN"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "SOLORZANO ORTIZ, DANI"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "GIL SAN MARTIN, GONZALO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "3",
+            "nombre": "SÁNCHEZ GIL, IBAI"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "LOPEZ GARCIA, CARLOS"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "FLOREA BLESNIAC, NICOLÁS"
+          }
+        ]
+      },
+      "Valle Lebaniego": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "FEIJOO FERNÁNDEZ, MIGUEL"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "VELARDE FERNÁNDEZ, LARO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "PABLOS PRIETO, HUGO"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "GONZÁLEZ ALONSO, MARTÍN"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "MARTIN FOMBELLIDA, MATEO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "SAINZ BRIZ, VIDAL"
+          },
+          {
+            "dorsal": "13",
+            "nombre": "MARTIN FOMBELLIDA, JIMENA"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "ROJO FERNANDEZ, LUCAS"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "12",
+            "nombre": "DUQUE DE CELIS, ALEJANDRO"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "POSADA GONZÁLEZ, JAIRO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "PARVANA, YANNIS RADU"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "LOZANO ALBUJAR, SERGIO"
+          }
+        ]
+      }
+    },
+    "goles": [],
+    "marcador": null
   }
 }
