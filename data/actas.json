@@ -10949,7 +10949,74 @@
         ]
       }
     },
-    "goles": [],
+    "goles": [
+      {
+        "minuto": 5,
+        "jugador": "SAÑUDO ORTIZ, MARTIN",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 11,
+        "jugador": "PABLOS PRIETO, HUGO",
+        "equipo": "Vimenor",
+        "tipo": "propia"
+      },
+      {
+        "minuto": 16,
+        "jugador": "MARTIN FOMBELLIDA, MATEO",
+        "equipo": "Valle Lebaniego",
+        "tipo": "penalti"
+      },
+      {
+        "minuto": 16,
+        "jugador": "GIL SAN MARTIN, GONZALO",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 18,
+        "jugador": "PABLOS PRIETO, HUGO",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 21,
+        "jugador": "EZZEKRAOUI BENELGOUSSA, SOHAIL",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 26,
+        "jugador": "MARTIN FOMBELLIDA, MATEO",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 32,
+        "jugador": "SOLORZANO ORTIZ, DANI",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 34,
+        "jugador": "SÁNCHEZ GIL, IBAI",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 41,
+        "jugador": "MARTIN FOMBELLIDA, MATEO",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 43,
+        "jugador": "PABLOS PRIETO, HUGO",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      }
+    ],
     "marcador": null
   }
 }

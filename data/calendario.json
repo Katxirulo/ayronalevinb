@@ -5,56 +5,112 @@
       "hora": "11:00",
       "campo": "Comp. Albericia (A)",
       "arbitro": "LUCAS GUTIERREZ, ANGEL",
-      "acta": "246587"
+      "acta": "246587",
+      "estado": ""
     },
     "Gimnástica|Ayron": {
       "fecha": "2026-11-15",
       "hora": "11:00",
       "campo": "El Malecón 2",
       "arbitro": "EL HARKAOUI EL MANSOURI , JABER",
-      "acta": "246585"
+      "acta": "246585",
+      "estado": ""
     },
     "Naval|Bezana": {
       "fecha": "2026-11-14",
       "hora": "10:15",
       "campo": "Reinosa",
       "arbitro": "MARTINEZ GONZALEZ, GUILLERMO",
-      "acta": "246586"
+      "acta": "246586",
+      "estado": "final"
     },
     "San Agustín|Calasanz": {
       "fecha": "2026-11-15",
       "hora": "11:45",
       "campo": "San Agustin",
       "arbitro": "MARTINEZ CASAS, CARLA",
-      "acta": "246581"
+      "acta": "246581",
+      "estado": ""
     },
     "San Martín|Marina Sport": {
       "fecha": "2026-11-14",
       "hora": "09:30",
       "campo": "Suances",
       "arbitro": "GARCIA RUBIO, JOEL",
-      "acta": "246584"
+      "acta": "246584",
+      "estado": "final"
     },
     "Textil Escudo|Polanco": {
       "fecha": "2026-11-15",
       "hora": "10:15",
       "campo": "Cabezón de la Sal",
       "arbitro": "LASO MARTINEZ, GONZALO",
-      "acta": "246582"
+      "acta": "246582",
+      "estado": ""
     },
     "Tropezón|Milinde Reocín": {
       "fecha": "2026-11-15",
       "hora": "10:30",
       "campo": "Tanos 2",
       "arbitro": "CARUTA MOROI, EDUARDO",
-      "acta": "246580"
+      "acta": "246580",
+      "estado": ""
     },
     "Vimenor|Valle Lebaniego": {
       "fecha": "2026-11-14",
       "hora": "11:00",
       "campo": "Vioño",
       "arbitro": "ALLENDE GARCIA, SAÚL",
-      "acta": "246583"
+      "acta": "246583",
+      "estado": ""
+    }
+  },
+  "11": {
+    "Ayron|Naval": {
+      "fecha": "2026-11-21",
+      "hora": "12:00",
+      "campo": "Vargas",
+      "estado": ""
+    },
+    "Bezana|Esclavas": {
+      "fecha": "2026-11-21",
+      "hora": "10:00",
+      "campo": "Santa Cruz de Bezana",
+      "estado": ""
+    },
+    "Calasanz|Textil Escudo": {
+      "fecha": "2026-11-22",
+      "hora": "12:00",
+      "campo": "Comp. Albericia (A)",
+      "estado": ""
+    },
+    "Marina Sport|Gimnástica": {
+      "fecha": "2026-11-22",
+      "campo": "Alberto Perez Blanco 1",
+      "estado": ""
+    },
+    "Milinde Reocín|Amistad Sniace": {
+      "fecha": "2026-11-22",
+      "campo": "Puente San Miguel",
+      "estado": ""
+    },
+    "Polanco|Vimenor": {
+      "fecha": "2026-11-21",
+      "hora": "12:00",
+      "campo": "Polanco",
+      "estado": ""
+    },
+    "Tropezón|San Agustín": {
+      "fecha": "2026-11-22",
+      "hora": "10:30",
+      "campo": "Tanos 1",
+      "estado": ""
+    },
+    "Valle Lebaniego|San Martín": {
+      "fecha": "2026-11-21",
+      "hora": "11:30",
+      "campo": "Tama",
+      "estado": ""
     }
   }
 }
