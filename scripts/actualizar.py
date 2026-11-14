@@ -255,9 +255,9 @@ def extraer_acta_partido(cod_acta):
 
 
 def resultado_desde_acta(acta):
-    """[goles local, goles visitante]: el marcador del acta o, si no lo trae, los goles contados."""
-    if acta.get("marcador"):
-        return list(acta["marcador"])
+    """[goles local, goles visitante] contando los goles del acta (los de propia puerta ya van
+    asignados al equipo que se beneficia). No se usa el marcador que pinta la web: la RFCF mete
+    dígitos ocultos en el HTML y leído tal cual puede dar un resultado falso (p. ej. 8-5 en vez de 6-5)."""
     if any(not g.get("equipo") for g in acta.get("goles", [])):
         return None  # algún goleador sin equipo: no se puede saber el marcador con seguridad
     return [sum(1 for g in acta["goles"] if g["equipo"] == acta["local"]),
@@ -583,11 +583,12 @@ def revisar_jornadas(filas, cal, actas):
             cerrado = estado == "final" or (ini is not None and ahora >= ini + ACTA_SEGURA)
             marcador = None
             if terminado and a and acta_completa(a) and cerrado:
-                marcador = marcador_web
-                if marcador is None:
-                    r = resultado_desde_acta(a)
-                    if r:
-                        marcador = r if a["local"] == l else [r[1], r[0]]
+                r = resultado_desde_acta(a)
+                if r:
+                    marcador = r if a["local"] == l else [r[1], r[0]]
+                    if marcador_web and marcador_web != marcador:
+                        print(f"  (aviso) J{j} {l} - {v}: la web parece mostrar {marcador_web[0]}-{marcador_web[1]}, "
+                              f"pero el acta suma {marcador[0]}-{marcador[1]}; se usa el acta.")
             elif terminado and f[3] == "":
                 print(f"  J{j} {l} - {v}: terminado pero sin acta cerrada todavía; se queda sin resultado.")
             if marcador:
