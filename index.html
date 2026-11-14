@@ -270,6 +270,20 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
 .tag-vivo{font-size:12px;font-weight:800;color:#fff;background:#FF3B30;border-radius:999px;padding:2px 9px}
 .tag-vivo::before{content:"● ";animation:latido 1.4s infinite}
 .pj-res.vivo{background:#FF3B30;color:#fff;font-size:18px;letter-spacing:2px}
+button.pj-res.abre{border:0;cursor:pointer;display:inline-flex;align-items:center;gap:4px;font:inherit;font-family:var(--display);font-size:22px;line-height:1.1;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);transition:transform .15s}
+button.pj-res.abre:hover{transform:translateY(-1px)}
+button.pj-res.abre .flecha{font-size:13px;opacity:.8;transition:transform .2s}
+button.pj-res.abre[aria-expanded=true] .flecha{transform:rotate(180deg)}
+.pj-goles{border-top:1px solid var(--linea);padding-top:8px;margin-top:2px}
+.lista-goles{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.lista-goles li{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;font-size:14px}
+.lista-goles li.L .gol-nom{text-align:right}
+.lista-goles small{color:var(--tinta-2);font-size:11.5px}
+.gol-min{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--tinta-2);min-width:74px;justify-content:center}
+.gol-min b{background:var(--tinta);color:var(--panel);border-radius:6px;padding:1px 6px;font-size:12px}
+.gol-min::before{content:"⚽";font-size:12px}
+.pj-goles-nada{margin:0;font-size:13px;color:var(--tinta-2);text-align:center}
 </style>
 </head>
 <body>
@@ -1019,7 +1033,7 @@ jornada,local,visitante,goles_local,goles_visitante
         c.hora && !c.aprox ? `<b>${esc(c.hora)} h</b>` : '',
         c.campo ? esc(c.campo) + (c.ciudad ? ' (' + esc(c.ciudad) + ')' : '') : ''
       ].filter(Boolean).join('<span aria-hidden="true">·</span>');
-      const centro = p.gl !== null ? `<span class="pj-res">${p.gl}–${p.gv}</span>` : enJuego(p) ? '<span class="pj-res vivo">· · ·</span>' : '<span class="pj-res pend">vs</span>';
+      const centro = p.gl !== null ? `<button type="button" class="pj-res abre" data-j="${p.j}" data-l="${esc(p.local)}" data-v="${esc(p.visitante)}" aria-expanded="false" title="Ver goleadores">${p.gl}–${p.gv}<span class="flecha" aria-hidden="true">▾</span></button>` : enJuego(p) ? '<span class="pj-res vivo">· · ·</span>' : '<span class="pj-res pend">vs</span>';
       const barra = p.gl === null && p.q && !enJuego(p) ? `
         <div class="barra-prob mini" role="img" aria-label="${esc(p.local)} ${pct(p.q.pl)}%, empate ${pct(p.q.pe)}%, ${esc(p.visitante)} ${pct(p.q.pv)}%">
           <span style="width:${pct(p.q.pl)}%;background:var(--p1)" title="${pct(p.q.pl)}%">${etq(p.q.pl)}</span>
@@ -1027,8 +1041,9 @@ jornada,local,visitante,goles_local,goles_visitante
           <span style="width:${pct(p.q.pv)}%;background:var(--p2)" title="${pct(p.q.pv)}%">${etq(p.q.pv)}</span>
         </div>` : '';
       return `<div class="pj${yo ? ' yo' : ''}"><div class="pj-meta">${meta}</div>
-        <div class="pj-cruce"><span>${esc(p.local)}</span>${centro}<span class="vis">${esc(p.visitante)}</span></div>${barra}</div>`;
+        <div class="pj-cruce"><span>${esc(p.local)}</span>${centro}<span class="vis">${esc(p.visitante)}</span></div>${barra}${p.gl !== null ? '<div class="pj-goles" hidden></div>' : ''}</div>`;
     }).join('') || '<p class="nota">No hay partidos en esta jornada.</p>';
+    if (hechos) document.getElementById('nota-jornada').textContent += ' Toca un resultado para ver los goleadores.';
 
     // Clasificación: la de antes de la jornada + resultado real o puntos esperados de esta jornada
     const antes = clasificacion(J - 1);
@@ -1064,6 +1079,43 @@ jornada,local,visitante,goles_local,goles_visitante
 
   // ESTADÍSTICAS DE JUGADORES DESDE data/actas.json (filtradas por el equipo elegido)
   let actasCache = null;
+
+  // Desplegable de goleadores al tocar el resultado de un partido terminado
+  function htmlGoles(acta) {
+    if (!acta) return '<p class="pj-goles-nada">El acta de este partido aún no está disponible.</p>';
+    const gs = [...(acta.goles || [])].sort((a, b) => (a.minuto ?? 999) - (b.minuto ?? 999));
+    if (!gs.length) return '<p class="pj-goles-nada">Partido sin goles.</p>';
+    let gl = 0, gv = 0;
+    return '<ol class="lista-goles">' + gs.map((g) => {
+      const local = g.equipo === acta.local;
+      if (local) gl++; else gv++;
+      const extra = g.tipo === 'penalti' ? ' <small>(pen.)</small>' : g.tipo === 'propia' ? ' <small>(p.p.)</small>' : '';
+      const nom = `<span class="gol-nom">${esc(nombreBonito(g.jugador))}${extra}</span>`;
+      const mid = `<span class="gol-min">${g.minuto != null ? g.minuto + "'" : '–'}<b>${gl}-${gv}</b></span>`;
+      return `<li class="${local ? 'L' : 'V'}">${local ? nom : '<span></span>'}${mid}${local ? '<span></span>' : nom}</li>`;
+    }).join('') + '</ol>';
+  }
+
+  document.getElementById('lista-jornada').addEventListener('click', async (ev) => {
+    const b = ev.target.closest('button.abre');
+    if (!b) return;
+    const caja = b.closest('.pj').querySelector('.pj-goles');
+    const abrir = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', String(abrir));
+    caja.hidden = !abrir;
+    if (abrir && !caja.dataset.listo) {
+      caja.innerHTML = '<p class="pj-goles-nada">Cargando…</p>';
+      try {
+        const actas = await leerActas();
+        const acta = Object.values(actas).find((a) => a.jornada === Number(b.dataset.j) && a.local === b.dataset.l && a.visitante === b.dataset.v);
+        caja.innerHTML = htmlGoles(acta);
+        caja.dataset.listo = '1';
+      } catch (e) {
+        caja.innerHTML = '<p class="pj-goles-nada">No se pudieron cargar las actas.</p>';
+      }
+    }
+  });
+
   async function leerActas() {
     if (actasCache) return actasCache;
     // no-store + parámetro para no quedarnos con una copia antigua en la caché del navegador
