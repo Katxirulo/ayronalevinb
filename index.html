@@ -267,6 +267,9 @@ details{background:var(--panel);border-radius:var(--radio);padding:14px 18px;box
   width:min(620px,95vw);aspect-ratio:1;right:-4%;top:50%;transform:translateY(-50%) rotate(-8deg);
   background:var(--escudo-fondo,none) no-repeat center/contain;opacity:.6;filter:grayscale(1) contrast(1.6) brightness(1.15);mix-blend-mode:soft-light}
 @media (max-width:560px){.marcador::before{width:120vw;right:-38%;top:auto;bottom:-6%;transform:rotate(-8deg)}}
+.tag-vivo{font-size:12px;font-weight:800;color:#fff;background:#FF3B30;border-radius:999px;padding:2px 9px}
+.tag-vivo::before{content:"● ";animation:latido 1.4s infinite}
+.pj-res.vivo{background:#FF3B30;color:#fff;font-size:18px;letter-spacing:2px}
 </style>
 </head>
 <body>
@@ -525,7 +528,7 @@ jornada,local,visitante,goles_local,goles_visitante
 10,San Martín,Marina Sport,3,4
 10,Textil Escudo,Polanco,,
 10,Tropezón,Milinde Reocín,,
-10,Vimenor,Valle Lebaniego,0,0
+10,Vimenor,Valle Lebaniego,,
 11,Ayron,Naval,,
 11,Bezana,Esclavas,,
 11,Calasanz,Textil Escudo,,
@@ -976,6 +979,14 @@ jornada,local,visitante,goles_local,goles_visitante
   const pts1 = (x) => String(Math.round(x));
   const etq = (x) => (pct(x) >= 10 ? pct(x) + '%' : '');
 
+  // Un partido está "en juego" desde su hora de inicio hasta que hay resultado (acta cerrada en la federación)
+  function enJuego(p) {
+    if (p.gl !== null) return false;
+    if (p.cal.estado === 'en_juego') return true;
+    if (!p.cal.fecha || !p.cal.hora || p.cal.aprox) return false;
+    return new Date(p.cal.fecha + 'T' + p.cal.hora + ':00') <= new Date();
+  }
+
   function pintarJornada(eq) {
     if (!calendario) return;
     const J = jornadaEnCurso(calendario), cal = calendario[J] || {};
@@ -998,13 +1009,13 @@ jornada,local,visitante,goles_local,goles_visitante
     document.getElementById('lista-jornada').innerHTML = ps.map((p) => {
       const c = p.cal, yo = p.local === eq || p.visitante === eq;
       const meta = [
-        p.gl !== null ? '<span class="tag-final">Final</span>' : '',
+        p.gl !== null ? '<span class="tag-final">Final</span>' : enJuego(p) ? '<span class="tag-vivo">En juego</span>' : '',
         c.fecha ? `<b>${esc(fecha(c.fecha))}</b>` : '<b>Fecha por confirmar</b>',
         c.hora && !c.aprox ? `<b>${esc(c.hora)} h</b>` : '',
         c.campo ? esc(c.campo) + (c.ciudad ? ' (' + esc(c.ciudad) + ')' : '') : ''
       ].filter(Boolean).join('<span aria-hidden="true">·</span>');
-      const centro = p.gl !== null ? `<span class="pj-res">${p.gl}–${p.gv}</span>` : '<span class="pj-res pend">vs</span>';
-      const barra = p.gl === null && p.q ? `
+      const centro = p.gl !== null ? `<span class="pj-res">${p.gl}–${p.gv}</span>` : enJuego(p) ? '<span class="pj-res vivo">· · ·</span>' : '<span class="pj-res pend">vs</span>';
+      const barra = p.gl === null && p.q && !enJuego(p) ? `
         <div class="barra-prob mini" role="img" aria-label="${esc(p.local)} ${pct(p.q.pl)}%, empate ${pct(p.q.pe)}%, ${esc(p.visitante)} ${pct(p.q.pv)}%">
           <span style="width:${pct(p.q.pl)}%;background:var(--p1)" title="${pct(p.q.pl)}%">${etq(p.q.pl)}</span>
           <span style="width:${pct(p.q.pe)}%;background:var(--e)" title="${pct(p.q.pe)}%">${etq(p.q.pe)}</span>
