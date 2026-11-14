@@ -284,6 +284,8 @@ button.pj-res.abre[aria-expanded=true] .flecha{transform:rotate(180deg)}
 .gol-min b{background:var(--tinta);color:var(--panel);border-radius:6px;padding:1px 6px;font-size:12px}
 .gol-min::before{content:"⚽";font-size:12px}
 .pj-goles-nada{margin:0;font-size:13px;color:var(--tinta-2);text-align:center}
+.pestanas-j{margin:10px 0 2px}
+@media (max-width:560px){.pestanas-j{width:100%}.pestanas-j .boton{flex:1}}
 </style>
 </head>
 <body>
@@ -324,6 +326,10 @@ button.pj-res.abre[aria-expanded=true] .flecha{transform:rotate(180deg)}
       <div class="cabecera">
         <h2 id="t-jornada">Jornada</h2>
         <span class="estado-j" id="estado-jornada"></span>
+      </div>
+      <div class="segmentado pestanas-j" role="group" aria-label="Jornada a mostrar">
+        <button type="button" class="boton" data-vista-j="actual" aria-pressed="true" id="btn-j-actual">Jornada</button>
+        <button type="button" class="boton" data-vista-j="sig" aria-pressed="false" id="btn-j-sig">Próxima</button>
       </div>
       <p class="nota" id="nota-jornada">Cargando calendario...</p>
       <div class="lista-j" id="lista-jornada"></div>
@@ -1001,6 +1007,12 @@ jornada,local,visitante,goles_local,goles_visitante
     return new Date(p.cal.fecha + 'T' + p.cal.hora + ':00') <= new Date();
   }
 
+  let vistaJ = 'actual';
+  document.querySelectorAll('[data-vista-j]').forEach((b) => b.addEventListener('click', () => {
+    vistaJ = b.dataset.vistaJ;
+    pintarJornada(document.getElementById('equipo').value);
+  }));
+
   function pintarJornada(eq) {
     if (!calendario) return;
     const J = jornadaEnCurso(calendario), cal = calendario[J] || {};
@@ -1009,23 +1021,37 @@ jornada,local,visitante,goles_local,goles_visitante
     ps.sort((a, b) => orden(a).localeCompare(orden(b)) || a.local.localeCompare(b.local, 'es'));
     const hechos = ps.filter((p) => p.gl !== null).length;
 
-    document.getElementById('t-jornada').textContent = 'Jornada ' + J;
+    // Pestañas: jornada en curso / próxima jornada
+    const haySig = J < ultimaJornada;
+    if (!haySig) vistaJ = 'actual';
+    const JV = vistaJ === 'sig' ? J + 1 : J, calV = calendario[JV] || {};
+    const psV = JV === J ? ps : partidos.filter((p) => p.j === JV).map((p) => ({ ...p, cal: calV[p.local + '|' + p.visitante] || {}, q: probs.get(p) }))
+      .sort((a, b) => orden(a).localeCompare(orden(b)) || a.local.localeCompare(b.local, 'es'));
+    const hechosV = psV.filter((p) => p.gl !== null).length;
+    document.getElementById('btn-j-actual').textContent = 'Jornada ' + J;
+    document.getElementById('btn-j-sig').textContent = 'Próxima · J' + (J + 1);
+    document.getElementById('btn-j-sig').hidden = !haySig;
+    document.querySelectorAll('[data-vista-j]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.vistaJ === vistaJ)));
+
+    document.getElementById('t-jornada').textContent = 'Jornada ' + JV;
     document.getElementById('t-clas-jornada').textContent = 'Clasificación prevista tras la J' + J;
     document.getElementById('th-jornada').textContent = 'J' + J;
     const est = document.getElementById('estado-jornada');
     // Rojo «En juego» solo si hay algún partido disputándose ahora; si no, cuántos se han jugado
-    const vivos = ps.filter((p) => enJuego(p)).length;
+    const vivos = psV.filter((p) => enJuego(p)).length;
+    const conHora = psV.filter((p) => p.cal.fecha && p.cal.hora && !p.cal.aprox).length;
     est.textContent = vivos ? `En juego · ${vivos} ${vivos === 1 ? 'partido' : 'partidos'}`
-      : hechos === ps.length ? 'Terminada'
-      : hechos === 0 ? 'Por jugar'
-      : `${hechos} de ${ps.length} jugados`;
+      : hechosV === psV.length ? 'Terminada'
+      : JV !== J ? (conHora ? `${conHora} de ${psV.length} con horario` : 'Horarios pendientes')
+      : hechosV === 0 ? 'Por jugar'
+      : `${hechosV} de ${psV.length} jugados`;
     est.className = 'estado-j' + (vivos ? ' vivo' : '');
-    const dias = [...new Set(ps.map((p) => p.cal.fecha).filter(Boolean))].sort();
+    const dias = [...new Set(psV.map((p) => p.cal.fecha).filter(Boolean))].sort();
     document.getElementById('nota-jornada').textContent = dias.length
       ? 'Se juega ' + dias.map((d) => fecha(d, fmtDiaLargo)).join(' y ') + '. Las barras son las probabilidades de cada resultado.'
       : 'Horarios aún no publicados por la federación. Las barras son las probabilidades de cada resultado.';
 
-    document.getElementById('lista-jornada').innerHTML = ps.map((p) => {
+    document.getElementById('lista-jornada').innerHTML = psV.map((p) => {
       const c = p.cal, yo = p.local === eq || p.visitante === eq;
       const meta = [
         p.gl !== null ? '<span class="tag-final">Final</span>' : enJuego(p) ? '<span class="tag-vivo">En juego</span>' : '',
@@ -1043,7 +1069,7 @@ jornada,local,visitante,goles_local,goles_visitante
       return `<div class="pj${yo ? ' yo' : ''}"><div class="pj-meta">${meta}</div>
         <div class="pj-cruce"><span>${esc(p.local)}</span>${centro}<span class="vis">${esc(p.visitante)}</span></div>${barra}${p.gl !== null ? '<div class="pj-goles" hidden></div>' : ''}</div>`;
     }).join('') || '<p class="nota">No hay partidos en esta jornada.</p>';
-    if (hechos) document.getElementById('nota-jornada').textContent += ' Toca un resultado para ver los goleadores.';
+    if (hechosV) document.getElementById('nota-jornada').textContent += ' Toca un resultado para ver los goleadores.';
 
     // Clasificación: la de antes de la jornada + resultado real o puntos esperados de esta jornada
     const antes = clasificacion(J - 1);
