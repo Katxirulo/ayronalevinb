@@ -62,7 +62,7 @@
       "campo": "Vioño",
       "arbitro": "ALLENDE GARCIA, SAÚL",
       "acta": "246583",
-      "estado": ""
+      "estado": "final"
     }
   },
   "11": {
@@ -87,12 +87,14 @@
     "Marina Sport|Gimnástica": {
       "fecha": "2026-11-22",
       "campo": "Alberto Perez Blanco 1",
-      "estado": ""
+      "estado": "",
+      "hora": "09:45"
     },
     "Milinde Reocín|Amistad Sniace": {
       "fecha": "2026-11-22",
       "campo": "Puente San Miguel",
-      "estado": ""
+      "estado": "",
+      "hora": "11:30"
     },
     "Polanco|Vimenor": {
       "fecha": "2026-11-21",
