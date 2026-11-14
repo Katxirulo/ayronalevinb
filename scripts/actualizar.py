@@ -39,7 +39,7 @@ URL_JORNADA = ("https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=100012
                "&CodGrupo=22595822&CodTemporada=22&cod_agrupacion=1&CodJornada={j}&Sch_Tipo_Juego=4")
 VERSION_ACTA = 2      # sube este número si cambias el formato y quieres volver a descargar todo
 PAUSA = 8             # segundos entre peticiones a la federación (si se piden muchas seguidas, corta)
-ESPERAS_BLOQUEO = [60, 150]  # esperas antes de cada reintento si la web responde vacío o raro
+ESPERAS_BLOQUEO = [45, 120]  # esperas antes de cada reintento si la web responde vacío o raro
 MADRID = ZoneInfo("Europe/Madrid")
 DURACION_PARTIDO = timedelta(minutes=80)  # tras la hora de inicio, se da el partido por terminado
 
@@ -325,10 +325,8 @@ def sincronizar_actas(jornadas):
 # ---------------------------------------------------------------------------
 _BASE_JORNADA = ("https://www.rfcf.es/pnfg/NPcd/NFG_CmpJornada?cod_primaria=1000120&CodCompeticion=22595821"
                  "&CodGrupo=22595822&CodTemporada=22&CodJornada={j}")
-URLS_CALENDARIO = [  # se prueban en orden hasta que una traiga horarios
-    _BASE_JORNADA + "&Sch_Tipo_Juego=",   # la que se ve en el navegador: trae horarios y resultados
-    URL_JORNADA,
-    _BASE_JORNADA,
+URLS_CALENDARIO = [  # la que se ve en el navegador: trae horarios y resultados
+    _BASE_JORNADA + "&Sch_Tipo_Juego=",
 ]
 
 def pagina_calendario(j):
@@ -506,13 +504,16 @@ def revisar_jornadas(filas, cal, actas):
         try:
             soup = pagina_calendario(j)
         except Bloqueado:
-            print("  No se ha podido leer; se deja todo como estaba.")
-            continue
-        texto = (soup.find("main") or soup).get_text(" ", strip=True)
-        m = re.search(r"Jornada\s+\d+\D{0,15}(\d{1,2}[-/]\d{1,2}[-/]\d{4})", texto)
-        fecha_jornada = _fecha(m.group(1)) if m else ""
-        en_pagina = partidos_en_pagina_jornada(soup)
-        print(f"  La página trae {len(soup.select('span.horario'))} horarios; reconocidos {len(en_pagina)} partidos.")
+            soup = None
+            print("  La página de la jornada no responde: se usan las fechas y códigos de acta ya guardados.")
+        if soup is not None:
+            texto = (soup.find("main") or soup).get_text(" ", strip=True)
+            m = re.search(r"Jornada\s+\d+\D{0,15}(\d{1,2}[-/]\d{1,2}[-/]\d{4})", texto)
+            fecha_jornada = _fecha(m.group(1)) if m else ""
+            en_pagina = partidos_en_pagina_jornada(soup)
+            print(f"  La página trae {len(soup.select('span.horario'))} horarios; reconocidos {len(en_pagina)} partidos.")
+        else:
+            fecha_jornada, en_pagina = "", {}
         previo = cal.get(str(j), {})
         nuevo = {}
         for f in por_jornada[j]:
