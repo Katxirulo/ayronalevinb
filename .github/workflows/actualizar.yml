@@ -2,20 +2,27 @@ name: Actualizar resultados desde Web
 
 on:
   schedule:
-    # Sábados de 10:00 a 18:00 cada hora (en UTC: 09:00 a 17:00)
-    - cron: '0 9-17 * * 6'
-    # Domingos de 10:00 a 14:00 cada hora (en UTC: 09:00 a 13:00)
-    - cron: '0 9-13 * * 0'
-    # De domingo a viernes a las 20:00 (19:00 UTC): recoge los horarios de la próxima jornada
-    - cron: '0 19 * * 0-5'
-  workflow_dispatch:     # Permite mantener el botón de ejecución manual por si lo necesitas
+    # GitHub retrasa o descarta ejecuciones programadas en punto (minuto 0), por eso se usan minutos "raros".
+    # Sábados de 10:00 a 18:30, dos veces por hora (UTC 09-17)
+    - cron: '17,47 9-17 * * 6'
+    # Domingos de 10:00 a 15:00, dos veces por hora (UTC 09-14)
+    - cron: '17,47 9-14 * * 0'
+    # De domingo a viernes a las 20:23 (19:23 UTC): horarios de la próxima jornada y actas corregidas
+    - cron: '23 19 * * 0-5'
+  workflow_dispatch:     # botón de ejecución manual
 
 permissions:
   contents: write
 
+# si una ejecución tarda (la federación corta), la siguiente espera en vez de pisarla
+concurrency:
+  group: actualizar
+  cancel-in-progress: false
+
 jobs:
   actualizar:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -29,4 +36,5 @@ jobs:
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
           git add index.html data/
           git diff --cached --quiet || git commit -m "Actualizar resultados y actas de partidos"
+          git pull --rebase --autostash
           git push
