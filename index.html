@@ -999,8 +999,13 @@ jornada,local,visitante,goles_local,goles_visitante
     document.getElementById('t-clas-jornada').textContent = 'Clasificación prevista tras la J' + J;
     document.getElementById('th-jornada').textContent = 'J' + J;
     const est = document.getElementById('estado-jornada');
-    est.textContent = hechos === 0 ? 'Por jugar' : hechos === ps.length ? 'Terminada' : `En juego · ${hechos} de ${ps.length}`;
-    est.className = 'estado-j' + (hechos > 0 && hechos < ps.length ? ' vivo' : '');
+    // Rojo «En juego» solo si hay algún partido disputándose ahora; si no, cuántos se han jugado
+    const vivos = ps.filter((p) => enJuego(p)).length;
+    est.textContent = vivos ? `En juego · ${vivos} ${vivos === 1 ? 'partido' : 'partidos'}`
+      : hechos === ps.length ? 'Terminada'
+      : hechos === 0 ? 'Por jugar'
+      : `${hechos} de ${ps.length} jugados`;
+    est.className = 'estado-j' + (vivos ? ' vivo' : '');
     const dias = [...new Set(ps.map((p) => p.cal.fecha).filter(Boolean))].sort();
     document.getElementById('nota-jornada').textContent = dias.length
       ? 'Se juega ' + dias.map((d) => fecha(d, fmtDiaLargo)).join(' y ') + '. Las barras son las probabilidades de cada resultado.'
