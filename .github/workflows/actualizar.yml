@@ -4,9 +4,9 @@ on:
   schedule:
     # GitHub retrasa o descarta ejecuciones programadas en punto (minuto 0), por eso se usan minutos "raros".
     # Sábados de 10:00 a 18:30, dos veces por hora (UTC 09-17)
-    - cron: '17,47 9-17 * * 6'
+    - cron: '17,47 9-23 * * 6'
     # Domingos de 10:00 a 15:00, dos veces por hora (UTC 09-14)
-    - cron: '17,47 9-14 * * 0'
+    - cron: '17,47 0-14 * * 0'
     # De domingo a viernes a las 20:23 (19:23 UTC): horarios de la próxima jornada y actas corregidas
     - cron: '23 19 * * 0-5'
   workflow_dispatch:     # botón de ejecución manual
