@@ -580,7 +580,9 @@ def revisar_jornadas(filas, cal, actas):
             a = actas.get(cod) if cod else None
             # Solo hay resultado con acta: la federación lo da por cerrado (visto bueno) o,
             # si no se puede saber, han pasado 2 h 30 desde el inicio y el acta trae alineaciones.
-            cerrado = estado == "final" or (ini is not None and ahora >= ini + ACTA_SEGURA)
+            # La federación pone «En juego» hasta que cierra el acta: si la página de la jornada se ha leído
+            # y el partido ya no aparece así, el acta está cerrada.
+            cerrado = estado == "final" or (p is not None and terminado) or (ini is not None and ahora >= ini + ACTA_SEGURA)
             marcador = None
             if terminado and a and acta_completa(a) and cerrado:
                 r = resultado_desde_acta(a)
