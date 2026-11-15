@@ -3,10 +3,10 @@ name: Actualizar resultados desde Web
 on:
   schedule:
     # GitHub retrasa o descarta ejecuciones programadas en punto (minuto 0), por eso se usan minutos "raros".
-    # Sábados de 10:00 a 18:30, dos veces por hora (UTC 09-17)
-    - cron: '17,47 9-23 * * 6'
-    # Domingos de 10:00 a 15:00, dos veces por hora (UTC 09-14)
-    - cron: '17,47 9-20 * * 0'
+    # Sábados de 9:17 a 18:47, dos veces por hora (UTC 08-17)
+    - cron: '17,47 8-17 * * 6'
+    # Domingos de 9:17 a 15:47, dos veces por hora (UTC 08-14)
+    - cron: '17,47 8-14 * * 0'
     # De domingo a viernes a las 20:23 (19:23 UTC): horarios de la próxima jornada y actas corregidas
     - cron: '23 19 * * 0-5'
   workflow_dispatch:     # botón de ejecución manual
@@ -14,7 +14,7 @@ on:
 permissions:
   contents: write
 
-# si una ejecución tarda (la federación corta), la siguiente espera en vez de pisarla
+# solo una ejecución a la vez: si hay una en marcha (en bucle), las programadas esperan en vez de pisarla
 concurrency:
   group: actualizar
   cancel-in-progress: false
@@ -22,19 +22,27 @@ concurrency:
 jobs:
   actualizar:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 340   # un día de partidos completo (máximo de GitHub: 360)
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install requests beautifulsoup4 lxml
-      - run: python scripts/actualizar.py
-      - name: Guardar cambios
+      - name: Actualizar (y repetir cada 20 min mientras queden partidos de hoy sin resultado)
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git add index.html data/
-          git diff --cached --quiet || git commit -m "Actualizar resultados y actas de partidos"
-          git pull --rebase --autostash
-          git push
+          for vuelta in $(seq 1 15); do
+            echo "::group::Vuelta $vuelta ($(TZ=Europe/Madrid date +%H:%M))"
+            python scripts/actualizar.py || echo "El script ha fallado en esta vuelta; se sigue."
+            git add index.html data/
+            if ! git diff --cached --quiet; then
+              git commit -m "Actualizar resultados y actas de partidos"
+              git pull --rebase --autostash && git push
+            fi
+            echo "::endgroup::"
+            python scripts/quedan_hoy.py || break
+            echo "Nueva vuelta en 20 minutos..."
+            sleep 1200
+          done
