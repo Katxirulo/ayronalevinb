@@ -342,15 +342,36 @@ button.pj-res.abre[aria-expanded=true] .flecha{transform:rotate(180deg)}
       <div class="leyenda" style="margin-top:10px"><span><i style="background:var(--p1)"></i>Gana el local</span><span><i style="background:var(--e)"></i>Empate</span><span><i style="background:var(--p2)"></i>Gana el visitante</span></div>
     </section>
     <section class="bloque">
-      <h2 id="t-clas-jornada">Clasificación prevista</h2>
-      <p class="nota" id="nota-clas-jornada">Partidos jugados con su resultado real; los pendientes, con su resultado más probable (3, 1 o 0 puntos).</p>
-      <div class="desliza">
-        <table id="tabla-clas-jornada">
-          <thead><tr><th>#</th><th class="izq">Equipo</th><th>Antes</th><th id="th-jornada">Jornada</th><th>Pts</th><th></th></tr></thead>
+      <div class="cabecera">
+        <h2>Clasificación</h2>
+        <div class="segmentado" role="group" aria-label="Vista de la clasificación">
+          <button type="button" class="boton" data-vista="actual" aria-pressed="true">Actual</button>
+          <button type="button" class="boton" data-vista="v1" aria-pressed="false">1ª Vuelta</button>
+          <button type="button" class="boton" data-vista="fin" aria-pressed="false">Fin Liga</button>
+        </div>
+      </div>
+      <p class="nota" data-ver="actual">3 puntos por victoria y 1 por empate. Los empates a puntos se ordenan por diferencia de goles.</p>
+      <p class="nota" data-ver="v1" hidden>Clasificación prevista al acabar la primera vuelta (J15), simulando 10.000 veces los partidos pendientes: cada uno da 3, 1 o 0 puntos según sus probabilidades. «Previstos» es el total más habitual (la mediana).</p>
+      <p class="nota" data-ver="fin" hidden>Clasificación prevista al final de la liga (J30), simulando 10.000 veces los partidos pendientes: cada uno da 3, 1 o 0 puntos según sus probabilidades. «Previstos» es el total más habitual (la mediana).</p>
+      <div class="desliza" data-ver="actual">
+        <table id="tabla-clas">
+          <thead><tr><th>#</th><th class="izq">Equipo</th><th>PJ</th><th class="ocultar-movil">V</th><th class="ocultar-movil">E</th><th class="ocultar-movil">D</th><th class="ocultar-movil">GF</th><th class="ocultar-movil">GC</th><th>DG</th><th>Pts</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
-      <div class="leyenda-zonas"><span><i style="background:var(--v)"></i>Ascienden los 2 primeros</span><span><i style="background:var(--d)"></i>Descienden los 4 últimos</span><span><b style="color:var(--tinta)">+3</b>&nbsp;puntos reales</span><span><i style="background:none;width:auto;height:auto;margin:0;font-style:italic">+3</i>&nbsp;resultado más probable</span></div>
+      <div class="desliza" data-ver="v1" hidden>
+        <table id="tabla-v1">
+          <thead><tr><th>#</th><th class="izq">Equipo</th><th>Ahora</th><th>Previstos</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="desliza" data-ver="fin" hidden>
+        <table id="tabla-fin">
+          <thead><tr><th>#</th><th class="izq">Equipo</th><th>Ahora</th><th>Previstos</th><th></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="leyenda-zonas"><span><i style="background:var(--v)"></i>Ascienden los 2 primeros</span><span><i style="background:var(--d)"></i>Descienden los 4 últimos</span></div>
     </section>
   </div>
 
@@ -430,36 +451,15 @@ button.pj-res.abre[aria-expanded=true] .flecha{transform:rotate(180deg)}
     </section>
 
     <section class="bloque">
-      <div class="cabecera">
-        <h2>Clasificación</h2>
-        <div class="segmentado" role="group" aria-label="Vista de la clasificación">
-          <button type="button" class="boton" data-vista="actual" aria-pressed="true">Actual</button>
-          <button type="button" class="boton" data-vista="v1" aria-pressed="false">1ª Vuelta</button>
-          <button type="button" class="boton" data-vista="fin" aria-pressed="false">Fin Liga</button>
-        </div>
-      </div>
-      <p class="nota" data-ver="actual">3 puntos por victoria y 1 por empate. Los empates a puntos se ordenan por diferencia de goles.</p>
-      <p class="nota" data-ver="v1" hidden>Clasificación prevista al acabar la primera vuelta (J15), simulando 10.000 veces los partidos pendientes: cada uno da 3, 1 o 0 puntos según sus probabilidades. «Previstos» es el total más habitual (la mediana).</p>
-      <p class="nota" data-ver="fin" hidden>Clasificación prevista al final de la liga (J30), simulando 10.000 veces los partidos pendientes: cada uno da 3, 1 o 0 puntos según sus probabilidades. «Previstos» es el total más habitual (la mediana).</p>
-      <div class="desliza" data-ver="actual">
-        <table id="tabla-clas">
-          <thead><tr><th>#</th><th class="izq">Equipo</th><th>PJ</th><th class="ocultar-movil">V</th><th class="ocultar-movil">E</th><th class="ocultar-movil">D</th><th class="ocultar-movil">GF</th><th class="ocultar-movil">GC</th><th>DG</th><th>Pts</th></tr></thead>
+      <h2 id="t-clas-jornada">Clasificación prevista</h2>
+      <p class="nota" id="nota-clas-jornada">Partidos jugados con su resultado real; los pendientes, con su resultado más probable (3, 1 o 0 puntos).</p>
+      <div class="desliza">
+        <table id="tabla-clas-jornada">
+          <thead><tr><th>#</th><th class="izq">Equipo</th><th>Antes</th><th id="th-jornada">Jornada</th><th>Pts</th><th></th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
-      <div class="desliza" data-ver="v1" hidden>
-        <table id="tabla-v1">
-          <thead><tr><th>#</th><th class="izq">Equipo</th><th>Ahora</th><th>Previstos</th><th></th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <div class="desliza" data-ver="fin" hidden>
-        <table id="tabla-fin">
-          <thead><tr><th>#</th><th class="izq">Equipo</th><th>Ahora</th><th>Previstos</th><th></th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-      <div class="leyenda-zonas"><span><i style="background:var(--v)"></i>Ascienden los 2 primeros</span><span><i style="background:var(--d)"></i>Descienden los 4 últimos</span></div>
+      <div class="leyenda-zonas"><span><i style="background:var(--v)"></i>Ascienden los 2 primeros</span><span><i style="background:var(--d)"></i>Descienden los 4 últimos</span><span><b style="color:var(--tinta)">+3</b>&nbsp;puntos reales</span><span><i style="background:none;width:auto;height:auto;margin:0;font-style:italic">+3</i>&nbsp;resultado más probable</span></div>
     </section>
   </div>
 
