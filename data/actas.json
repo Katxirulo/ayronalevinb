@@ -11424,5 +11424,155 @@
       }
     ],
     "marcador": null
+  },
+  "246587": {
+    "version": 2,
+    "jornada": 10,
+    "local": "Esclavas",
+    "visitante": "Amistad Sniace",
+    "arbitro": "LUCAS GUTIERREZ, ANGEL",
+    "equipos": {
+      "Esclavas": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "SIÑERIZ RODRIGUEZ, MIGUEL"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "PRIETO VENERO, NEL"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "IDROBO GIMIAS, YAMPIER SAID"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "SALVADOR MIERA, CLARA"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "GOMEZ COSIO, ISABEL"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "FERNANDEZ GONZALEZ, DIEGO"
+          },
+          {
+            "dorsal": "22",
+            "nombre": "FERNANDEZ ROSADO, CARLOS"
+          },
+          {
+            "dorsal": "23",
+            "nombre": "SÁNCHEZ-BARCÁIZTEGUI MIGUEL, JAVIER"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "7",
+            "nombre": "MAZA COBO, JORGE"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "VAN DEN EYNDE SOLIS, JUAN"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "GUERRERO SOLORZANO, DANIEL"
+          }
+        ]
+      },
+      "Amistad Sniace": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "HOYOS HERRERO, JOEL"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "FERNANDEZ PARDO, DYLAN"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "RODRIGUEZ GOMEZ, PABLO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "FREIRE SAINZ, JUAN"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "PIÑERO MARTIN, ALBA"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "CALDERON MARTINEZ, DARIO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "DE SANTIAGO JORRIN, LEO"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "QUINTANAL ZARRABETIA, JAIRO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "3",
+            "nombre": "DE LA TORRE BLANCO, EKAIN"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "DE LA PINTA SALCES, MARIO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "GARCIA TORRE, MANUEL"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "SOUSA GARCIA, NICO"
+          },
+          {
+            "dorsal": "19",
+            "nombre": "SACEDA VELARDE, AARON"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 17,
+        "jugador": "SALVADOR MIERA, CLARA",
+        "equipo": "Esclavas",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 32,
+        "jugador": "RODRIGUEZ GOMEZ, PABLO",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 46,
+        "jugador": "CALDERON MARTINEZ, DARIO",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 56,
+        "jugador": "GARCIA TORRE, MANUEL",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 59,
+        "jugador": "SACEDA VELARDE, AARON",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
