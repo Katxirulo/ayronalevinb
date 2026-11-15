@@ -286,6 +286,8 @@ button.pj-res.abre[aria-expanded=true] .flecha{transform:rotate(180deg)}
 .pj-goles-nada{margin:0;font-size:13px;color:var(--tinta-2);text-align:center}
 .pestanas-j{margin:10px 0 2px}
 @media (max-width:560px){.pestanas-j{width:100%}.pestanas-j .boton{flex:1}}
+.tag-acta{font-size:12px;font-weight:800;color:#7A4B00;background:#FFE7A8;border-radius:999px;padding:2px 9px}
+.pj-res.acta{background:#FFE7A8;color:#7A4B00;font-size:18px;letter-spacing:2px}
 </style>
 </head>
 <body>
@@ -1000,11 +1002,22 @@ jornada,local,visitante,goles_local,goles_visitante
   const etq = (x) => (pct(x) >= 10 ? pct(x) + '%' : '');
 
   // Un partido está "en juego" desde su hora de inicio hasta que hay resultado (acta cerrada en la federación)
+  // Estado de un partido sin resultado: «en juego» durante su duración; después, «pendiente de acta»
+  const DURACION_MIN = 75;  // minutos desde la hora de inicio hasta que se da por terminado
+  function inicio(p) {
+    return p.cal.fecha && p.cal.hora && !p.cal.aprox ? new Date(p.cal.fecha + 'T' + p.cal.hora + ':00') : null;
+  }
   function enJuego(p) {
     if (p.gl !== null) return false;
-    if (p.cal.estado === 'en_juego') return true;
-    if (!p.cal.fecha || !p.cal.hora || p.cal.aprox) return false;
-    return new Date(p.cal.fecha + 'T' + p.cal.hora + ':00') <= new Date();
+    const i = inicio(p);
+    if (!i) return p.cal.estado === 'en_juego';
+    const ahora = new Date();
+    return i <= ahora && ahora < new Date(i.getTime() + DURACION_MIN * 60000);
+  }
+  function sinActa(p) {
+    if (p.gl !== null || enJuego(p)) return false;
+    const i = inicio(p);
+    return !!i && new Date() >= new Date(i.getTime() + DURACION_MIN * 60000);
   }
 
   let vistaJ = 'actual';
@@ -1038,9 +1051,10 @@ jornada,local,visitante,goles_local,goles_visitante
     document.getElementById('th-jornada').textContent = 'J' + J;
     const est = document.getElementById('estado-jornada');
     // Rojo «En juego» solo si hay algún partido disputándose ahora; si no, cuántos se han jugado
-    const vivos = psV.filter((p) => enJuego(p)).length;
+    const vivos = psV.filter((p) => enJuego(p)).length, esperando = psV.filter((p) => sinActa(p)).length;
     const conHora = psV.filter((p) => p.cal.fecha && p.cal.hora && !p.cal.aprox).length;
     est.textContent = vivos ? `En juego · ${vivos} ${vivos === 1 ? 'partido' : 'partidos'}`
+      : esperando ? `Esperando ${esperando === 1 ? 'acta' : esperando + ' actas'} · ${hechosV} de ${psV.length} jugados`
       : hechosV === psV.length ? 'Terminada'
       : JV !== J ? (conHora ? `${conHora} de ${psV.length} con horario` : 'Horarios pendientes')
       : hechosV === 0 ? 'Por jugar'
@@ -1054,13 +1068,13 @@ jornada,local,visitante,goles_local,goles_visitante
     document.getElementById('lista-jornada').innerHTML = psV.map((p) => {
       const c = p.cal, yo = p.local === eq || p.visitante === eq;
       const meta = [
-        p.gl !== null ? '<span class="tag-final">Final</span>' : enJuego(p) ? '<span class="tag-vivo">En juego</span>' : '',
+        p.gl !== null ? '<span class="tag-final">Final</span>' : enJuego(p) ? '<span class="tag-vivo">En juego</span>' : sinActa(p) ? '<span class="tag-acta">Pendiente de acta</span>' : '',
         c.fecha ? `<b>${esc(fecha(c.fecha))}</b>` : '<b>Fecha por confirmar</b>',
         c.hora && !c.aprox ? `<b>${esc(c.hora)} h</b>` : '',
         c.campo ? esc(c.campo) + (c.ciudad ? ' (' + esc(c.ciudad) + ')' : '') : ''
       ].filter(Boolean).join('<span aria-hidden="true">·</span>');
-      const centro = p.gl !== null ? `<button type="button" class="pj-res abre" data-j="${p.j}" data-l="${esc(p.local)}" data-v="${esc(p.visitante)}" aria-expanded="false" title="Ver goleadores">${p.gl}–${p.gv}<span class="flecha" aria-hidden="true">▾</span></button>` : enJuego(p) ? '<span class="pj-res vivo">· · ·</span>' : '<span class="pj-res pend">vs</span>';
-      const barra = p.gl === null && p.q && !enJuego(p) ? `
+      const centro = p.gl !== null ? `<button type="button" class="pj-res abre" data-j="${p.j}" data-l="${esc(p.local)}" data-v="${esc(p.visitante)}" aria-expanded="false" title="Ver goleadores">${p.gl}–${p.gv}<span class="flecha" aria-hidden="true">▾</span></button>` : enJuego(p) ? '<span class="pj-res vivo">· · ·</span>' : sinActa(p) ? '<span class="pj-res acta">· · ·</span>' : '<span class="pj-res pend">vs</span>';
+      const barra = p.gl === null && p.q && !enJuego(p) && !sinActa(p) ? `
         <div class="barra-prob mini" role="img" aria-label="${esc(p.local)} ${pct(p.q.pl)}%, empate ${pct(p.q.pe)}%, ${esc(p.visitante)} ${pct(p.q.pv)}%">
           <span style="width:${pct(p.q.pl)}%;background:var(--p1)" title="${pct(p.q.pl)}%">${etq(p.q.pl)}</span>
           <span style="width:${pct(p.q.pe)}%;background:var(--e)" title="${pct(p.q.pe)}%">${etq(p.q.pe)}</span>
