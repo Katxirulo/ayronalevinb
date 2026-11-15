@@ -11574,5 +11574,175 @@
       }
     ],
     "marcador": null
+  },
+  "246581": {
+    "version": 2,
+    "jornada": 10,
+    "local": "San Agustín",
+    "visitante": "Calasanz",
+    "arbitro": "MARTINEZ CASAS, CARLA",
+    "equipos": {
+      "San Agustín": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "GALLO VINUESA, MIGUEL"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "VIDAL SABIO, ALVARO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "VIVANCO GONZALEZ, ENRIQUE"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "RUIZ PAREDES, PEDRO JULIÁN"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "EXPOSITO MAZA, JUAN"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "SILIO SANZ, BORJA"
+          },
+          {
+            "dorsal": "18",
+            "nombre": "SIERRA NOVO, MATEO"
+          },
+          {
+            "dorsal": "23",
+            "nombre": "CAJETE GRIJELMO, JUAN"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "2",
+            "nombre": "CONDE ARRIZABALAGA, MARTIN"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "MANRIQUE PEDRAZA, CARLOS"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "GUTIERREZ GOMEZ, MARCOS"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "SAEZ ALVAREZ-NOVOA, DAVID"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "DE LA FUENTE GUTIERREZ, PEDRO"
+          },
+          {
+            "dorsal": "19",
+            "nombre": "GARCÍA-RIVERA BESOY, ROBERTO"
+          }
+        ]
+      },
+      "Calasanz": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "SILVA REYES, CAMILO MOISES"
+          },
+          {
+            "dorsal": "2",
+            "nombre": "DE LA CONCHA VILLAFRUELA, LUCAS"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "LOPEZ MARTIN, THIAGO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "RUIZ ALONSO, BRUNO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "GARCIA BARREDO IBARRA, PABLO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "CABRILLO MARCOS, DANIEL"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "VEGEL CUERVAS-MONS, SIMON"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "MORI ASTETE, AITOR"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "3",
+            "nombre": "FARTO VAZQUEZ, LUCAS"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "HIGUERA ANDECOCHEA, RODRIGO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "MORENO GARCIA, IVAN"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "IGAREDA MORCILLO, JAVIER"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 3,
+        "jugador": "SIERRA NOVO, MATEO",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 9,
+        "jugador": "EXPOSITO MAZA, JUAN",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 36,
+        "jugador": "CAJETE GRIJELMO, JUAN",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 39,
+        "jugador": "EXPOSITO MAZA, JUAN",
+        "equipo": "San Agustín",
+        "tipo": "penalti"
+      },
+      {
+        "minuto": 42,
+        "jugador": "SAEZ ALVAREZ-NOVOA, DAVID",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 50,
+        "jugador": "GARCÍA-RIVERA BESOY, ROBERTO",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 52,
+        "jugador": "VEGEL CUERVAS-MONS, SIMON",
+        "equipo": "Calasanz",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
