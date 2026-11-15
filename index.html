@@ -288,6 +288,9 @@ button.pj-res.abre[aria-expanded=true] .flecha{transform:rotate(180deg)}
 @media (max-width:560px){.pestanas-j{width:100%}.pestanas-j .boton{flex:1}}
 .tag-acta{font-size:12px;font-weight:800;color:#7A4B00;background:#FFE7A8;border-radius:999px;padding:2px 9px}
 .pj-res.acta{background:#FFE7A8;color:#7A4B00;font-size:18px;letter-spacing:2px}
+.pestanas-j .boton{display:flex;flex-direction:column;align-items:center;line-height:1.15;padding:6px 10px}
+.pest-t{font-weight:800}
+.pest-j{font-size:11.5px;font-weight:600;opacity:.8}
 </style>
 </head>
 <body>
@@ -330,7 +333,8 @@ button.pj-res.abre[aria-expanded=true] .flecha{transform:rotate(180deg)}
         <span class="estado-j" id="estado-jornada"></span>
       </div>
       <div class="segmentado pestanas-j" role="group" aria-label="Jornada a mostrar">
-        <button type="button" class="boton" data-vista-j="actual" aria-pressed="true" id="btn-j-actual">Jornada</button>
+        <button type="button" class="boton" data-vista-j="ant" aria-pressed="false" id="btn-j-ant">Anterior</button>
+        <button type="button" class="boton" data-vista-j="actual" aria-pressed="true" id="btn-j-actual">Actual</button>
         <button type="button" class="boton" data-vista-j="sig" aria-pressed="false" id="btn-j-sig">Próxima</button>
       </div>
       <p class="nota" id="nota-jornada">Cargando calendario...</p>
@@ -1035,14 +1039,17 @@ jornada,local,visitante,goles_local,goles_visitante
     const hechos = ps.filter((p) => p.gl !== null).length;
 
     // Pestañas: jornada en curso / próxima jornada
-    const haySig = J < ultimaJornada;
-    if (!haySig) vistaJ = 'actual';
-    const JV = vistaJ === 'sig' ? J + 1 : J, calV = calendario[JV] || {};
+    const haySig = J < ultimaJornada, hayAnt = J > 1;
+    if ((vistaJ === 'sig' && !haySig) || (vistaJ === 'ant' && !hayAnt)) vistaJ = 'actual';
+    const JV = vistaJ === 'sig' ? J + 1 : vistaJ === 'ant' ? J - 1 : J, calV = calendario[JV] || {};
     const psV = JV === J ? ps : partidos.filter((p) => p.j === JV).map((p) => ({ ...p, cal: calV[p.local + '|' + p.visitante] || {}, q: probs.get(p) }))
       .sort((a, b) => orden(a).localeCompare(orden(b)) || a.local.localeCompare(b.local, 'es'));
     const hechosV = psV.filter((p) => p.gl !== null).length;
-    document.getElementById('btn-j-actual').textContent = 'Jornada ' + J;
-    document.getElementById('btn-j-sig').textContent = 'Próxima · J' + (J + 1);
+    const etiqueta = (t, n) => `<span class="pest-t">${t}</span><span class="pest-j">Jornada ${n}</span>`;
+    document.getElementById('btn-j-ant').innerHTML = etiqueta('Anterior', J - 1);
+    document.getElementById('btn-j-actual').innerHTML = etiqueta('Actual', J);
+    document.getElementById('btn-j-sig').innerHTML = etiqueta('Próxima', J + 1);
+    document.getElementById('btn-j-ant').hidden = !hayAnt;
     document.getElementById('btn-j-sig').hidden = !haySig;
     document.querySelectorAll('[data-vista-j]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.vistaJ === vistaJ)));
 
@@ -1056,13 +1063,15 @@ jornada,local,visitante,goles_local,goles_visitante
     est.textContent = vivos ? `En juego · ${vivos} ${vivos === 1 ? 'partido' : 'partidos'}`
       : esperando ? `Esperando ${esperando === 1 ? 'acta' : esperando + ' actas'} · ${hechosV} de ${psV.length} jugados`
       : hechosV === psV.length ? 'Terminada'
+      : JV < J ? `${hechosV} de ${psV.length} jugados`
       : JV !== J ? (conHora ? `${conHora} de ${psV.length} con horario` : 'Horarios pendientes')
       : hechosV === 0 ? 'Por jugar'
       : `${hechosV} de ${psV.length} jugados`;
     est.className = 'estado-j' + (vivos ? ' vivo' : '');
     const dias = [...new Set(psV.map((p) => p.cal.fecha).filter(Boolean))].sort();
     document.getElementById('nota-jornada').textContent = dias.length
-      ? 'Se juega ' + dias.map((d) => fecha(d, fmtDiaLargo)).join(' y ') + '. Las barras son las probabilidades de cada resultado.'
+      ? (hechosV === psV.length ? 'Se jugó ' + dias.map((d) => fecha(d, fmtDiaLargo)).join(' y ') + '.'
+        : 'Se juega ' + dias.map((d) => fecha(d, fmtDiaLargo)).join(' y ') + '. Las barras son las probabilidades de cada resultado.')
       : 'Horarios aún no publicados por la federación. Las barras son las probabilidades de cada resultado.';
 
     document.getElementById('lista-jornada').innerHTML = psV.map((p) => {
