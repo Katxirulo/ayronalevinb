@@ -130,5 +130,51 @@
       "arbitro": "HAYA CARRAL, SAMUEL",
       "acta": "246591"
     }
+  },
+  "12": {
+    "Amistad Sniace|Bezana": {
+      "fecha": "2026-11-29",
+      "campo": "Oscar Freire 2",
+      "estado": ""
+    },
+    "Esclavas|Ayron": {
+      "fecha": "2026-11-28",
+      "hora": "11:00",
+      "campo": "Comp. Albericia (A)",
+      "estado": ""
+    },
+    "Gimnástica|Valle Lebaniego": {
+      "fecha": "2026-11-29",
+      "hora": "11:30",
+      "campo": "El Malecón 2",
+      "estado": ""
+    },
+    "Naval|Marina Sport": {
+      "fecha": "2026-11-29",
+      "campo": "Reinosa",
+      "estado": ""
+    },
+    "San Agustín|Milinde Reocín": {
+      "fecha": "2026-11-28",
+      "hora": "12:00",
+      "campo": "San Agustin",
+      "estado": ""
+    },
+    "San Martín|Polanco": {
+      "fecha": "2026-11-28",
+      "hora": "12:45",
+      "campo": "Suances",
+      "estado": ""
+    },
+    "Textil Escudo|Tropezón": {
+      "fecha": "2026-11-29",
+      "campo": "Cabezón de la Sal",
+      "estado": ""
+    },
+    "Vimenor|Calasanz": {
+      "fecha": "2026-11-29",
+      "campo": "Vioño",
+      "estado": ""
+    }
   }
 }
