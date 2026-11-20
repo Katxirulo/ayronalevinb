@@ -504,13 +504,16 @@ def revisar_jornadas(filas, cal, actas):
     por_jornada = {}
     for f in filas:
         por_jornada.setdefault(int(f[0]), []).append(f)
-    jugadas = [j for j, ps in por_jornada.items() if any(f[3] != "" for f in ps)]
-    ultima = max(jugadas) if jugadas else 0
-    objetivo = sorted(j for j, ps in por_jornada.items()
-                      if j <= ultima + 1 and any(f[3] == "" for f in ps))
-    if ultima + 2 in por_jornada and all(f[3] != "" for f in por_jornada.get(ultima + 1, [])):
-        objetivo.append(ultima + 2)
     ahora = datetime.now(MADRID)
+    def empezado(j, f):
+        ini = inicio_partido(cal.get(str(j), {}).get(f"{f[1]}|{f[2]}", {}))
+        return ini is not None and ini <= ahora
+    # Jornadas con partidos ya empezados sin resultado + las 2 siguientes con partidos por jugar
+    # (así salen los horarios de la jornada de la semana que viene aunque la de este finde no se haya jugado).
+    atrasadas = [j for j, ps in por_jornada.items() if any(f[3] == "" and empezado(j, f) for f in ps)]
+    proximas = [j for j, ps in sorted(por_jornada.items()) if any(f[3] == "" and not empezado(j, f) for f in ps)][:2]
+    objetivo = sorted(set(atrasadas) | set(proximas))
+    print(f"Jornadas a revisar: {objetivo}")
     cambios = nuevas_actas = 0
 
     for j in objetivo:
