@@ -11900,5 +11900,173 @@
       }
     ],
     "marcador": null
+  },
+  "246591": {
+    "version": 2,
+    "jornada": 11,
+    "local": "Valle Lebaniego",
+    "visitante": "San Martín",
+    "arbitro": "HAYA CARRAL, SAMUEL",
+    "equipos": {
+      "Valle Lebaniego": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "FEIJOO FERNÁNDEZ, MIGUEL"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "POSADA GONZÁLEZ, JAIRO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "PABLOS PRIETO, HUGO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "MARTIN FOMBELLIDA, MATEO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "SAINZ BRIZ, VIDAL"
+          },
+          {
+            "dorsal": "13",
+            "nombre": "MARTIN FOMBELLIDA, JIMENA"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "LAMADRID DIAZ, CAYETANO"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "LOZANO ALBUJAR, SERGIO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "12",
+            "nombre": "DUQUE DE CELIS, ALEJANDRO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "VELARDE FERNÁNDEZ, LARO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "PARVANA, YANNIS RADU"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "GONZÁLEZ ALONSO, MARTÍN"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "ROJO FERNANDEZ, LUCAS"
+          }
+        ]
+      },
+      "San Martín": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "FERNANDEZ ALDA, MARCO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "SEDANO CORRALES, BRUNO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "PEÑIL GARCÍA, MARTÍN"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "RODRIGUEZ BASAÑEZ, ALBERTO"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "ROLDAN RUBAYO, HUGO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "GUTIERREZ VILA, CLAUDIA"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "DIAZ MERINO, LUIS"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "HOYAL PEREZ, TEO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "5",
+            "nombre": "PEREZ REQUEJO, MARIO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "RIVERO CUELI, PABLO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "OBREGON TRESGALLO, TOMAS"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 8,
+        "jugador": "POSADA GONZÁLEZ, JAIRO",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 13,
+        "jugador": "MARTIN FOMBELLIDA, JIMENA",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 15,
+        "jugador": "MARTIN FOMBELLIDA, MATEO",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 16,
+        "jugador": "PABLOS PRIETO, HUGO",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 19,
+        "jugador": "ROJO FERNANDEZ, LUCAS",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 29,
+        "jugador": "PARVANA, YANNIS RADU",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 53,
+        "jugador": "MARTIN FOMBELLIDA, MATEO",
+        "equipo": "Valle Lebaniego",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 59,
+        "jugador": "PEÑIL GARCÍA, MARTÍN",
+        "equipo": "San Martín",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
