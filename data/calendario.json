@@ -151,9 +151,10 @@
       "estado": ""
     },
     "Naval|Marina Sport": {
-      "fecha": "2026-11-29",
+      "fecha": "2026-11-28",
       "campo": "Reinosa",
-      "estado": ""
+      "estado": "",
+      "hora": "10:15"
     },
     "San Agustín|Milinde Reocín": {
       "fecha": "2026-11-28",
@@ -170,12 +171,14 @@
     "Textil Escudo|Tropezón": {
       "fecha": "2026-11-29",
       "campo": "Cabezón de la Sal",
-      "estado": ""
+      "estado": "",
+      "hora": "10:00"
     },
     "Vimenor|Calasanz": {
-      "fecha": "2026-11-29",
+      "fecha": "2026-11-28",
       "campo": "Vioño",
-      "estado": ""
+      "estado": "",
+      "hora": "12:45"
     }
   }
 }
