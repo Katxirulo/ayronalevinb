@@ -12068,5 +12068,287 @@
       }
     ],
     "marcador": null
+  },
+  "246593": {
+    "version": 2,
+    "jornada": 11,
+    "local": "Ayron",
+    "visitante": "Naval",
+    "arbitro": "MUÑIZ SAINZ -PARDO, NICOLÁS",
+    "equipos": {
+      "Ayron": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "SAN ROMÁN RUIZ, PABLO"
+          },
+          {
+            "dorsal": "2",
+            "nombre": "CARRAL COBO, LEO"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "GOMEZ PEREZ, LUCAS"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "GUTIERREZ CARRAL, JUAN"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "SAINZ SAINZ, HUGO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "RODRIGUEZ HERRERO, DAVID"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "EXPÓSITO GOMEZ, DIEGO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "ORDOÑEZ FRAILE, ASIER"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "6",
+            "nombre": "ORTIZ FERNANDEZ, IGOR"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "ÁLVAREZ SAN EMETERIO, IKER"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "MARTÍN SÁNCHEZ, SERGIO"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "APARICIO CRESPO, ALEJANDRO"
+          }
+        ]
+      },
+      "Naval": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "FRAILE OLEA, DANIEL"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "RAMOS CALDERON, MANUEL"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "LOPEZ MORENO, JESUS"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "GUTIERREZ BUSTILLO, DIEGO"
+          },
+          {
+            "dorsal": "27",
+            "nombre": "DIEZ PEDRACES, LUIS"
+          },
+          {
+            "dorsal": "28",
+            "nombre": "CUEVAS GUTIERREZ, AITOR"
+          },
+          {
+            "dorsal": "29",
+            "nombre": "CEBALLOS JORRIN, MARTIN"
+          },
+          {
+            "dorsal": "31",
+            "nombre": "MENDES RUIZ, MARCO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "30",
+            "nombre": "CASTAÑOS DE LEON, CRISTHIAN YARIEL"
+          },
+          {
+            "dorsal": "33",
+            "nombre": "LOPEZ GOMEZ, MARTIN"
+          },
+          {
+            "dorsal": "34",
+            "nombre": "DIEZ DIAZ, ORIOL"
+          },
+          {
+            "dorsal": "42",
+            "nombre": "HERREROS GUTIERREZ, AXEL"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 2,
+        "jugador": "LOPEZ MORENO, JESUS",
+        "equipo": "Naval",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 40,
+        "jugador": "ORDOÑEZ FRAILE, ASIER",
+        "equipo": "Ayron",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 43,
+        "jugador": "ORDOÑEZ FRAILE, ASIER",
+        "equipo": "Ayron",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 55,
+        "jugador": "CASTAÑOS DE LEON, CRISTHIAN YARIEL",
+        "equipo": "Naval",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
+  },
+  "246590": {
+    "version": 2,
+    "jornada": 11,
+    "local": "Polanco",
+    "visitante": "Vimenor",
+    "arbitro": "SAIZ BOLADO, LUCAS",
+    "equipos": {
+      "Polanco": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "SÁNCHEZ ÁLVAREZ, DAVID"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "MARTÍNEZ DÍEZ, MARCO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "GONZÁLEZ GARCÍA, PABLO"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "GONZALEZ FERNANDEZ, CARLO"
+          },
+          {
+            "dorsal": "19",
+            "nombre": "GARCÍA GONZÁLEZ, PABLO"
+          },
+          {
+            "dorsal": "25",
+            "nombre": "AGUERO VELASCO, JAIME"
+          },
+          {
+            "dorsal": "40",
+            "nombre": "CRUCES POSTIGO, DAVID"
+          },
+          {
+            "dorsal": "80",
+            "nombre": "LOKE HARTFORD, LEO ZEN YU"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "9",
+            "nombre": "BUENAGA OBESO, MARIO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "HERRERA SAIZ, ENZO"
+          },
+          {
+            "dorsal": "28",
+            "nombre": "DÍAZ GUTIÉRREZ, ENZO"
+          }
+        ]
+      },
+      "Vimenor": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "GONZALEZ HOYO, SAUL"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "GARCIA ACEREDA, PABLO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "LOPEZ GARCIA, CARLOS"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "SAÑUDO ORTIZ, MARTIN"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "PRECIADO CARAMÉS, DANIEL"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "DIEGO DE LA RIVA, MARTÍN"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "SOLORZANO ORTIZ, DANI"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "GIL SAN MARTIN, GONZALO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "3",
+            "nombre": "SÁNCHEZ GIL, IBAI"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "HEREDIA FERNÁNDEZ, MAURO"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 6,
+        "jugador": "CRUCES POSTIGO, DAVID",
+        "equipo": "Polanco",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 24,
+        "jugador": "LOKE HARTFORD, LEO ZEN YU",
+        "equipo": "Polanco",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 27,
+        "jugador": "GIL SAN MARTIN, GONZALO",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 40,
+        "jugador": "LOPEZ GARCIA, CARLOS",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 50,
+        "jugador": "HERRERA SAIZ, ENZO",
+        "equipo": "Polanco",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
