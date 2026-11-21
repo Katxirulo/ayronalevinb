@@ -78,7 +78,7 @@
       "fecha": "2026-11-21",
       "hora": "10:00",
       "campo": "Santa Cruz de Bezana",
-      "estado": "",
+      "estado": "final",
       "arbitro": "GONZALEZ OCEJA, LUCAS",
       "acta": "246594"
     },
@@ -133,9 +133,10 @@
   },
   "12": {
     "Amistad Sniace|Bezana": {
-      "fecha": "2026-11-29",
+      "fecha": "2026-11-28",
       "campo": "Oscar Freire 2",
-      "estado": ""
+      "estado": "",
+      "hora": "10:00"
     },
     "Esclavas|Ayron": {
       "fecha": "2026-11-28",

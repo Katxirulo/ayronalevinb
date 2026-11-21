@@ -11744,5 +11744,161 @@
       }
     ],
     "marcador": null
+  },
+  "246594": {
+    "version": 2,
+    "jornada": 11,
+    "local": "Bezana",
+    "visitante": "Esclavas",
+    "arbitro": "GONZALEZ OCEJA, LUCAS",
+    "equipos": {
+      "Bezana": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "RODRIGUEZ ROJO, MARTIN"
+          },
+          {
+            "dorsal": "2",
+            "nombre": "GUTIERREZ FERNANDEZ, DYLAN"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "DONICA DONICA, MAXIM"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "POO ORDOÑEZ, DARIO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "SOLAR MIERMONT, FABIO"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "DIEZ ARRIBAS, LUCAS"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "CASUSO DE LA FUENTE, MIGUEL"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "FIGUEROA PAEZ, JUAN ESTEBAN"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "3",
+            "nombre": "CASTAÑO DARAVIÑA, JACOBO"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "LOPEZ MAZO, IVAN"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "NAKHAL ESTRADA, MOISES DAVID"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "GONZALEZ-ORTEGA HAYA, PABLO"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "TORRONTEGUI GARCIA, DIEGO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "PEREZ JIMENEZ, ALEJANDRO"
+          }
+        ]
+      },
+      "Esclavas": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "SIÑERIZ RODRIGUEZ, MIGUEL"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "PRIETO VENERO, NEL"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "MAZA COBO, JORGE"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "SALVADOR MIERA, CLARA"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "GOMEZ COSIO, ISABEL"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "FERNANDEZ GONZALEZ, DIEGO"
+          },
+          {
+            "dorsal": "22",
+            "nombre": "FERNANDEZ ROSADO, CARLOS"
+          },
+          {
+            "dorsal": "27",
+            "nombre": "GUERRERO SOLORZANO, DANIEL"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "8",
+            "nombre": "IDROBO GIMIAS, YAMPIER SAID"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "VAN DEN EYNDE SOLIS, JUAN"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 4,
+        "jugador": "FIGUEROA PAEZ, JUAN ESTEBAN",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 32,
+        "jugador": "LOPEZ MAZO, IVAN",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 36,
+        "jugador": "LOPEZ MAZO, IVAN",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 37,
+        "jugador": "SALVADOR MIERA, CLARA",
+        "equipo": "Esclavas",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 38,
+        "jugador": "FIGUEROA PAEZ, JUAN ESTEBAN",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 47,
+        "jugador": "GOMEZ COSIO, ISABEL",
+        "equipo": "Esclavas",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
