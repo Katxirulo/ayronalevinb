@@ -1,4 +1,5 @@
-"""Sale con código 0 si hoy (hora de España) queda algún partido sin resultado; si no, con 1.
+"""Sale con código 0 si hoy (hora de España) hay algún partido ya empezado (o que empieza en menos
+de 20 minutos) sin resultado; si no, con 1.
 Lo usa el workflow para seguir actualizando cada 20 minutos mientras dura la jornada."""
 import json
 import sys
@@ -22,11 +23,19 @@ except Exception:
 pendientes = []
 for j, l, v, gl, gv in filas:
     d = cal.get(j, {}).get(f"{l}|{v}", {})
-    if d.get("fecha") == hoy and gl == "":
+    if d.get("fecha") != hoy or gl != "":
+        continue
+    try:
+        h, m = map(int, str(d.get("hora", "")).split(":")[:2])
+        empieza = ahora.replace(hour=h, minute=m, second=0, microsecond=0)
+    except ValueError:
+        empieza = ahora.replace(hour=9, minute=0, second=0, microsecond=0)
+    # solo cuenta si el partido ya ha empezado o empieza en menos de 20 minutos
+    if (empieza - ahora).total_seconds() <= 1200:
         pendientes.append(f"J{j} {l} - {v} ({d.get('hora', '¿hora?')})")
 
 if pendientes and ahora.hour < 22:
-    print("Partidos de hoy aún sin resultado: " + "; ".join(pendientes))
+    print("Partidos de hoy en juego o a punto de empezar, aún sin resultado: " + "; ".join(pendientes))
     sys.exit(0)
-print("No quedan partidos de hoy sin resultado.")
+print("No hay partidos de hoy en juego sin resultado.")
 sys.exit(1)
