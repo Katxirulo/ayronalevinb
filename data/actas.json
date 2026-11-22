@@ -12638,5 +12638,143 @@
       }
     ],
     "marcador": null
+  },
+  "246595": {
+    "version": 2,
+    "jornada": 11,
+    "local": "Milinde Reocín",
+    "visitante": "Amistad Sniace",
+    "arbitro": "GONZÁLEZ AJA, PABLO",
+    "equipos": {
+      "Milinde Reocín": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "CAYON RUIZ, ERIC"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "GUTIERREZ CAYON, LEO"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "ALCORTA GARCIA, MIKEL"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "FERNANDEZ NUÑEZ, LUCAS"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "DIESTRO RAMOS, PABLO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "ALONSO GÓMEZ, LEO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "CUETO PONGA, LEO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "GRANADO SAN EMETERIO, MARIO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "54",
+            "nombre": "PEREZ RIVES, DIEGO"
+          }
+        ]
+      },
+      "Amistad Sniace": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "HOYOS HERRERO, JOEL"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "DE LA TORRE BLANCO, EKAIN"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "GARCIA TORRE, MANUEL"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "FREIRE SAINZ, JUAN"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "PIÑERO MARTIN, ALBA"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "CALDERON MARTINEZ, DARIO"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "SOUSA GARCIA, NICO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "DE SANTIAGO JORRIN, LEO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "1",
+            "nombre": "GUTIERREZ CEREZO, HUGO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "FERNANDEZ PARDO, DYLAN"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "RODRIGUEZ GOMEZ, PABLO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "SACEDA VELARDE, AARON"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 29,
+        "jugador": "SACEDA VELARDE, AARON",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 33,
+        "jugador": "GARCIA TORRE, MANUEL",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 38,
+        "jugador": "GARCIA TORRE, MANUEL",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 47,
+        "jugador": "FERNANDEZ PARDO, DYLAN",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 49,
+        "jugador": "SACEDA VELARDE, AARON",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
