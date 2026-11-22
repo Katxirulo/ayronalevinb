@@ -12776,5 +12776,125 @@
       }
     ],
     "marcador": null
+  },
+  "246589": {
+    "version": 2,
+    "jornada": 11,
+    "local": "Calasanz",
+    "visitante": "Textil Escudo",
+    "arbitro": "URBANO BECERRA, SAMUEL ALEJANDRO",
+    "equipos": {
+      "Calasanz": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "DIEGO BERNAL, PABLO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "GARCIA BARREDO IBARRA, PABLO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "HIGUERA ANDECOCHEA, RODRIGO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "CABRILLO MARCOS, DANIEL"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "SERNA ALONSO, RODRIGO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "VEGEL CUERVAS-MONS, SIMON"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "MORENO GARCIA, IVAN"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "PILA SERRANO, PABLO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "1",
+            "nombre": "SILVA REYES, CAMILO MOISES"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "FARTO VAZQUEZ, LUCAS"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "LOPEZ MARTIN, THIAGO"
+          }
+        ]
+      },
+      "Textil Escudo": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "COSIO NIETO, MATEO"
+          },
+          {
+            "dorsal": "19",
+            "nombre": "PEREZ IBAÑEZ, PABLO"
+          },
+          {
+            "dorsal": "20",
+            "nombre": "FIDALGO VIDAL, MARCOS"
+          },
+          {
+            "dorsal": "21",
+            "nombre": "IRIZABAL BELTRAN, MARTIN"
+          },
+          {
+            "dorsal": "22",
+            "nombre": "GONZALEZ CENDON, PABLO"
+          },
+          {
+            "dorsal": "23",
+            "nombre": "VAZQUEZ ODRIOZOLA, MARIO"
+          },
+          {
+            "dorsal": "26",
+            "nombre": "SAMPEDRO BERRIO, DANIEL"
+          },
+          {
+            "dorsal": "27",
+            "nombre": "URRACA CANO, SERGIO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "18",
+            "nombre": "JORDAN MUÑIZ, LARO"
+          },
+          {
+            "dorsal": "24",
+            "nombre": "LOPEZ RENEDO, MARTIN"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 49,
+        "jugador": "GONZALEZ CENDON, PABLO",
+        "equipo": "Textil Escudo",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 51,
+        "jugador": "PEREZ IBAÑEZ, PABLO",
+        "equipo": "Textil Escudo",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
