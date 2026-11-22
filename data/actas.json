@@ -12350,5 +12350,293 @@
       }
     ],
     "marcador": null
+  },
+  "246592": {
+    "version": 2,
+    "jornada": 11,
+    "local": "Marina Sport",
+    "visitante": "Gimnástica",
+    "arbitro": "DE LA LOMA GARCIA, MARCO",
+    "equipos": {
+      "Marina Sport": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "SEOANE ABASCAL, ALEJANDRO"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "CHAPARRO PÉREZ, DIEGO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "GOMEZ EXPOSITO, BRUNO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "MARTINEZ CALLEJA, EDUARDO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "CASTAÑERA LAVIN, MARTIN"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "MUÑIZ RUIZ, MIGUEL"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "MARTINEZ OPORTO, HECTOR"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "GONZALEZ RIVAS, HUGO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "5",
+            "nombre": "GARRALDA YEZERSKA, MARTIN"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "RUIZ DIEZ, ARES"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "SAIZ DIEGO, MAURO"
+          }
+        ]
+      },
+      "Gimnástica": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "GONZALEZ GANGAS, ALEX"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "HOYOS CALDERON, MARCO"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "GOMEZ CALDERON, MANUEL"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "GONZÁLEZ FERNÁNDEZ, JOEL"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "PESO ORTIZ, MARTIN"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "GARCIA CORDÓN, MARTÍN"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "LAAZAIRI EL AMRAOUI, BADR"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "LANDERAS PEREZ, ADRIAN"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "1",
+            "nombre": "RUIZ MUÑOZ, FELIPE"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "MORENO FERNANDEZ, MARTIN"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "GONZÁLEZ SÁNCHEZ, MATEO"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "ALONSO FERNÁNDEZ, ÁNTONIO"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 3,
+        "jugador": "MUÑIZ RUIZ, MIGUEL",
+        "equipo": "Marina Sport",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 7,
+        "jugador": "MARTINEZ OPORTO, HECTOR",
+        "equipo": "Marina Sport",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 46,
+        "jugador": "MUÑIZ RUIZ, MIGUEL",
+        "equipo": "Marina Sport",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
+  },
+  "246588": {
+    "version": 2,
+    "jornada": 11,
+    "local": "Tropezón",
+    "visitante": "San Agustín",
+    "arbitro": "ALLENDE GARCIA, SAÚL",
+    "equipos": {
+      "Tropezón": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "VILLAR OCHANDO, LUCAS"
+          },
+          {
+            "dorsal": "2",
+            "nombre": "BEL AOUJA AMRAQUI, AYMAN"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "SANTAMARIA LOPEZ, MATEO"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "OMAR GONZALEZ, OMAR"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "CAMARA CAMARA, ALIOU"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "FERNANDEZ SAINZ, MARTIN"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "BUENAGA FERNANDEZ CUETO, MAURO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "LAMA MARTINEZ PEDROSA, LUCAS"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "13",
+            "nombre": "AGUDO DEL RIO, PEDRO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "HENAO MARTINEZ, STEVEN ALEJANDRO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "GOMEZ SOTORRIOS, ILAY"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "FERNANDEZ GUTIERREZ, ERIK"
+          }
+        ]
+      },
+      "San Agustín": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "MANRIQUE PEDRAZA, CARLOS"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "GUTIERREZ GOMEZ, MARCOS"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "VIVANCO GONZALEZ, ENRIQUE"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "SAEZ ALVAREZ-NOVOA, DAVID"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "RUIZ PAREDES, PEDRO JULIÁN"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "EXPOSITO MAZA, JUAN"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "SILIO SANZ, BORJA"
+          },
+          {
+            "dorsal": "19",
+            "nombre": "GARCÍA-RIVERA BESOY, ROBERTO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "2",
+            "nombre": "CONDE ARRIZABALAGA, MARTIN"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "VIDAL SABIO, ALVARO"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "DE LA FUENTE GUTIERREZ, PEDRO"
+          },
+          {
+            "dorsal": "18",
+            "nombre": "SIERRA NOVO, MATEO"
+          },
+          {
+            "dorsal": "23",
+            "nombre": "CAJETE GRIJELMO, JUAN"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 8,
+        "jugador": "OMAR GONZALEZ, OMAR",
+        "equipo": "Tropezón",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 26,
+        "jugador": "FERNANDEZ SAINZ, MARTIN",
+        "equipo": "Tropezón",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 34,
+        "jugador": "EXPOSITO MAZA, JUAN",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 37,
+        "jugador": "SIERRA NOVO, MATEO",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 40,
+        "jugador": "VIDAL SABIO, ALVARO",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
