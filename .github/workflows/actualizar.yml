@@ -1,14 +1,5 @@
 name: Actualizar resultados desde Web
 
-on:
-  schedule:
-    # GitHub retrasa o descarta ejecuciones programadas en punto (minuto 0), por eso se usan minutos "raros".
-    # Sábados de 9:17 a 18:47, dos veces por hora (UTC 08-17)
-    - cron: '17,47 8-17 * * 6'
-    # Domingos de 9:17 a 15:47, dos veces por hora (UTC 08-14)
-    - cron: '17,47 8-14 * * 0'
-    # De domingo a viernes a las 20:23 (19:23 UTC): horarios de la próxima jornada y actas corregidas
-    - cron: '23 19 * * 0-5'
   workflow_dispatch:     # botón de ejecución manual
 
 permissions:
