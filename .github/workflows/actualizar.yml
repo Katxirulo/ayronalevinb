@@ -1,5 +1,7 @@
 name: Actualizar resultados desde Web
 
+on:
+
   workflow_dispatch:     # botón de ejecución manual
 
 permissions:
