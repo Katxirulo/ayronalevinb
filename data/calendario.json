@@ -136,49 +136,65 @@
       "fecha": "2026-11-28",
       "campo": "Oscar Freire 2",
       "estado": "",
-      "hora": "10:00"
+      "hora": "10:00",
+      "arbitro": "VISPO RODRIGUEZ, ISRAEL",
+      "acta": "246603"
     },
     "Esclavas|Ayron": {
       "fecha": "2026-11-28",
       "hora": "11:00",
       "campo": "Comp. Albericia (A)",
-      "estado": ""
+      "estado": "",
+      "arbitro": "DE MARIA SANCHEZ, LUCAS",
+      "acta": "246602"
     },
     "Gimnástica|Valle Lebaniego": {
       "fecha": "2026-11-29",
       "hora": "11:30",
       "campo": "El Malecón 2",
-      "estado": ""
+      "estado": "",
+      "arbitro": "SOLOMONSON VALLINES, LUCAS",
+      "acta": "246600"
     },
     "Naval|Marina Sport": {
       "fecha": "2026-11-28",
       "campo": "Reinosa",
       "estado": "",
-      "hora": "10:15"
+      "hora": "10:15",
+      "arbitro": "RODRIGUEZ ROQUEÑI, AQUILES",
+      "acta": "246601"
     },
     "San Agustín|Milinde Reocín": {
       "fecha": "2026-11-28",
       "hora": "12:00",
       "campo": "San Agustin",
-      "estado": ""
+      "estado": "",
+      "arbitro": "BEAR MIYAR, ANTONIO",
+      "acta": "246596"
     },
     "San Martín|Polanco": {
       "fecha": "2026-11-28",
       "hora": "12:45",
       "campo": "Suances",
-      "estado": ""
+      "estado": "",
+      "arbitro": "CARUTA MOROI, EDUARDO",
+      "acta": "246599"
     },
     "Textil Escudo|Tropezón": {
       "fecha": "2026-11-29",
       "campo": "Cabezón de la Sal",
       "estado": "",
-      "hora": "10:00"
+      "hora": "10:00",
+      "arbitro": "FERNANDEZ CUESTA, AMIA",
+      "acta": "246597"
     },
     "Vimenor|Calasanz": {
       "fecha": "2026-11-28",
       "campo": "Vioño",
       "estado": "",
-      "hora": "12:45"
+      "hora": "12:45",
+      "arbitro": "RUIZ GONZALEZ, ABRAHAM",
+      "acta": "246598"
     }
   },
   "13": {
@@ -190,17 +206,20 @@
     "Calasanz|San Martín": {
       "fecha": "2026-12-06",
       "campo": "Comp. Albericia (A)",
-      "estado": ""
+      "estado": "",
+      "hora": "10:00"
     },
     "Marina Sport|Esclavas": {
-      "fecha": "2026-12-06",
+      "fecha": "2026-12-05",
       "campo": "Alberto Perez Blanco 1",
-      "estado": ""
+      "estado": "",
+      "hora": "10:00"
     },
     "Milinde Reocín|Bezana": {
       "fecha": "2026-12-06",
       "campo": "Puente San Miguel",
-      "estado": ""
+      "estado": "",
+      "hora": "10:00"
     },
     "Polanco|Gimnástica": {
       "fecha": "2026-12-06",
@@ -208,9 +227,10 @@
       "estado": ""
     },
     "San Agustín|Textil Escudo": {
-      "fecha": "2026-12-06",
+      "fecha": "2026-12-05",
       "campo": "San Agustin",
-      "estado": ""
+      "estado": "",
+      "hora": "10:30"
     },
     "Tropezón|Vimenor": {
       "fecha": "2026-12-06",
