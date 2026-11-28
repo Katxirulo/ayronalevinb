@@ -13434,5 +13434,279 @@
       }
     ],
     "marcador": null
+  },
+  "246599": {
+    "version": 2,
+    "jornada": 12,
+    "local": "San Martín",
+    "visitante": "Polanco",
+    "arbitro": "CARUTA MOROI, EDUARDO",
+    "equipos": {
+      "San Martín": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "FERNANDEZ ALDA, MARCO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "PEREZ REQUEJO, MARIO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "PEÑIL GARCÍA, MARTÍN"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "ROLDAN RUBAYO, HUGO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "GUTIERREZ VILA, CLAUDIA"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "OBREGON TRESGALLO, TOMAS"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "DIAZ MERINO, LUIS"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "HOYAL PEREZ, TEO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "8",
+            "nombre": "RODRIGUEZ BASAÑEZ, ALBERTO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "RIVERO CUELI, PABLO"
+          }
+        ]
+      },
+      "Polanco": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "SÁNCHEZ ÁLVAREZ, DAVID"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "MARTÍNEZ DÍEZ, MARCO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "GONZÁLEZ GARCÍA, PABLO"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "BUENAGA OBESO, MARIO"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "GONZALEZ FERNANDEZ, CARLO"
+          },
+          {
+            "dorsal": "19",
+            "nombre": "GARCÍA GONZÁLEZ, PABLO"
+          },
+          {
+            "dorsal": "28",
+            "nombre": "DÍAZ GUTIÉRREZ, ENZO"
+          },
+          {
+            "dorsal": "40",
+            "nombre": "CRUCES POSTIGO, DAVID"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "10",
+            "nombre": "HERRERA SAIZ, ENZO"
+          },
+          {
+            "dorsal": "25",
+            "nombre": "AGUERO VELASCO, JAIME"
+          },
+          {
+            "dorsal": "80",
+            "nombre": "LOKE HARTFORD, LEO ZEN YU"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 26,
+        "jugador": "RIVERO CUELI, PABLO",
+        "equipo": "San Martín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 31,
+        "jugador": "RIVERO CUELI, PABLO",
+        "equipo": "San Martín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 37,
+        "jugador": "GUTIERREZ VILA, CLAUDIA",
+        "equipo": "San Martín",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
+  },
+  "246598": {
+    "version": 2,
+    "jornada": 12,
+    "local": "Vimenor",
+    "visitante": "Calasanz",
+    "arbitro": "RUIZ GONZALEZ, ABRAHAM",
+    "equipos": {
+      "Vimenor": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "GONZALEZ HOYO, SAUL"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "GARCIA ACEREDA, PABLO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "LOPEZ GARCIA, CARLOS"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "SAÑUDO ORTIZ, MARTIN"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "PRECIADO CARAMÉS, DANIEL"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "HEREDIA FERNÁNDEZ, MAURO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "DIEGO DE LA RIVA, MARTÍN"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "GIL SAN MARTIN, GONZALO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "3",
+            "nombre": "SÁNCHEZ GIL, IBAI"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "EZZEKRAOUI BENELGOUSSA, SOHAIL"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "SOLORZANO ORTIZ, DANI"
+          }
+        ]
+      },
+      "Calasanz": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "DIEGO BERNAL, PABLO"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "DE LA CONCHA VILLAFRUELA, LUCAS"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "RUIZ ALONSO, BRUNO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "HIGUERA ANDECOCHEA, RODRIGO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "CABRILLO MARCOS, DANIEL"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "SERNA ALONSO, RODRIGO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "VEGEL CUERVAS-MONS, SIMON"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "MORENO GARCIA, IVAN"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "13",
+            "nombre": "SILVA REYES, CAMILO MOISES"
+          },
+          {
+            "dorsal": "2",
+            "nombre": "FARTO VAZQUEZ, LUCAS"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "LOPEZ MARTIN, THIAGO"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 14,
+        "jugador": "GIL SAN MARTIN, GONZALO",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 30,
+        "jugador": "SOLORZANO ORTIZ, DANI",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 35,
+        "jugador": "SOLORZANO ORTIZ, DANI",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 42,
+        "jugador": "SÁNCHEZ GIL, IBAI",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 50,
+        "jugador": "HEREDIA FERNÁNDEZ, MAURO",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 54,
+        "jugador": "HEREDIA FERNÁNDEZ, MAURO",
+        "equipo": "Vimenor",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }

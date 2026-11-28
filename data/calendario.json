@@ -176,7 +176,7 @@
       "fecha": "2026-11-28",
       "hora": "12:45",
       "campo": "Suances",
-      "estado": "",
+      "estado": "final",
       "arbitro": "CARUTA MOROI, EDUARDO",
       "acta": "246599"
     },
@@ -191,8 +191,8 @@
     "Vimenor|Calasanz": {
       "fecha": "2026-11-28",
       "campo": "Vioño",
-      "estado": "",
-      "hora": "13:16",
+      "estado": "final",
+      "hora": "12:45",
       "arbitro": "RUIZ GONZALEZ, ABRAHAM",
       "acta": "246598"
     }
