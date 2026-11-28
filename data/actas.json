@@ -12896,5 +12896,165 @@
       }
     ],
     "marcador": null
+  },
+  "246603": {
+    "version": 2,
+    "jornada": 12,
+    "local": "Amistad Sniace",
+    "visitante": "Bezana",
+    "arbitro": "VISPO RODRIGUEZ, ISRAEL",
+    "equipos": {
+      "Amistad Sniace": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "GUTIERREZ CEREZO, HUGO"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "DE LA TORRE BLANCO, EKAIN"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "DE LA PINTA SALCES, MARIO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "GARCIA TORRE, MANUEL"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "FERNANDEZ PARDO, DYLAN"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "RODRIGUEZ GOMEZ, PABLO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "CALDERON MARTINEZ, DARIO"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "QUINTANAL ZARRABETIA, JAIRO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "13",
+            "nombre": "HOYOS HERRERO, JOEL"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "FREIRE SAINZ, JUAN"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "PIÑERO MARTIN, ALBA"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "SOUSA GARCIA, NICO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "DE SANTIAGO JORRIN, LEO"
+          }
+        ]
+      },
+      "Bezana": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "RODRIGUEZ ROJO, MARTIN"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "CASTAÑO DARAVIÑA, JACOBO"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "LOPEZ MAZO, IVAN"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "DONICA DONICA, MAXIM"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "NAKHAL ESTRADA, MOISES DAVID"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "GONZALEZ-ORTEGA HAYA, PABLO"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "TORRONTEGUI GARCIA, DIEGO"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "FIGUEROA PAEZ, JUAN ESTEBAN"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "2",
+            "nombre": "GUTIERREZ FERNANDEZ, DYLAN"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "PEREZ JIMENEZ, ALEJANDRO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "SOLAR MIERMONT, FABIO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "CASUSO DE LA FUENTE, MIGUEL"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 6,
+        "jugador": "GARCIA TORRE, MANUEL",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 7,
+        "jugador": "FIGUEROA PAEZ, JUAN ESTEBAN",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 18,
+        "jugador": "FIGUEROA PAEZ, JUAN ESTEBAN",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 19,
+        "jugador": "SOLAR MIERMONT, FABIO",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 26,
+        "jugador": "TORRONTEGUI GARCIA, DIEGO",
+        "equipo": "Bezana",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 37,
+        "jugador": "GARCIA TORRE, MANUEL",
+        "equipo": "Amistad Sniace",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
