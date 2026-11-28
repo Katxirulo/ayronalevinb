@@ -144,7 +144,7 @@
       "fecha": "2026-11-28",
       "hora": "11:00",
       "campo": "Comp. Albericia (A)",
-      "estado": "",
+      "estado": "final",
       "arbitro": "DE MARIA SANCHEZ, LUCAS",
       "acta": "246602"
     },
@@ -234,9 +234,10 @@
       "hora": "10:30"
     },
     "Tropezón|Vimenor": {
-      "fecha": "2026-12-06",
-      "campo": "Tanos 2",
-      "estado": ""
+      "fecha": "2026-12-05",
+      "campo": "Tanos 1",
+      "estado": "",
+      "hora": "15:30"
     },
     "Valle Lebaniego|Naval": {
       "fecha": "2026-12-06",

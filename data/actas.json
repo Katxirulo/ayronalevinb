@@ -13180,5 +13180,133 @@
       }
     ],
     "marcador": null
+  },
+  "246602": {
+    "version": 2,
+    "jornada": 12,
+    "local": "Esclavas",
+    "visitante": "Ayron",
+    "arbitro": "DE MARIA SANCHEZ, LUCAS",
+    "equipos": {
+      "Esclavas": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "SIÑERIZ RODRIGUEZ, MIGUEL"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "PRIETO VENERO, NEL"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "MAZA COBO, JORGE"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "IDROBO GIMIAS, YAMPIER SAID"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "SALVADOR MIERA, CLARA"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "GOMEZ COSIO, ISABEL"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "FERNANDEZ GONZALEZ, DIEGO"
+          },
+          {
+            "dorsal": "22",
+            "nombre": "FERNANDEZ ROSADO, CARLOS"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "11",
+            "nombre": "VAN DEN EYNDE SOLIS, JUAN"
+          },
+          {
+            "dorsal": "20",
+            "nombre": "ALONSO DE CELADA GARCIA, JAIME"
+          },
+          {
+            "dorsal": "27",
+            "nombre": "GUERRERO SOLORZANO, DANIEL"
+          }
+        ]
+      },
+      "Ayron": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "SAN ROMÁN RUIZ, PABLO"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "GOMEZ PEREZ, LUCAS"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "GUTIERREZ CARRAL, JUAN"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "SAINZ SAINZ, HUGO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "ORTIZ FERNANDEZ, IGOR"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "RODRIGUEZ HERRERO, DAVID"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "EXPÓSITO GOMEZ, DIEGO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "ORDOÑEZ FRAILE, ASIER"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "2",
+            "nombre": "CARRAL COBO, LEO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "ÁLVAREZ SAN EMETERIO, IKER"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "MARTÍN SÁNCHEZ, SERGIO"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "APARICIO CRESPO, ALEJANDRO"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 11,
+        "jugador": "SALVADOR MIERA, CLARA",
+        "equipo": "Esclavas",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 13,
+        "jugador": "SAINZ SAINZ, HUGO",
+        "equipo": "Ayron",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
