@@ -13056,5 +13056,129 @@
       }
     ],
     "marcador": null
+  },
+  "246601": {
+    "version": 2,
+    "jornada": 12,
+    "local": "Naval",
+    "visitante": "Marina Sport",
+    "arbitro": "RODRIGUEZ ROQUEÑI, AQUILES",
+    "equipos": {
+      "Naval": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "FRAILE OLEA, DANIEL"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "MANCHON GARCIA, MARIO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "RAMOS CALDERON, MANUEL"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "LOPEZ MORENO, JESUS"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "GUTIERREZ BUSTILLO, DIEGO"
+          },
+          {
+            "dorsal": "28",
+            "nombre": "CUEVAS GUTIERREZ, AITOR"
+          },
+          {
+            "dorsal": "30",
+            "nombre": "CASTAÑOS DE LEON, CRISTHIAN YARIEL"
+          },
+          {
+            "dorsal": "34",
+            "nombre": "DIEZ DIAZ, ORIOL"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "27",
+            "nombre": "DIEZ PEDRACES, LUIS"
+          },
+          {
+            "dorsal": "33",
+            "nombre": "LOPEZ GOMEZ, MARTIN"
+          },
+          {
+            "dorsal": "38",
+            "nombre": "MANTILLA MARTIN, LEO"
+          },
+          {
+            "dorsal": "42",
+            "nombre": "HERREROS GUTIERREZ, AXEL"
+          }
+        ]
+      },
+      "Marina Sport": {
+        "titulares": [
+          {
+            "dorsal": "13",
+            "nombre": "SEOANE ABASCAL, ALEJANDRO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "GARRALDA YEZERSKA, MARTIN"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "GOMEZ EXPOSITO, BRUNO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "MARTINEZ CALLEJA, EDUARDO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "MUÑIZ RUIZ, MIGUEL"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "MARTINEZ OPORTO, HECTOR"
+          },
+          {
+            "dorsal": "12",
+            "nombre": "GONZALEZ RIVAS, HUGO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "SAIZ DIEGO, MAURO"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "4",
+            "nombre": "CHAPARRO PÉREZ, DIEGO"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "CASTAÑERA LAVIN, MARTIN"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 19,
+        "jugador": "GONZALEZ RIVAS, HUGO",
+        "equipo": "Marina Sport",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 22,
+        "jugador": "GARRALDA YEZERSKA, MARTIN",
+        "equipo": "Marina Sport",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }
