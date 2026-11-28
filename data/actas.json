@@ -13308,5 +13308,131 @@
       }
     ],
     "marcador": null
+  },
+  "246596": {
+    "version": 2,
+    "jornada": 12,
+    "local": "San Agustín",
+    "visitante": "Milinde Reocín",
+    "arbitro": "BEAR MIYAR, ANTONIO",
+    "equipos": {
+      "San Agustín": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "MANRIQUE PEDRAZA, CARLOS"
+          },
+          {
+            "dorsal": "2",
+            "nombre": "CONDE ARRIZABALAGA, MARTIN"
+          },
+          {
+            "dorsal": "4",
+            "nombre": "GUTIERREZ GOMEZ, MARCOS"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "SAEZ ALVAREZ-NOVOA, DAVID"
+          },
+          {
+            "dorsal": "8",
+            "nombre": "RUIZ PAREDES, PEDRO JULIÁN"
+          },
+          {
+            "dorsal": "9",
+            "nombre": "EXPOSITO MAZA, JUAN"
+          },
+          {
+            "dorsal": "19",
+            "nombre": "GARCÍA-RIVERA BESOY, ROBERTO"
+          },
+          {
+            "dorsal": "23",
+            "nombre": "CAJETE GRIJELMO, JUAN"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "5",
+            "nombre": "VIDAL SABIO, ALVARO"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "VIVANCO GONZALEZ, ENRIQUE"
+          },
+          {
+            "dorsal": "15",
+            "nombre": "BEZANILLA RUIZ, NICOLAS"
+          },
+          {
+            "dorsal": "16",
+            "nombre": "DE LA FUENTE GUTIERREZ, PEDRO"
+          }
+        ]
+      },
+      "Milinde Reocín": {
+        "titulares": [
+          {
+            "dorsal": "1",
+            "nombre": "CAYON RUIZ, ERIC"
+          },
+          {
+            "dorsal": "3",
+            "nombre": "GUTIERREZ CAYON, LEO"
+          },
+          {
+            "dorsal": "5",
+            "nombre": "FERNANDEZ NUÑEZ, LUCAS"
+          },
+          {
+            "dorsal": "6",
+            "nombre": "DIESTRO RAMOS, PABLO"
+          },
+          {
+            "dorsal": "7",
+            "nombre": "ALONSO GÓMEZ, LEO"
+          },
+          {
+            "dorsal": "10",
+            "nombre": "CUETO PONGA, LEO"
+          },
+          {
+            "dorsal": "11",
+            "nombre": "GRANADO SAN EMETERIO, MARIO"
+          },
+          {
+            "dorsal": "14",
+            "nombre": "RUIZ FLORANES, LUCAS"
+          }
+        ],
+        "suplentes": [
+          {
+            "dorsal": "4",
+            "nombre": "ALCORTA GARCIA, MIKEL"
+          }
+        ]
+      }
+    },
+    "goles": [
+      {
+        "minuto": 10,
+        "jugador": "ALONSO GÓMEZ, LEO",
+        "equipo": "Milinde Reocín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 44,
+        "jugador": "VIVANCO GONZALEZ, ENRIQUE",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      },
+      {
+        "minuto": 55,
+        "jugador": "SAEZ ALVAREZ-NOVOA, DAVID",
+        "equipo": "San Agustín",
+        "tipo": "normal"
+      }
+    ],
+    "marcador": null
   }
 }

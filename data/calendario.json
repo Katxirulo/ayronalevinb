@@ -166,9 +166,9 @@
     },
     "San Agustín|Milinde Reocín": {
       "fecha": "2026-11-28",
-      "hora": "12:30",
+      "hora": "12:00",
       "campo": "San Agustin",
-      "estado": "",
+      "estado": "final",
       "arbitro": "BEAR MIYAR, ANTONIO",
       "acta": "246596"
     },
@@ -192,7 +192,7 @@
       "fecha": "2026-11-28",
       "campo": "Vioño",
       "estado": "",
-      "hora": "12:45",
+      "hora": "13:16",
       "arbitro": "RUIZ GONZALEZ, ABRAHAM",
       "acta": "246598"
     }
